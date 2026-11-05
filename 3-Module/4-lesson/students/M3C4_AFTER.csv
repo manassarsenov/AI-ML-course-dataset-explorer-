@@ -1,0 +1,8 @@
+row_id,name,age,city,score,segment
+A,Amina,20,Samarkand,70,A
+B,Bek,21,Samarkand,85,A
+C,Chen,22,Bukhara,80,B
+D,Dina,23,Bukhara,92,B
+G,Gul,26,Khiva,88,A
+H,Hasan,27,Nukus,   ,B
+I,Iman,28,Khiva,0,C

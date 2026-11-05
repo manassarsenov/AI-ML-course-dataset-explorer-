@@ -1,0 +1,7 @@
+row_id,name,age,city,score,legacy_note
+A,Amina,20,Tashkent,70,old
+B,Bek,21,Samarkand,,old
+C,Chen,,Bukhara,80,old
+D,Dina,23,,90,old
+E,Eli,24,Nukus,60,old
+F,Fara,25,Tashkent,75,old

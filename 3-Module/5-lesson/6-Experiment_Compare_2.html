@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="M4C5 optional practice: compare experiment summaries in your own Dataset Explorer. Offline guide in English, Russian and Uzbek.">
+<meta name="color-scheme" content="light">
+<title>AI/ML · Dataset Explorer — compare experiments</title>
+<style>
+:root{--blue:#0757ff;--blue-deep:#0045d4;--ink:#08112e;--muted:#34415a;--line:#bdcce4;--pale:#e4edfc;--paper:#fff;--green:#116644;--green-pale:#edf8f1;--radius:18px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:104px}
+body{margin:0;background:#fcfdff;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:600;line-height:1.58}
+body:before{content:"";position:fixed;top:0;bottom:0;left:0;width:6px;background:var(--blue);z-index:9}
+button,input{font:inherit}
+button,a,input,summary{-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+button{cursor:pointer}
+a{color:var(--blue);text-underline-offset:3px}
+a:hover{color:var(--blue-deep)}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #efb82f;outline-offset:4px}
+button:disabled{cursor:default}
+svg{display:block}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{line-height:1.16}
+.wrap{max-width:1192px;margin:auto;padding-left:36px;padding-right:36px}
+.top{position:sticky;top:0;z-index:8;border-bottom:1px solid var(--line);background:rgba(255,255,255,.97)}
+.top-row{min-height:78px;display:flex;gap:20px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-weight:800;font-size:14px;letter-spacing:.035em}
+.brand svg{width:34px;height:34px;color:var(--blue)}
+.brand small{display:block;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.13em}
+.segmented{display:inline-flex;border:1px solid var(--line);padding:4px;border-radius:12px;background:#fff;gap:2px;max-width:100%}
+.segmented button{border:0;background:transparent;padding:7px 14px;color:var(--muted);border-radius:8px;font-size:13px;font-weight:700;line-height:1.5;white-space:nowrap}
+.segmented button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.segmented button:hover:not([aria-pressed="true"]){background:var(--pale);color:var(--ink)}
+.hero{position:relative;overflow:hidden;padding-top:57px;padding-bottom:37px}
+.hero:after{content:"";position:absolute;width:285px;height:285px;border:1px solid #edf1f8;border-radius:50%;right:-95px;top:0;box-shadow:0 0 0 27px #f5f7fc,0 0 0 28px #edf1f8;z-index:-1}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:11px;color:var(--blue);font-weight:800}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;align-items:center;gap:64px;margin-top:21px}
+h1{font-size:clamp(42px,5.25vw,66px);font-weight:800;letter-spacing:-.055em;line-height:1.03}
+h1 span{color:var(--blue);display:block}
+.lede{font-size:17px;color:var(--muted);max-width:595px;margin-top:23px;line-height:1.65}
+.hero-note{font-size:12px;margin-top:17px;color:var(--muted)}
+.hero-sketch{position:relative;padding:20px 26px 22px;border:1px solid #bed0ff;background:#fff;border-radius:20px;box-shadow:0 12px 32px #0b316509;transform:rotate(1.5deg)}
+.sketch-top{display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:19px;font-size:12px;font-weight:700;color:var(--muted)}
+.sketch-top i{height:8px;width:8px;border:1px solid #a9c1f9;border-radius:50%}
+.sketch-folder{display:flex;gap:10px;align-items:center;font-size:15px;font-weight:700}
+.sketch-folder svg{height:25px;width:25px;color:var(--blue)}
+.sketch-file{margin:10px 0 0 35px;font-family:Consolas,Menlo,monospace;font-size:13px;color:var(--muted)}
+.sketch-file:before{content:"";display:inline-block;height:7px;width:7px;border-radius:2px;border:1px solid #b9c9e9;margin-right:9px}
+.sketch-bottom{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);color:var(--blue);font-weight:700;font-size:12px}
+.sketch-bottom svg{width:22px;height:22px}
+.settings-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0 23px;border-bottom:1px solid var(--line)}
+.setting-group{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.control-label{font-size:13px;font-weight:700}
+.print{display:flex;align-items:center;gap:7px;background:none;border:0;padding:10px 0;color:var(--muted);font-size:13px;white-space:nowrap}
+.print svg{height:17px;width:17px}
+.layout{display:grid;grid-template-columns:176px minmax(0,1fr);gap:42px;padding-top:31px;padding-bottom:55px}
+.side{align-self:start;position:sticky;top:109px}
+.side p{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:4px 0 13px}
+.side a{display:flex;align-items:center;gap:10px;color:var(--muted);text-decoration:none;font-size:13px;padding:10px 0;line-height:1.35}
+.side a:hover{color:var(--blue)}
+.side a b{display:grid;place-items:center;flex-shrink:0;height:27px;width:27px;border-radius:50%;border:1px solid #cbd9f7;font-size:10px;color:var(--blue);background:white}
+.side .side-bottom{font-size:11px;color:var(--muted);margin-top:23px;border-top:1px solid var(--line);padding-top:15px;line-height:1.6}
+.content{min-width:0}
+section{padding-bottom:39px;margin-bottom:35px;border-bottom:1px solid var(--line);scroll-margin-top:100px}
+section:last-of-type{border:0;margin-bottom:0}
+.section-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.step-num{display:grid;place-items:center;background:var(--blue);color:white;font-size:12px;font-weight:700;border-radius:50%;width:34px;height:34px;flex-shrink:0;margin-top:2px}
+h2{font-size:27px;letter-spacing:-.035em;font-weight:800}
+.section-head p{font-size:14px;color:var(--muted);margin-top:6px}
+.agents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.agent{border:1px solid var(--line);border-radius:var(--radius);background:white;text-align:left;padding:21px 18px 19px;position:relative;color:var(--ink);min-width:0}
+.agent:hover{border-color:#90aeff}
+.agent[aria-pressed="true"]{border:2px solid var(--blue);padding:20px 17px 18px;background:#f7faff}
+.agent-symbol{width:36px;height:36px;display:grid;place-items:center;border:1px solid #c3d4fc;border-radius:11px;margin-bottom:18px;color:var(--blue);font-size:18px;font-weight:800;background:white}
+.agent h3{font-size:18px;letter-spacing:-.03em}
+.agent p{font-size:12px;line-height:1.5;color:var(--muted);margin-top:8px}
+.agent .agent-tag{font-size:10px;font-weight:700;color:var(--blue);display:block;margin-top:14px}
+.select-dot{position:absolute;right:16px;top:18px;height:15px;width:15px;border:1px solid #bbcae8;border-radius:50%}
+.agent[aria-pressed="true"] .select-dot{border:4px solid var(--blue);background:white}
+.note{margin-top:17px;border-left:3px solid var(--blue);padding:10px 14px;background:var(--pale);font-size:13px;line-height:1.6;border-radius:0 10px 10px 0}
+.note.soft{background:#f6f8fc;border-left-color:#b8c7e6;color:var(--muted)}
+.install-box{border:1px solid #b9ceff;border-radius:var(--radius);overflow:hidden;background:white}
+.install-header{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px 23px;background:#f5f8ff;border-bottom:1px solid var(--line)}
+.install-header h3{font-size:21px;letter-spacing:-.03em}
+.small-tag{font-size:11px;font-weight:700;color:var(--blue);padding:4px 9px;border:1px solid #c1d3ff;border-radius:6px;white-space:nowrap;background:white}
+.install-steps{list-style:none;padding:8px 23px 5px;margin:0}
+.install-steps li{padding:17px 0;display:grid;grid-template-columns:25px minmax(0,1fr);gap:11px;border-bottom:1px solid #edf1f8}
+.install-steps li:last-child{border-bottom:0}
+.tiny-num{font-size:11px;font-weight:700;color:var(--blue);background:var(--pale);border-radius:6px;height:23px;display:grid;place-items:center}
+.install-steps h4{font-size:15px;margin:2px 0 7px;line-height:1.35}
+.install-steps p{font-size:14px;color:var(--muted)}
+.text-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;text-decoration:none;font-weight:700;font-size:12px}
+.text-link:after{content:"↗";font-size:14px}
+.access{padding:14px 23px;background:#f8faff;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.rule-card{padding:18px 19px;border:1px solid var(--line);background:#fff;border-radius:14px}
+.rule-label{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px}
+.rule-card h3{font-size:16px;margin-bottom:9px}
+.rule-card p{font-size:13px;color:var(--muted)}
+.rule-card .mini{margin-top:11px;font-size:12px;color:var(--ink)}
+.effort-line{display:flex;gap:6px;margin:12px 0}
+.effort-line span{font-size:10px;line-height:1.3;padding:6px 9px;background:#f3f6fc;border:1px solid var(--line);border-radius:6px}
+.effort-line span:nth-child(2){color:var(--blue);border-color:#c2d4ff;background:var(--pale)}
+details{border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:14px;overflow:hidden}
+summary{cursor:pointer;font-size:13px;font-weight:700;padding:15px 17px;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:21px;font-weight:400;color:var(--blue);line-height:1}
+details[open] summary:after{content:"−"}
+.details-body{padding:0 17px 17px;font-size:13px;color:var(--muted)}
+.details-body p+p{margin-top:12px}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tool{border:1px solid var(--line);border-radius:14px;background:#fff;padding:20px;min-width:0}
+.tool h3{font-size:17px;letter-spacing:-.02em;margin-bottom:9px}
+.tool p{font-size:13px;color:var(--muted)}
+.tool .cmd{margin-top:13px}
+.cmd{position:relative;border:1px solid #d4e0f8;border-radius:11px;background:#f5f8ff;margin:11px 0 6px;min-width:0;overflow:hidden}
+.cmd-bar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:8px 12px;border-bottom:1px solid #e1e9f8}
+.cmd-label{font-size:10px;font-weight:700;letter-spacing:.035em;color:var(--muted)}
+.copy{border:0;background:#fff;border-radius:5px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--blue);white-space:nowrap}
+.copy:hover{background:#e6eeff}
+pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;padding:14px;font-family:Consolas,"Liberation Mono",Menlo,monospace;font-size:12px;line-height:1.7;color:#15386b}
+code{font-family:Consolas,"Liberation Mono",Menlo,monospace;background:#edf3ff;color:#204a88;border-radius:4px;padding:2px 4px;font-size:.9em;overflow-wrap:anywhere}
+pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.substep{margin-top:24px}
+.substep h3{font-size:17px;letter-spacing:-.02em;margin-bottom:9px;line-height:1.35}
+.substep>p{font-size:14px;color:var(--muted)}
+.substep .tiny{font-size:12px;margin-top:8px}
+.package-choice{display:flex;gap:7px;margin:12px 0 3px;flex-wrap:wrap}
+.package-choice button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 11px;color:var(--muted);font-size:11px;font-weight:700}
+.package-choice button[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--pale)}
+.prompt-box{margin-top:13px}
+.prompt-box pre{font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.75;color:var(--ink);padding:18px 19px;white-space:pre-wrap}
+.result-box{border:1px solid #bfd4fd;border-radius:12px;padding:16px 18px;background:white;margin-top:17px}
+.result-box h4{font-size:13px;color:var(--blue);margin-bottom:8px}
+.result-box p{font-size:13px;color:var(--muted)}
+.microflow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:18px}
+.microflow div{border:1px solid var(--line);border-radius:9px;padding:11px 10px;font-size:11px;color:var(--muted);line-height:1.5;background:white}
+.microflow b{display:block;font-size:13px;color:var(--blue);margin-bottom:3px}
+.check-box{border:1px solid #b8ceff;border-radius:var(--radius);background:white;overflow:hidden}
+.check-top{padding:19px 22px;background:var(--pale);border-bottom:1px solid var(--line)}
+.check-top-row{display:flex;align-items:center;justify-content:space-between;gap:13px}
+.check-top h3{font-size:17px;line-height:1.3}
+.count{font-size:14px;color:var(--blue);font-weight:700;white-space:nowrap}
+.meter{background:#dbe6ff;height:4px;border-radius:3px;margin-top:14px;overflow:hidden}
+.meter div{height:100%;background:var(--blue);width:0;transition:width .2s}
+.checks{padding:5px 21px}
+.check-row{display:flex;gap:12px;align-items:flex-start;cursor:pointer;padding:14px 0;border-bottom:1px solid #edf1f8;font-size:13px;line-height:1.6}
+.check-row:last-child{border:0}
+.check-row input{margin:4px 0 0;flex:0 0 17px;width:17px;height:17px;accent-color:var(--blue);cursor:pointer}
+.check-row input:checked+span{color:var(--green)}
+.check-bottom{padding:15px 21px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.check-bottom p{font-size:11px;color:var(--muted);max-width:520px}
+.reset{padding:2px 0;border:0;background:none;color:var(--blue);font-size:11px;font-weight:700;white-space:nowrap}
+.complete{margin-top:14px;padding:15px 18px;color:var(--green);background:var(--green-pale);border:1px solid #bdddc9;border-radius:11px;font-size:13px}
+.helper-head{font-size:18px;margin-top:26px;letter-spacing:-.02em}
+.sources{margin-top:26px}
+.source-links{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}
+.source-links a{font-size:12px;line-height:1.5;text-decoration:none}
+.source-links a:hover{text-decoration:underline}
+.source-meta{margin-top:15px!important;font-size:11px}
+footer{border-top:1px solid var(--line);padding:24px 0 30px;background:white}
+.footer-row{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:11px;color:var(--muted)}
+.footer-row strong{color:var(--ink);font-size:12px}
+.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;font-size:13px;padding:10px 18px;border-radius:10px;z-index:15;box-shadow:0 5px 20px #08112e22;max-width:90vw;text-align:center}
+.skip{position:fixed;top:-80px;left:20px;z-index:20;background:white;padding:10px}
+.skip:focus{top:10px}
+.noscript{margin:30px;padding:25px;border:2px solid var(--blue);font-size:16px}
+[hidden]{display:none!important}
+@media(min-width:1500px){.wrap{max-width:1250px}.layout{gap:55px}}
+@media(max-width:900px){.hero-grid{gap:28px;grid-template-columns:1.3fr 1fr}.wrap{padding-left:28px;padding-right:24px}.layout{grid-template-columns:1fr;gap:0}.side{position:static;display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:28px}.side p,.side-bottom{display:none}.side a{padding:0;font-size:11px}.side a b{width:23px;height:23px;font-size:9px}.hero{padding-top:39px}.hero-sketch{padding:19px}.layout{padding-top:23px}}
+@media(max-width:620px){body{font-size:15px}body:before{width:4px}.wrap{padding-left:22px;padding-right:18px}.top-row{min-height:73px;gap:9px}.brand{font-size:11px;gap:7px;letter-spacing:0}.brand svg{width:25px;height:25px}.brand small{font-size:8px;letter-spacing:.09em}.segmented button{padding:7px 9px;font-size:11px}.hero{padding-top:31px;padding-bottom:23px}.hero-grid{display:block;margin-top:18px}.hero-sketch{display:none}h1{font-size:47px;letter-spacing:-.05em}.lede{font-size:15px;margin-top:20px}.hero-note{font-size:11px}.eyebrow{font-size:9px}.settings-bar{align-items:flex-start;padding:15px 0}.setting-group{gap:7px}.control-label{font-size:11px;display:block;width:100%}.print{font-size:11px;padding-top:27px}.print svg{display:none}.side{gap:10px 13px}.side a{font-size:10px;gap:5px}.side a b{width:21px;height:21px}.section-head{gap:10px}h2{font-size:24px}.section-head p{font-size:13px}.step-num{width:30px;height:30px;font-size:11px}.agents{grid-template-columns:1fr;gap:8px}.agent{display:grid;grid-template-columns:36px 1fr;gap:0 12px;padding:14px 37px 14px 14px;align-items:center}.agent[aria-pressed="true"]{padding:13px 36px 13px 13px}.agent-symbol{grid-column:1;grid-row:1 / span 3;margin:0}.agent h3{font-size:17px}.agent p{margin-top:4px}.agent .agent-tag{margin-top:4px;font-size:10px}.select-dot{top:20px;right:13px}.install-header{padding:17px}.install-header h3{font-size:19px}.install-steps{padding:3px 16px}.install-steps p{font-size:13px}.access{padding:13px 16px}.rules-grid,.tools-grid{grid-template-columns:1fr;gap:12px}.rules-grid{margin-top:17px}.tool{padding:17px}.rule-card{padding:17px}.microflow{grid-template-columns:1fr 1fr}.source-links{grid-template-columns:1fr}.check-top{padding:17px}.check-top h3{font-size:15px}.checks{padding:3px 16px}.check-bottom{padding:14px 16px}.check-bottom p{font-size:10px}.check-row{font-size:12px}.footer-row{align-items:flex-start;flex-direction:column;gap:6px}section{padding-bottom:28px;margin-bottom:26px}.cmd-label{font-size:9px}.substep h3{font-size:16px}pre{font-size:11px}.prompt-box pre{font-size:13px;padding:15px}.note{font-size:12px;padding:10px 12px}.source-meta{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+@media print{body{background:#fff;font-size:10pt}body:before,.top,.side,.settings-bar,.copy,.reset,.toast,.skip{display:none!important}.wrap{max-width:none;padding:0}.hero{padding:0 0 14px}.hero-grid{display:block}.hero-sketch{display:none}h1{font-size:30pt}h1 span{display:inline}.lede{font-size:11pt;max-width:none;margin-top:10px}.hero-note{font-size:9pt}.layout{display:block;padding:0}.section-head{break-after:avoid}section{margin:15px 0;padding-bottom:15px;break-inside:auto}.agent{display:none}.agent[aria-pressed="true"]{display:block;padding:12px;border:1px solid #a5bcf3}.agent-symbol,.select-dot{display:none}.agent p{font-size:9pt}.agent h3{font-size:13pt}.agent-tag{display:none!important}h2{font-size:18pt}.install-box{break-inside:auto}.install-steps li,.rule-card,.tool,.substep,.check-row,.result-box{break-inside:avoid}.cmd,pre{break-inside:avoid}.cmd-bar{padding:5px 10px}.rules-grid,.tools-grid{gap:12px}.check-row{padding:7px 0;font-size:9pt}.check-bottom p{font-size:8pt}.note,.access{font-size:9pt}.source-links a{font-size:8pt}.check-top{padding:12px}footer{margin-top:15px}.package-choice button{display:none}.package-choice button[aria-pressed="true"]{display:block}.complete{font-size:9pt}.details-body{display:block}details:not([open]) .details-body{display:none}.source-links a:after{content:""}a{text-decoration:none}.step-num{width:25px;height:25px;font-size:9pt}.section-head{margin-bottom:11px}}
+
+/* Readable instruction cards */
+.install-box{background:#eaf0fa;border-color:#afc3e6}
+.install-header,.check-top{background:#dce7fa}
+.install-steps li{border-bottom-color:#c5d3e9}
+.install-steps p,.substep>p,.rule-card p,.details-body,.result-box p,.check-row{font-weight:600}
+.install-steps h4,.substep h3{font-weight:800}
+.rule-card,.result-box,.tool,.microflow div,details{background:#eaf0fa;border-color:#bdcce4}
+.substep{padding:20px 22px;background:#eaf0fa;border:1px solid #bdcce4;border-radius:14px;margin-top:16px}
+.permission-card{background:#dfe9fb;border-color:#9fb9e8;border-left:4px solid var(--blue)}
+.note.soft{background:#e8edf5;border-left-color:#99adc9;color:#34415a}
+.access{background:#dde7f6;font-weight:600}
+.cmd{background:#dfe9fa;border-color:#adbfde}
+.cmd-bar{background:#cfddf4;border-bottom-color:#adbfde;padding:12px 16px}
+.cmd-label{font-size:11px;color:#263c62;font-weight:800}
+.copy{font-size:12px;padding:6px 12px;border:1px solid #b0c4e7}
+.prompt-box pre{font-size:15px;font-weight:600;background:#e8effc;line-height:1.8}
+.check-box{background:#edf2fa}
+.check-row{border-bottom-color:#c8d5e8}
+.agent p,.lede,.section-head p{font-weight:600}
+strong{font-weight:800}
+@media(max-width:620px){.substep{padding:17px}.prompt-box pre{font-size:14px}.cmd-label{font-size:10px}.copy{font-size:11px}}
+
+/* M3C2 additions; colors, type, spacing and components follow the M2 setup reference. */
+.hero-sketch{transform:none;margin:0;padding:22px;background:#fff;box-shadow:0 12px 32px #0b316509}
+.hero-sketch .sketch-top{margin-bottom:18px;line-height:1.5}
+.value-groups{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:12px;align-items:stretch}
+.value-group{min-width:0;padding:14px 12px 12px;border:1px solid #d6e2fa;border-radius:13px;background:#f5f8ff}
+.value-group-label{font-size:11px;font-weight:700;line-height:1.45;color:var(--muted);min-height:32px}
+.number-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:10px}
+.number-tiles span{display:grid;place-items:center;min-height:29px;background:#fff;border:1px solid #d5e2fa;border-radius:6px;font-size:14px;font-weight:700;color:#1e4382;font-variant-numeric:tabular-nums}
+.value-group.flagged{background:#fff7e9;border-color:#efc879;text-align:center}
+.flagged .value-group-label{color:#825212}
+.flagged-number{display:block;font-size:46px;font-weight:800;letter-spacing:-.06em;line-height:1.2;color:#a15d08;margin-top:9px;font-variant-numeric:tabular-nums}
+.iqr-boundaries{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding:12px 13px;border:1px solid var(--line);border-radius:10px}
+.iqr-boundaries span{font-size:11px;font-weight:600;color:var(--muted);line-height:1.5;max-width:185px}
+.iqr-boundaries strong{font-size:25px;font-weight:800;letter-spacing:-.04em;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums}
+.iqr-explanation{font-size:12px;line-height:1.6;margin-top:10px;color:var(--ink)}
+.hero-sketch .sketch-bottom{margin-top:15px;font-size:12px;line-height:1.5}
+.hero-sketch .sketch-bottom svg{flex-shrink:0}
+.route-label{font-size:13px;color:var(--muted)}
+.downloads{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.download-card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:20px;min-width:0}
+.download-card h3{font-size:17px;margin-bottom:9px}
+.download-card p{font-size:13px;color:var(--muted)}
+.action{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:9px;padding:10px 14px;font-size:12px;font-weight:700;min-height:42px;margin-top:15px}
+.action:hover{background:var(--blue-deep)}
+.download-card .cmd{margin-top:14px}
+.guide-list{padding-left:20px;margin:12px 0 0;font-size:14px;color:var(--muted)}
+.guide-list li{padding:4px 0 7px}
+.guide-list strong{color:var(--ink)}
+.table-wrap{overflow-x:auto;margin-top:15px;border:1px solid var(--line);border-radius:10px;background:white}
+table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.5}
+caption{text-align:left;padding:12px 14px;font-weight:700;background:#f5f8ff;color:var(--ink)}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-top:1px solid #e3ebfa}
+th{font-weight:700;color:var(--ink)}
+td{font-weight:500;color:var(--muted)}
+thead th{font-size:11px;color:var(--blue);background:#f9fbff}
+.note strong{color:var(--ink)}
+.bonus{margin-top:26px;border:1px solid #b9ceff;border-radius:14px}
+.bonus summary{font-size:15px;color:var(--blue);padding:18px}
+.bonus .details-body{padding:0 18px 20px}
+.bonus h3{font-size:17px;margin:18px 0 9px;color:var(--ink)}
+.bonus p{font-size:14px}
+.bonus .prompt-box pre{font-size:13px}
+.empty-tip{font-size:12px;color:var(--muted);margin-top:12px}
+.complete[hidden]{display:none!important}
+.cmd-bar{flex-wrap:wrap;gap:8px}
+.cmd-label{min-width:0;overflow-wrap:anywhere;flex:1 1 170px}
+.copy{min-height:32px;flex:0 0 auto}
+.action{max-width:100%;overflow-wrap:anywhere;white-space:normal}
+[tabindex]:focus-visible{outline:3px solid #efb82f;outline-offset:4px}
+.own-request{margin-top:20px;border:1px solid #b9ceff;background:#f8faff;border-radius:14px;padding:20px}
+.own-request h3{font-size:17px;margin-bottom:10px;line-height:1.35}
+.own-request>p,.own-request .guide-list{font-size:14px;color:var(--muted)}
+.prompt-help{border-left:3px solid var(--blue);margin-top:18px}
+.prompt-help>summary{color:var(--blue);line-height:1.5}
+.prompt-help .details-body>p{font-size:13px}
+.route-note{padding:14px 0 0;font-size:12px;color:var(--muted)}
+@media(max-width:620px){.own-request{padding:16px}.own-request>p,.own-request .guide-list{font-size:13px}.settings-bar{flex-wrap:wrap;align-items:flex-start}.settings-bar .setting-group{flex:1 1 225px;max-width:100%}.settings-bar .segmented{flex-wrap:nowrap}.settings-bar .segmented button{padding:7px 8px}.settings-bar .print{margin-left:auto;align-self:flex-end}}
+@media print{.own-request{padding:12px}.own-request>p,.own-request .guide-list{font-size:10pt}.route-note{display:none}details[data-prompt-help]:not([open])>.details-body{display:none!important}}
+@media(max-width:620px){.downloads{grid-template-columns:1fr}.download-card{padding:17px}.route-label{font-size:11px}h1{font-size:clamp(36px,10vw,47px)}.guide-list{font-size:13px}th,td{padding:9px 10px;font-size:12px}.bonus summary{font-size:14px}.hero-sketch{display:none}.print{padding-top:0}.settings-bar{align-items:center}.brand{max-width:61%}.brand div{min-width:0}.brand small{font-size:7px;letter-spacing:.04em}.top-row>.segmented{flex-shrink:0}.segmented button{min-height:38px}}
+@media print{.downloads{grid-template-columns:1fr 1fr}.action{display:none}.table-wrap{overflow:visible}table{font-size:9pt}.bonus .details-body{display:block!important}.bonus{break-inside:auto}.cmd{break-inside:auto}.prompt-box pre{font-size:9pt}.guide-list{font-size:10pt}.check-row{font-size:9pt}.hero-sketch{display:none}}
+@media screen and (max-width:620px){.hero-sketch{display:block;margin-top:26px;padding:18px}.value-groups{gap:10px}.value-group{padding:12px 10px}.value-group-label{font-size:11px}.number-tiles{gap:4px}.number-tiles span{font-size:13px}.flagged-number{font-size:clamp(34px,10vw,42px)}.iqr-boundaries span{max-width:155px}.iqr-boundaries strong{font-size:23px}}
+
+.experiment-stats{display:grid;gap:10px}
+.experiment-stat{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px;padding:16px 13px;background:#f8faff;border:1px solid var(--line);border-radius:11px}
+.experiment-stat>span:first-child{font-size:12px;color:var(--muted)}
+.experiment-stat strong{font-size:23px;white-space:nowrap;letter-spacing:-.04em}
+.experiment-delta{padding:4px 7px;border-radius:6px;background:#edf8f1;color:#155d39;font-size:12px;font-weight:800;white-space:nowrap}
+.experiment-foot{font-size:12px;line-height:1.6;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted)}
+.compact-details{margin-top:17px}
+.finale{margin:0 0 28px;padding:22px;border:1px solid #bfd4fd;background:var(--pale);border-radius:var(--radius)}
+.finale>h3{font-size:21px;line-height:1.3;margin-bottom:12px;letter-spacing:-.02em}
+.finale>p{font-size:14px;line-height:1.75}
+.finale .download-card{background:white;margin:18px 0}
+.finale details{background:white}
+.finale .own-request{margin-top:18px}
+.save-copy{font-size:14px;margin:18px 0 22px}
+details:not([open])>summary:after{content:"+"}
+@media screen and (max-width:620px){.experiment-stat{padding:12px 10px;gap:8px}.experiment-stat strong{font-size:20px}.experiment-stat>span:first-child{font-size:11px}.finale{padding:16px 10px}.finale>h3{font-size:19px}.finale #challenge-answer{margin-left:-5px;margin-right:-5px}.finale #challenge-answer>.details-body{padding:0 10px 14px}.finale .prompt-help>.details-body{padding:0 8px 12px}.finale .prompt-box pre{padding:13px 10px}.finale .cmd-bar{padding:10px}.finale .own-request{padding:14px}}
+
+</style>
+<link rel="icon" href="data:,">
+</head>
+<body>
+<a class="skip" href="#guide" id="skip">Skip to instructions</a>
+<header class="top"><div class="wrap top-row"><a href="#top" class="brand" aria-label="AI/ML Fundamentals, Cohort 2">
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M17 7v26M23 7v26M12 11l5 5m11-5-5 5M9 20h8m14 0h-8m-11 9 5-5m11 5-5-5"/><circle cx="17" cy="5" r="2"/><circle cx="23" cy="5" r="2"/><circle cx="10" cy="9" r="2"/><circle cx="30" cy="9" r="2"/><circle cx="7" cy="20" r="2"/><circle cx="33" cy="20" r="2"/><circle cx="10" cy="31" r="2"/><circle cx="30" cy="31" r="2"/><circle cx="17" cy="35" r="2"/><circle cx="23" cy="35" r="2"/></svg>
+    <div>AI/ML FUNDAMENTALS<small>COHORT 2 · DATASET EXPLORER</small></div>
+  </a>
+<div class="segmented" role="group" id="language" aria-label="Language">
+<button type="button" data-lang="en" lang="en" aria-pressed="true" aria-label="English">ENG</button>
+<button type="button" data-lang="ru" lang="ru" aria-pressed="false" aria-label="Русский">RU</button>
+<button type="button" data-lang="uz" lang="uz" aria-pressed="false" aria-label="O‘zbekcha">UZB</button>
+</div></div></header>
+<div id="app"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<noscript><div class="noscript">Enable JavaScript to display this offline guide.<br>Включите JavaScript, чтобы открыть эту офлайн-инструкцию.<br>Ushbu oflayn yo‘riqnomani ochish uchun JavaScript’ni yoqing.</div></noscript>
+<script>
+"use strict";
+const CSV = {"run_a": "{\n  \"format_version\": 1,\n  \"run_id\": \"DEMO_A\",\n  \"dataset_id\": \"demo_telco_v1\",\n  \"split_id\": \"demo_split_42\",\n  \"features\": [\n    \"tenure\",\n    \"MonthlyCharges\",\n    \"Contract\"\n  ],\n  \"target\": \"Churn\",\n  \"positive_class\": \"Yes\",\n  \"model\": \"LogisticRegression\",\n  \"penalty\": \"l2\",\n  \"C\": 1,\n  \"seed\": 42,\n  \"threshold\": 0.5,\n  \"evaluation_split\": \"validation\",\n  \"metrics\": {\n    \"train_f1\": 0.75,\n    \"f1\": 0.6,\n    \"precision\": 0.64,\n    \"recall\": 0.57\n  },\n  \"note\": \"Synthetic UI fixture. Not a measured Telco result or an MLflow run.\"\n}\n", "run_b": "{\n  \"format_version\": 1,\n  \"run_id\": \"DEMO_B\",\n  \"dataset_id\": \"demo_telco_v1\",\n  \"split_id\": \"demo_split_42\",\n  \"features\": [\n    \"tenure\",\n    \"MonthlyCharges\",\n    \"Contract\"\n  ],\n  \"target\": \"Churn\",\n  \"positive_class\": \"Yes\",\n  \"model\": \"LogisticRegression\",\n  \"penalty\": \"l2\",\n  \"C\": 0.1,\n  \"seed\": 42,\n  \"threshold\": 0.5,\n  \"evaluation_split\": \"validation\",\n  \"metrics\": {\n    \"train_f1\": 0.7,\n    \"f1\": 0.63,\n    \"precision\": 0.67,\n    \"recall\": 0.59\n  },\n  \"note\": \"Synthetic UI fixture. Not a measured Telco result or an MLflow run.\"\n}\n", "challenge": "{\n  \"format_version\": 1,\n  \"run_id\": \"DEMO_TRAIN\",\n  \"dataset_id\": \"demo_telco_v1\",\n  \"split_id\": \"demo_split_42\",\n  \"features\": [\n    \"tenure\",\n    \"MonthlyCharges\",\n    \"Contract\"\n  ],\n  \"target\": \"Churn\",\n  \"positive_class\": \"Yes\",\n  \"model\": \"LogisticRegression\",\n  \"penalty\": \"l2\",\n  \"C\": 0.1,\n  \"seed\": 42,\n  \"threshold\": 0.5,\n  \"evaluation_split\": \"train\",\n  \"metrics\": {\n    \"train_f1\": 0.86,\n    \"f1\": 0.86,\n    \"precision\": 0.9,\n    \"recall\": 0.82\n  },\n  \"note\": \"Synthetic UI fixture. Not a measured Telco result or an MLflow run.\"\n}\n", "missing": "{\n  \"format_version\": 1,\n  \"run_id\": \"DEMO_B\",\n  \"dataset_id\": \"demo_telco_v1\",\n  \"split_id\": \"demo_split_42\",\n  \"features\": [\n    \"tenure\",\n    \"MonthlyCharges\",\n    \"Contract\"\n  ],\n  \"target\": \"Churn\",\n  \"positive_class\": \"Yes\",\n  \"model\": \"LogisticRegression\",\n  \"penalty\": \"l2\",\n  \"C\": 0.1,\n  \"seed\": 42,\n  \"threshold\": 0.5,\n  \"metrics\": {\n    \"train_f1\": 0.7,\n    \"f1\": 0.63,\n    \"precision\": 0.67,\n    \"recall\": 0.59\n  },\n  \"note\": \"Synthetic UI fixture. Not a measured Telco result or an MLflow run.\"\n}\n", "changed": "{\n  \"format_version\": 1,\n  \"run_id\": \"DEMO_OTHER_SPLIT\",\n  \"dataset_id\": \"demo_telco_v1\",\n  \"split_id\": \"demo_split_99\",\n  \"features\": [\n    \"tenure\",\n    \"MonthlyCharges\",\n    \"Contract\"\n  ],\n  \"target\": \"Churn\",\n  \"positive_class\": \"Yes\",\n  \"model\": \"LogisticRegression\",\n  \"penalty\": \"l2\",\n  \"C\": 0.1,\n  \"seed\": 42,\n  \"threshold\": 0.5,\n  \"evaluation_split\": \"validation\",\n  \"metrics\": {\n    \"train_f1\": 0.7,\n    \"f1\": 0.63,\n    \"precision\": 0.67,\n    \"recall\": 0.59\n  },\n  \"note\": \"Synthetic UI fixture. Not a measured Telco result or an MLflow run.\"\n}\n"};
+const FILES = {"run_a": "M4C5_RUN_A.json", "run_b": "M4C5_RUN_B.json", "challenge": "M4C5_CHALLENGE.json", "missing": "M4C5_MISSING_CONTEXT.json", "changed": "M4C5_CHANGED_SPLIT.json"};
+const IDS = ["open","plan","upgrade","verify","save"];
+const T = {
+  "en": {
+    "systemLabel": "My computer",
+    "systemContext": "My system",
+    "systemInstruction": "Use the current project environment and a launch command for this system and my actual terminal. Check the existing project instead of guessing filenames or creating a new environment.",
+    "ownTitle": "Build your own request",
+    "ownSend": "Use these points to write a short request in your own words. Send it to your agent in the existing project. There is no single required wording.",
+    "promptHelpTitle": "Having trouble writing your request? Use a ready-made example",
+    "promptHelpIntro": "Try your own wording first. If you get stuck, you may use this optional example. Your selected system is already included. Replace any [placeholders] with your actual details before sending.",
+    "launchTitle": "If you need the launch command",
+    "launchTask": "Ask the agent to help you open the existing app. Include:",
+    "launchLabel": "OPTIONAL EXAMPLE · OPEN THE EXISTING APP",
+    "launchPrompt": "Help me start the existing Dataset Explorer in the current project folder. Inspect the project instructions and reuse its existing Python environment. Preserve the files and features; do not create a new project or reinstall tools. Check which terminal to use and ask me if it is unclear. Start the app if you can. Give me the actual launch command, the terminal it belongs in and the local URL. Clearly state what you actually ran and what I must run myself.",
+    "print": "Print guide",
+    "skip": "Skip to instructions",
+    "language": "Language",
+    "navTitle": "YOUR ROUTE",
+    "download": "Download",
+    "csvContents": "View JSON contents",
+    "csvFallback": "If the download does not start, copy this JSON into a UTF-8 file with the indicated filename.",
+    "checkTitle": "Your manual check",
+    "checkNote": "Tick only what you personally checked. This guide does not inspect your app; the check marks are stored only in this browser when storage is available.",
+    "reset": "Reset checks",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFail": "Copy unavailable. The text is selected: press Ctrl+C / Cmd+C, or copy it manually.",
+    "launchPoints": [
+      "Your selected system and the name of the terminal you used before, if you know it.",
+      "The same Explorer project folder; the agent should inspect the project and reuse its existing environment.",
+      "The actual launch command and local URL, plus what to do if it cannot start the app itself."
+    ],
+    "osTips": {
+      "win": "Tell the agent that you use Windows and name your terminal, for example PowerShell. Ask for a command for that terminal and the existing project environment. If you use WSL or Git Bash, say so explicitly.",
+      "mac": "Tell the agent that you use macOS and the terminal you used before. Ask for the launch command for that terminal and the existing project environment.",
+      "linux": "Tell the agent that you use Linux and the terminal you used before. Ask for the launch command for that terminal and the existing project environment."
+    },
+    "title": "Two experiments.",
+    "accent": "Can you compare them?",
+    "eyebrow": "M4C5 / OPTIONAL CODING PRACTICE",
+    "lede": "Continue your Dataset Explorer. Add a view that compares two saved experiment summaries and shows the context behind their metrics.",
+    "heroNote": "Use your own project and coding agent. Write your request first; the examples below are optional help.",
+    "heroCaption": "Demo A → Demo B · validation",
+    "heroRows": "F1",
+    "heroColumns": "Precision",
+    "heroMissing": "Recall",
+    "heroAdded": "A",
+    "heroRemoved": "B",
+    "heroFoot": "These numbers are synthetic display fixtures, not measured Telco results or MLflow runs.",
+    "routeLabel": "Open → plan → build → check → save",
+    "nav": [
+      "Continue",
+      "Plan",
+      "Ask AI",
+      "Test",
+      "Save"
+    ],
+    "sideNote": "This page is a guide. Download the demo files and upload them into your own Explorer.",
+    "openTitle": "Open your Explorer",
+    "openSub": "Start with the project you already have.",
+    "openItems": [
+      "Open your existing Python / Streamlit / pandas Dataset Explorer in your coding agent.",
+      "Start it with your usual command and open the local URL. If needed, ask your agent to inspect the project and identify the command.",
+      "Check that the existing upload, summary and charts still work."
+    ],
+    "openNote": "If the app does not start, share the exact error with your agent and restore it first. A working starting point makes the new section easier to check.",
+    "planTitle": "Plan the comparison",
+    "planSub": "Download the demos, then decide what your app should show. These hand-authored synthetic JSON fixtures use a separate educational format; they are not native M4C5 or MLflow exports. Each JSON file is one saved summary; run_id and split_id are recorded labels for the run and split.",
+    "planItems": [
+      "Add two JSON uploads: <strong>A</strong> and <strong>B</strong>. Display each filename and run ID so the direction is clear.",
+      "Show only three main cards: <strong>F1, precision and recall</strong>, each as A → B and Δ = B − A. Use green for upward, red for downward and neutral for zero, with a written sign. Direction alone does not establish quality.",
+      "Show the recorded model settings and their differences. Put the train–validation F1 gap in expandable details; it is available only for validation results.",
+      "Before interpreting the numbers, check dataset ID, split ID, target, positive class, feature set (ignore order), threshold, seed and a known matching validation evaluation split. Model, penalty and C are settings to display, not mismatch errors by themselves.",
+      "Use three statuses: <strong>Same recorded conditions</strong>, <strong>Conditions differ</strong>, and <strong>Insufficient context</strong>. Matching labels are not audited row hashes and cannot prove the measurements or their quality."
+    ],
+    "predict": "Before checking the answer table: if C changes, what else must stay recorded the same before you interpret the metric differences?",
+    "beforeTitle": "A · first demo",
+    "beforeText": "Download M4C5_RUN_A.json. This fixture contains a validation summary with C = 1.",
+    "afterTitle": "B · second demo",
+    "afterText": "Download M4C5_RUN_B.json. This fixture contains a validation summary with C = 0.1.",
+    "challengeTitle": "Challenge",
+    "challengeText": "Download M4C5_CHALLENGE.json for the finale. Try it in your app before opening the answer.",
+    "missingContextTitle": "Missing context",
+    "missingContextText": "Download M4C5_MISSING_CONTEXT.json for a check with an incomplete record.",
+    "changedSplitTitle": "Changed split",
+    "changedSplitText": "Download M4C5_CHANGED_SPLIT.json for a check with a different recorded split.",
+    "upgradeTitle": "Describe the feature to your agent",
+    "upgradeSub": "Start with your own request using these points.",
+    "promptIntro": "Attach the two synthetic demo JSON files to your request, or give your agent their exact accessible paths, and ask it to inspect their structure. You will also upload them separately into the app for testing.",
+    "featurePoints": [
+      "Context: your existing Python / Streamlit / pandas Explorer and environment. Preserve earlier features.",
+      "Input: attach the two synthetic JSON examples or provide their exact accessible paths; ask the agent to inspect their structure. Show filenames and run IDs. Handle malformed JSON and missing files clearly.",
+      "Display: three metric cards, A → B and B − A; visible signs as well as directional colors. Show settings and differences; place the validation gap in expandable details. Never declare a winner.",
+      "Interpretation: require the recorded conditions listed in step 2 for a comparable validation view. Use the three statuses and explain missing or differing context without defaults; distinguish incomplete context from invalid metrics.",
+      "Reliability: reject invalid, non-finite or out-of-range metrics; preserve zero. Clear stale results whenever inputs change. Ask what the agent actually ran, then test the app yourself."
+    ],
+    "promptLabel": "OPTIONAL EXAMPLE · ADD EXPERIMENT COMPARISON",
+    "prompt": "Use the attached synthetic examples, or my exact paths [A path] and [B path], and inspect their schema. Continue my existing Python/Streamlit/pandas Dataset Explorer in its current environment. Preserve its existing features. Add two JSON uploads labelled A and B, displaying filenames and run IDs.\n\nRead format_version 1 records with run_id, dataset_id, split_id, features (string list), target, positive_class, model, penalty, C, seed, threshold, evaluation_split, metrics (train_f1, f1, precision, recall) and note. Show three main cards only: F1, precision and recall, A → B and delta = B − A. Use green up, red down, neutral zero, and explicit signs; direction is not a quality verdict. Show recorded settings and their differences. In expandable details show train_f1 − f1 only when evaluation_split is validation; otherwise mark the gap unavailable. Never choose a winner.\n\nFor comparison, require known matching validation evaluation splits, dataset_id, split_id, target, positive_class, feature sets (order ignored), threshold and seed. Model, penalty and C are intended settings: show their differences without making those differences alone a mismatch. Use Same recorded conditions, Conditions differ, or Insufficient context; explain differences or missing context without defaults. IDs are labels, not audited data hashes.\n\nHandle missing files, malformed JSON and missing fields clearly. Distinguish insufficient recorded context from invalid metrics. Validate metrics as finite numbers in [0, 1], preserving zero; do not calculate with invalid values. Reset stale results when inputs change. Make a focused change using installed libraries. Tell me the launch command, changed files and checks you actually performed; if you cannot run it, tell me what to run. Do not add retraining, MLflow, model-file parsing or automatic conclusions.",
+    "afterPrompt": "Open the app using the command or URL your agent provides. A completed request is the start of your own checks.",
+    "verifyTitle": "Test the comparison",
+    "verifySub": "Use the known fixtures to check direction and refresh. Then open “Check missing and changed context” below and run both context checks.",
+    "verifyItems": [
+      "Upload M4C5_RUN_A.json as A and M4C5_RUN_B.json as B. Check the status, settings and cards against the table.",
+      "Upload A in both fields. The three deltas and the C difference should be 0.",
+      "Swap the main pair: B as A, A as B. Metric deltas become −0.03, −0.03 and −0.02; C changes by +0.9. Check that the display refreshes."
+    ],
+    "expectedCaption": "Known result · A → B",
+    "expectedHeads": [
+      "Check",
+      "A → B",
+      "B − A / detail"
+    ],
+    "expectedRows": [
+      [
+        "Status",
+        "Same recorded conditions",
+        "Recorded labels match; this does not verify the measurements"
+      ],
+      [
+        "C",
+        "1 → 0.1",
+        "−0.9"
+      ],
+      [
+        "F1",
+        "0.60 → 0.63",
+        "+0.03"
+      ],
+      [
+        "Precision",
+        "0.64 → 0.67",
+        "+0.03"
+      ],
+      [
+        "Recall",
+        "0.57 → 0.59",
+        "+0.02"
+      ],
+      [
+        "Train − validation F1",
+        "0.15 → 0.07",
+        "0.75 − 0.60; 0.70 − 0.63"
+      ]
+    ],
+    "verifyNote": "The fixtures are synthetic numbers for checking the display. Matching recorded labels do not establish that underlying rows or measurements match.",
+    "edgeTitle": "Check missing and changed context",
+    "edgeText": "These checks show why a difference in a card is not enough to explain a result. For the optional extra checks below, make a copy of B in your text editor, change one field, and save it as UTF-8 with a new .json filename. Keep the original demos unchanged.",
+    "missingTitle": "Missing evaluation split",
+    "missingText": "Compare A with M4C5_MISSING_CONTEXT.json. Expect Insufficient context; evaluation_split is missing. Do not assume validation or calculate a validation gap for the incomplete record.",
+    "splitTitle": "Different recorded split",
+    "splitText": "Compare A with M4C5_CHANGED_SPLIT.json. Expect Conditions differ: split_id is demo_split_99 rather than demo_split_42. Do not attribute any difference solely to C.",
+    "edgeChecks": [
+      "Try a missing file and malformed JSON: show a clear message and no stale results.",
+      "Try a metric of 0, then invalid, non-finite and out-of-range values: preserve zero and reject invalid calculations.",
+      "If feature order changes but the set is the same, it should not produce a mismatch."
+    ],
+    "revealTitle": "Finale · inspect the challenge",
+    "revealTask": "Before opening the answer below, upload M4C5_RUN_A.json as A and M4C5_CHALLENGE.json as B. Read the status, cards and details. Can you interpret the difference as a validation improvement? Record your answer first.",
+    "revealSummary": "Open the explanation after your test",
+    "revealText": "The challenge has evaluation_split = train. Its F1 is 0.86 versus A’s validation F1 of 0.60, a numerical difference of +0.26. These are train and validation scores, so +0.26 is not a comparable validation gain. There is no winner, and the challenge’s train–validation gap is unavailable.",
+    "revealPoints": [
+      "If your app flagged the train/validation difference and withheld a comparable validation conclusion, you caught it. Verify the guard by swapping the files and testing A/B again.",
+      "If you missed it, identify the train versus validation error. A larger displayed value alone does not tell you that validation performance improved.",
+      "The challenge is deliberately tricky data; it does not imply that your agent introduced a bug."
+    ],
+    "fixLabel": "OPTIONAL EXAMPLE · FIX OR VERIFY THE GUARD",
+    "fixPrompt": "In my existing Explorer, compare A with M4C5_CHALLENGE.json. A records validation; the challenge records train. The displayed F1 values are 0.60 and 0.86, but their +0.26 difference is not a comparable validation gain. The challenge validation gap is unavailable.\n\nMy app actually showed: [status, values and message]. Please inspect the current comparison guard. If it already handles the different evaluation splits, explain and verify it; otherwise make the smallest correction. Do not choose a winner or invent missing context. Tell me what you actually ran. I will repeat A/B, same-file, swapped and challenge checks.",
+    "fixPoints": [
+      "Describe the files, actual status and any exact error.",
+      "Ask for a focused correction if needed, or verification if the guard already works.",
+      "Repeat A/B, same-file, swapped and challenge checks after any change."
+    ],
+    "fixAfter": "Also repeat the missing-context and changed-split checks. Keep the earlier Explorer features working.",
+    "helpTitle": "A result differs or the app fails",
+    "helpText": "Give your agent enough detail to reproduce one issue.",
+    "repairPoints": [
+      "The filenames and which one is A or B.",
+      "The expected status or value, and what the app actually displayed.",
+      "The exact error, if any. Ask for a small fix and repeat the relevant checks."
+    ],
+    "repairLabel": "OPTIONAL EXAMPLE · FIX ONE ISSUE",
+    "repair": "Inspect the experiment comparison in my existing Explorer. A: [filename]; B: [filename]. Expected: [status or value]. Actual: [what I see]. Exact error: [text or none]. Make the smallest correction, preserve existing features and clear stale results. Report what you actually ran; I will repeat the checks.",
+    "helpAfter": "After a correction, repeat the main pair, same-file and swapped checks, then the challenge and context checks.",
+    "saveTitle": "Explain and save",
+    "saveSub": "Keep a short conclusion alongside your project.",
+    "explain": "In your own words: “The recorded conditions are … . F1 changed by … . I can or cannot interpret this as a validation difference because … . Matching labels do not prove … .”",
+    "saveText": "Save the project, restart the app and repeat the A/B check. Optionally export a tiny review JSON with your own conclusion. Later, you may manually adapt your own results to this educational format. Today does not require retraining, installing MLflow, parsing ZIPs or model files, or uploading real data.",
+    "checks": [
+      "A/B shows the expected three metrics, deltas, C difference and recorded-condition status.",
+      "Same-file and swapped checks work; changing inputs clears stale results.",
+      "Missing context and changed split receive the correct statuses without invented defaults.",
+      "I tried the challenge before the reveal and fixed or verified the train/validation guard.",
+      "After restarting, the earlier Explorer still works and I can explain the limits of the comparison."
+    ],
+    "complete": "Save your project and your explanation after the checks.",
+    "footer": "M4C5 · Dataset Explorer — compare experiments",
+    "footerNote": "One offline guide · Your existing project · Optional practice",
+    "downloadStarted": "File download requested. Check your Downloads folder."
+  },
+  "ru": {
+    "systemLabel": "Моя система",
+    "systemContext": "Моя система",
+    "systemInstruction": "Используй текущее окружение проекта и команду запуска для этой системы и моего фактического терминала. Проверь существующий проект, не угадывай имена файлов и не создавай новое окружение.",
+    "ownTitle": "Составь свой запрос",
+    "ownSend": "По этим опорам напиши короткий запрос своими словами и отправь агенту в прежнем проекте. Единственной правильной формулировки нет.",
+    "promptHelpTitle": "Не получилось придумать запрос? Открой готовый пример",
+    "promptHelpIntro": "Сначала попробуй сформулировать сам. Если возникли трудности, можно использовать этот необязательный пример. Выбранная система уже указана. Перед отправкой замени все [подсказки в скобках] своими фактическими данными.",
+    "launchTitle": "Если нужна команда запуска",
+    "launchTask": "Попроси агента помочь открыть прежнее приложение. Укажи:",
+    "launchLabel": "НЕОБЯЗАТЕЛЬНЫЙ ПРИМЕР · ОТКРЫТЬ ПРЕЖНЕЕ ПРИЛОЖЕНИЕ",
+    "launchPrompt": "Помоги запустить существующий Dataset Explorer в открытой папке проекта. Прочитай инструкции проекта и используй его прежнее Python-окружение. Сохрани файлы и функции; не создавай новый проект и не переустанавливай инструменты. Проверь, какой терминал использовать; если неясно, уточни у меня. Если можешь, запусти приложение. Дай фактическую команду запуска, название терминала, куда её вводить, и локальный адрес. Явно скажи, что ты реально запустил и что нужно выполнить мне.",
+    "print": "Распечатать",
+    "skip": "Перейти к инструкции",
+    "language": "Язык",
+    "navTitle": "ТВОЙ МАРШРУТ",
+    "download": "Скачать",
+    "csvContents": "Посмотреть содержимое JSON",
+    "csvFallback": "Если скачивание не началось, скопируй этот JSON в файл UTF-8 с указанным именем.",
+    "checkTitle": "Твоя ручная проверка",
+    "checkNote": "Отмечай только то, что проверил лично. Эта инструкция не проверяет приложение за тебя; отметки сохраняются только в этом браузере, если хранилище доступно.",
+    "reset": "Сбросить отметки",
+    "copy": "Копировать",
+    "copied": "Скопировано",
+    "copyFail": "Не удалось скопировать. Текст выделен: нажми Ctrl+C / Cmd+C или скопируй вручную.",
+    "launchPoints": [
+      "Выбранную систему и название прежнего терминала, если знаешь его.",
+      "Ту же папку Explorer: агенту нужно изучить проект и использовать его существующее окружение.",
+      "Что тебе нужны фактическая команда запуска и локальный адрес, а также действия на случай, если агент не сможет запустить приложение сам."
+    ],
+    "osTips": {
+      "win": "Назови агенту Windows и свой терминал, например PowerShell. Попроси команду для этого терминала и прежнего окружения проекта. Если используешь WSL или Git Bash, скажи об этом отдельно.",
+      "mac": "Назови агенту macOS и терминал, в котором запускал приложение раньше. Попроси команду для этого терминала и прежнего окружения проекта.",
+      "linux": "Назови агенту Linux и терминал, в котором запускал приложение раньше. Попроси команду для этого терминала и прежнего окружения проекта."
+    },
+    "title": "Два эксперимента.",
+    "accent": "Сможешь их сравнить?",
+    "eyebrow": "M4C5 / ПРАКТИКА ПО ПРОГРАММИРОВАНИЮ · ПО ЖЕЛАНИЮ",
+    "lede": "Продолжи работу над Dataset Explorer. Добавь раздел для сравнения двух сохранённых сводок экспериментов, который показывает контекст их метрик.",
+    "heroNote": "Используй свой проект и агента для программирования. Сначала напиши запрос самостоятельно; примеры ниже помогут, если понадобится.",
+    "heroCaption": "Демо A → Демо B · validation",
+    "heroRows": "F1",
+    "heroColumns": "Precision",
+    "heroMissing": "Recall",
+    "heroAdded": "A",
+    "heroRemoved": "B",
+    "heroFoot": "Это синтетические числа для проверки отображения, а не измеренные результаты Telco или запуски MLflow.",
+    "routeLabel": "Открой → спланируй → создай → проверь → сохрани",
+    "nav": [
+      "Продолжить",
+      "План",
+      "Спросить AI",
+      "Проверить",
+      "Сохранить"
+    ],
+    "sideNote": "Эта страница — инструкция. Скачай демофайлы и загрузи их в свой Explorer.",
+    "openTitle": "Открой свой Explorer",
+    "openSub": "Начни с проекта, который у тебя уже есть.",
+    "openItems": [
+      "Открой свой Dataset Explorer на Python / Streamlit / pandas в агенте для программирования.",
+      "Запусти его привычной командой и открой локальный адрес. Если нужно, попроси агента изучить проект и найти команду.",
+      "Проверь, что прежние загрузка файлов, сводка и графики работают."
+    ],
+    "openNote": "Если приложение не запускается, передай агенту точный текст ошибки и сначала восстанови его работу. На работающей основе новый раздел будет легче проверить.",
+    "planTitle": "Спланируй сравнение",
+    "planSub": "Скачай демофайлы и реши, что должно показывать приложение. Эти синтетические JSON-примеры созданы вручную в отдельном учебном формате; это не нативный экспорт M4C5 или MLflow. Каждый JSON-файл содержит одну сохранённую сводку; run_id и split_id — записанные метки запуска и разбиения.",
+    "planItems": [
+      "Добавь две загрузки JSON: <strong>A</strong> и <strong>B</strong>. Покажи имена файлов и run ID, чтобы было понятно направление сравнения.",
+      "Покажи только три основные карточки: <strong>F1, precision и recall</strong>. Для каждой укажи A → B и Δ = B − A. Используй зелёный цвет для роста, красный для снижения, нейтральный для нуля и показывай знак текстом. Само направление изменения ещё не определяет качество.",
+      "Покажи записанные настройки модели и их различия. Разницу F1 между train и validation помести в раскрывающиеся подробности; она доступна только для результатов validation.",
+      "Прежде чем объяснять числа, проверь dataset ID, split ID, target, положительный класс, набор признаков (без учёта порядка), threshold, seed и известное совпадение evaluation split со значением validation. Model, penalty и C — настройки для отображения; их различие само по себе не означает ошибку совпадения условий.",
+      "Используй три статуса: <strong>Одинаковые записанные условия</strong>, <strong>Условия различаются</strong> и <strong>Недостаточно контекста</strong>. Совпадающие метки не являются проверенными хешами строк и не доказывают правильность измерений или их качество."
+    ],
+    "predict": "Прежде чем смотреть таблицу ответов: если C изменился, какие ещё записанные условия должны совпадать, чтобы можно было объяснять различия метрик?",
+    "beforeTitle": "A · первый демофайл",
+    "beforeText": "Скачай M4C5_RUN_A.json. В этом примере записана сводка validation с C = 1.",
+    "afterTitle": "B · второй демофайл",
+    "afterText": "Скачай M4C5_RUN_B.json. В этом примере записана сводка validation с C = 0.1.",
+    "challengeTitle": "Задание с подвохом",
+    "challengeText": "Скачай M4C5_CHALLENGE.json для финального задания. Попробуй его в приложении до того, как откроешь ответ.",
+    "missingContextTitle": "Неполный контекст",
+    "missingContextText": "Скачай M4C5_MISSING_CONTEXT.json для проверки неполной записи.",
+    "changedSplitTitle": "Другое разбиение",
+    "changedSplitText": "Скачай M4C5_CHANGED_SPLIT.json для проверки записи с другим разбиением.",
+    "upgradeTitle": "Опиши функцию агенту",
+    "upgradeSub": "Начни со своего запроса, используя эти пункты.",
+    "promptIntro": "Прикрепи два синтетических демофайла JSON к запросу или укажи агенту точные доступные пути к ним и попроси изучить их структуру. Для проверки ты также отдельно загрузишь файлы в приложение.",
+    "featurePoints": [
+      "Контекст: твой существующий Explorer на Python / Streamlit / pandas и его окружение. Попроси сохранить прежние функции.",
+      "Входные данные: прикрепи два синтетических JSON-примера или укажи точные доступные пути; попроси агента изучить их структуру. Покажи имена файлов и run ID. Предусмотри понятные сообщения при отсутствии файлов и ошибках JSON.",
+      "Отображение: три карточки метрик, A → B и B − A; видимые знаки вместе с цветами направления. Покажи настройки и различия, а разницу для validation помести в раскрывающиеся подробности. Не объявляй победителя.",
+      "Интерпретация: для сопоставимого сравнения validation требуй записанные условия из шага 2. Используй три статуса и объясняй отсутствующий или различающийся контекст без значений по умолчанию; отличай неполный контекст от некорректных метрик.",
+      "Надёжность: отклоняй некорректные, неконечные и выходящие за диапазон метрики; сохраняй ноль. Убирай устаревшие результаты при изменении входных данных. Узнай, что агент действительно запустил, затем проверь приложение самостоятельно."
+    ],
+    "promptLabel": "ПРИМЕР ПО ЖЕЛАНИЮ · ДОБАВИТЬ СРАВНЕНИЕ ЭКСПЕРИМЕНТОВ",
+    "prompt": "Используй прикреплённые синтетические примеры или мои точные пути [путь A] и [путь B] и изучи их схему. Продолжи мой существующий Dataset Explorer на Python/Streamlit/pandas в его текущем окружении. Сохрани прежние функции. Добавь две загрузки JSON с подписями A и B, показывай имена файлов и run ID.\n\nЧитай записи format_version 1 с полями run_id, dataset_id, split_id, features (список строк), target, positive_class, model, penalty, C, seed, threshold, evaluation_split, metrics (train_f1, f1, precision, recall) и note. Покажи только три основные карточки: F1, precision и recall, A → B и delta = B − A. Используй зелёный для роста, красный для снижения, нейтральный для нуля и явные знаки; направление не является оценкой качества. Покажи записанные настройки и их различия. В раскрывающихся подробностях показывай train_f1 − f1 только когда evaluation_split равен validation; иначе отметь разницу как недоступную. Не выбирай победителя.\n\nДля сравнения требуй известные совпадающие evaluation split со значением validation, dataset_id, split_id, target, positive_class, наборы features (без учёта порядка), threshold и seed. Model, penalty и C — сравниваемые настройки: показывай их различия, но не считай их самих по себе несовпадением условий. Используй статусы «Одинаковые записанные условия», «Условия различаются» или «Недостаточно контекста»; объясняй различия или отсутствие контекста без значений по умолчанию. ID — это метки, а не проверенные хеши данных.\n\nПонятно обрабатывай отсутствие файлов, некорректный JSON и отсутствующие поля. Отличай недостаточный записанный контекст от некорректных метрик. Проверяй, что метрики — конечные числа в диапазоне [0, 1], сохраняя ноль; не вычисляй результаты с некорректными значениями. Сбрасывай устаревшие результаты при изменении входных данных. Внеси точечное изменение с установленными библиотеками. Сообщи команду запуска, изменённые файлы и действительно выполненные проверки; если не можешь запустить приложение, скажи, что запустить мне. Не добавляй повторное обучение, MLflow, разбор файлов моделей или автоматические выводы.",
+    "afterPrompt": "Открой приложение по команде или адресу, которые предоставил агент. Выполнение запроса — начало твоей собственной проверки.",
+    "verifyTitle": "Проверь сравнение",
+    "verifySub": "Используй известные примеры, чтобы проверить направление и обновление результатов. После основной проверки открой раздел «Проверь неполный и изменившийся контекст» ниже и выполни обе проверки контекста.",
+    "verifyItems": [
+      "Загрузи M4C5_RUN_A.json как A, а M4C5_RUN_B.json как B. Сверь статус, настройки и карточки с таблицей.",
+      "Загрузи A в оба поля. Все три разницы метрик и разница C должны быть равны 0.",
+      "Поменяй основную пару местами: B как A, A как B. Разницы метрик станут −0.03, −0.03 и −0.02; C изменится на +0.9. Проверь, что отображение обновилось."
+    ],
+    "expectedCaption": "Известный результат · A → B",
+    "expectedHeads": [
+      "Проверка",
+      "A → B",
+      "B − A / подробности"
+    ],
+    "expectedRows": [
+      [
+        "Статус",
+        "Одинаковые записанные условия",
+        "Записанные метки совпадают; это не подтверждает измерения"
+      ],
+      [
+        "C",
+        "1 → 0.1",
+        "−0.9"
+      ],
+      [
+        "F1",
+        "0.60 → 0.63",
+        "+0.03"
+      ],
+      [
+        "Precision",
+        "0.64 → 0.67",
+        "+0.03"
+      ],
+      [
+        "Recall",
+        "0.57 → 0.59",
+        "+0.02"
+      ],
+      [
+        "Train − validation F1",
+        "0.15 → 0.07",
+        "0.75 − 0.60; 0.70 − 0.63"
+      ]
+    ],
+    "verifyNote": "В примерах используются синтетические числа для проверки отображения. Совпадение записанных меток не доказывает, что исходные строки или измерения совпадают.",
+    "edgeTitle": "Проверь неполный и изменившийся контекст",
+    "edgeText": "Эти проверки показывают, почему одной разницы в карточке недостаточно для объяснения результата. Дополнительные три проверки ниже необязательны: создай копию B в текстовом редакторе, измени одно поле и сохрани её в UTF-8 под новым именем .json, сохранив оригиналы.",
+    "missingTitle": "Не указано разбиение для оценки",
+    "missingText": "Сравни A с M4C5_MISSING_CONTEXT.json. Ожидается статус «Недостаточно контекста»: evaluation_split отсутствует. Не предполагай validation и не вычисляй разницу для validation в неполной записи.",
+    "splitTitle": "Другое записанное разбиение",
+    "splitText": "Сравни A с M4C5_CHANGED_SPLIT.json. Ожидается статус «Условия различаются»: split_id равен demo_split_99 вместо demo_split_42. Не объясняй различие только изменением C.",
+    "edgeChecks": [
+      "Попробуй отсутствие файла и некорректный JSON: приложение должно показать понятное сообщение и убрать устаревшие результаты.",
+      "Попробуй метрику 0, затем некорректные, неконечные и выходящие за диапазон значения: ноль должен сохраниться, а некорректные вычисления — отклоняться.",
+      "Если порядок признаков изменился, но их набор совпадает, это не должно считаться различием условий."
+    ],
+    "revealTitle": "Финал · проверь задание с подвохом",
+    "revealTask": "Прежде чем открыть ответ ниже, загрузи M4C5_RUN_A.json как A и M4C5_CHALLENGE.json как B. Изучи статус, карточки и подробности. Можно ли считать разницу улучшением на validation? Сначала запиши свой ответ.",
+    "revealSummary": "Открой объяснение после проверки",
+    "revealText": "Заметили подвох? В задании evaluation_split = train. Его F1 равен 0.86, а F1 на validation для A — 0.60; численная разница составляет +0.26. Это оценки на train и validation, поэтому +0.26 нельзя считать сопоставимым улучшением на validation. Победителя здесь нет, а разница train–validation для задания недоступна.",
+    "revealPoints": [
+      "Если приложение отметило различие train/validation и не сделало вывод о сопоставимом улучшении на validation, ты заметил подвох. Проверь защиту, поменяв файлы местами, затем снова проверь A/B.",
+      "Если подвох остался незамеченным, найди ошибку сравнения train и validation. Само по себе большее число на экране не говорит об улучшении на validation.",
+      "Данные задания намеренно устроены с подвохом; это не означает, что агент внёс ошибку."
+    ],
+    "fixLabel": "ПРИМЕР ПО ЖЕЛАНИЮ · ИСПРАВИТЬ ИЛИ ПРОВЕРИТЬ ЗАЩИТУ",
+    "fixPrompt": "В моём существующем Explorer сравни A с M4C5_CHALLENGE.json. В A записан validation, в задании — train. Показанные значения F1 равны 0.60 и 0.86, но их разница +0.26 не является сопоставимым улучшением на validation. Разница для validation в задании недоступна.\n\nМоё приложение фактически показало: [статус, значения и сообщение]. Проверь текущую защиту сравнения. Если она уже обрабатывает разные evaluation split, объясни и проверь её; иначе внеси минимальное исправление. Не выбирай победителя и не придумывай недостающий контекст. Сообщи, что ты действительно запустил. Я повторю проверки A/B, одного и того же файла, переставленных файлов и задания с подвохом.",
+    "fixPoints": [
+      "Опиши файлы, фактический статус и точный текст ошибки, если она есть.",
+      "Попроси о точечном исправлении, если оно нужно, или о проверке уже работающей защиты.",
+      "После любого изменения повтори проверки A/B, одного и того же файла, переставленных файлов и задания с подвохом."
+    ],
+    "fixAfter": "Также повтори проверки неполного контекста и изменённого разбиения. Сохрани работоспособность прежних функций Explorer.",
+    "helpTitle": "Результат отличается или приложение не работает",
+    "helpText": "Передай агенту достаточно подробностей, чтобы воспроизвести одну проблему.",
+    "repairPoints": [
+      "Имена файлов и указание, какой из них A, а какой B.",
+      "Ожидаемый статус или значение и то, что приложение показало на самом деле.",
+      "Точный текст ошибки, если она есть. Попроси о небольшом исправлении и повтори соответствующие проверки."
+    ],
+    "repairLabel": "ПРИМЕР ПО ЖЕЛАНИЮ · ИСПРАВИТЬ ОДНУ ПРОБЛЕМУ",
+    "repair": "Изучи сравнение экспериментов в моём существующем Explorer. A: [имя файла]; B: [имя файла]. Ожидается: [статус или значение]. Фактически: [что я вижу]. Точная ошибка: [текст или ошибка отсутствует]. Внеси минимальное исправление, сохрани прежние функции и убери устаревшие результаты. Сообщи, что ты действительно запустил; я повторю проверки.",
+    "helpAfter": "После исправления повтори проверки основной пары, одного и того же файла и переставленных файлов, затем проверь задание с подвохом и контекст.",
+    "saveTitle": "Объясни и сохрани",
+    "saveSub": "Сохрани короткий вывод вместе с проектом.",
+    "explain": "Своими словами: «Записанные условия — … . F1 изменился на … . Я могу или не могу считать это различием на validation, потому что … . Совпадение меток не доказывает … .»",
+    "saveText": "Сохрани проект, перезапусти приложение и повтори проверку A/B. По желанию экспортируй небольшой JSON со своим выводом. Позже ты можешь вручную адаптировать собственные результаты к этому учебному формату. Сегодня не требуется переобучать модель, устанавливать MLflow, разбирать ZIP или файлы моделей либо загружать реальные данные.",
+    "checks": [
+      "A/B показывает ожидаемые три метрики, разницы, изменение C и статус записанных условий.",
+      "Проверки одного и того же файла и переставленных файлов проходят; при изменении входных данных устаревшие результаты исчезают.",
+      "Неполный контекст и изменённое разбиение получают правильные статусы без выдуманных значений по умолчанию.",
+      "Я попробовал задание до раскрытия ответа и исправил или проверил защиту от сравнения train/validation.",
+      "После перезапуска прежний Explorer работает, и я могу объяснить ограничения сравнения."
+    ],
+    "complete": "После проверок сохрани проект и своё объяснение.",
+    "footer": "M4C5 · Dataset Explorer — сравнение экспериментов",
+    "footerNote": "Одна инструкция без подключения к сети · Твой существующий проект · Практика по желанию",
+    "downloadStarted": "Запрос на скачивание файла отправлен. Проверь папку загрузок."
+  },
+  "uz": {
+    "systemLabel": "Mening tizimim",
+    "systemContext": "Mening tizimim",
+    "systemInstruction": "Mavjud loyiha muhiti hamda shu tizim va amaldagi terminalim uchun ishga tushirish buyrug‘idan foydalan. Fayl nomlarini taxmin qilish yoki yangi muhit yaratish o‘rniga mavjud loyihani tekshir.",
+    "ownTitle": "O‘z so‘rovingni tuz",
+    "ownSend": "Shu tayanchlar yordamida o‘z so‘zlaring bilan qisqa so‘rov yoz va avvalgi loyihadagi agentga yubor. Yagona to‘g‘ri ifoda yo‘q.",
+    "promptHelpTitle": "So‘rov tuzishda qiynaldingmi? Tayyor misolni och",
+    "promptHelpIntro": "Avval o‘zing ifodalashga urin. Qiynalsang, bu ixtiyoriy misoldan foydalanishing mumkin. Tanlangan tizim allaqachon kiritilgan. Yuborishdan oldin barcha [qavsdagi joylarni] haqiqiy ma’lumotlaring bilan almashtir.",
+    "launchTitle": "Ishga tushirish buyrug‘i kerak bo‘lsa",
+    "launchTask": "Agentdan avvalgi ilovani ochishga yordam so‘ra. Quyidagilarni ayt:",
+    "launchLabel": "IXTIYORIY MISOL · AVVALGI ILOVANI OCHISH",
+    "launchPrompt": "Ochiq loyiha papkasidagi mavjud Dataset Explorer’ni ishga tushirishga yordam ber. Loyiha yo‘riqnomalarini o‘qi va avvalgi Python muhitidan foydalan. Fayllar va imkoniyatlarni saqla; yangi loyiha yaratma va vositalarni qayta o‘rnatma. Qaysi terminalni ishlatishni tekshir; noaniq bo‘lsa mendan so‘ra. Imkoning bo‘lsa, ilovani ishga tushir. Haqiqiy buyruq, uni qaysi terminalga kiritish va mahalliy manzilni ber. Amalda nimani ishga tushirganingni va men nima bajarishim kerakligini aniq ayt.",
+    "print": "Chop etish",
+    "skip": "Yo‘riqnomaga o‘tish",
+    "language": "Til",
+    "navTitle": "SENING YO‘LING",
+    "download": "Yuklab olish",
+    "csvContents": "JSON tarkibini ko‘rish",
+    "csvFallback": "Yuklab olish boshlanmasa, bu JSON’ni ko‘rsatilgan nom bilan UTF-8 fayliga nusxala.",
+    "checkTitle": "O‘zing tekshiradigan ro‘yxat",
+    "checkNote": "Faqat shaxsan tekshirganingni belgila. Bu yo‘riqnoma ilovangni tekshirmaydi; belgilar saqlash imkoniyati bo‘lsa, faqat shu brauzerda qoladi.",
+    "reset": "Belgilarni tozalash",
+    "copy": "Nusxalash",
+    "copied": "Nusxalandi",
+    "copyFail": "Nusxalab bo‘lmadi. Matn belgilandi: Ctrl+C / Cmd+C ni bos yoki qo‘lda nusxala.",
+    "launchPoints": [
+      "Tanlangan tizim va bilsang, avvalgi terminal nomi.",
+      "O‘sha Explorer papkasi: agent loyihani o‘rganib, uning mavjud muhitidan foydalansin.",
+      "Haqiqiy ishga tushirish buyrug‘i va mahalliy manzil kerakligi; agent ilovani o‘zi ishga tushira olmasa, sen nima qilishing kerakligi."
+    ],
+    "osTips": {
+      "win": "Agentga Windows ishlatayotganingni va terminalingni, masalan PowerShell’ni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra. WSL yoki Git Bash ishlatsang, buni alohida ayt.",
+      "mac": "Agentga macOS ishlatayotganingni va ilovani avval ishga tushirgan terminalingni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra.",
+      "linux": "Agentga Linux ishlatayotganingni va ilovani avval ishga tushirgan terminalingni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra."
+    },
+    "title": "Ikki tajriba.",
+    "accent": "Ularni solishtira olasanmi?",
+    "eyebrow": "M4C5 / IXTIYORIY KODLASH MASHQI",
+    "lede": "Dataset Explorer’ingni rivojlantirishda davom et. Saqlangan ikki tajriba xulosasini solishtiradigan va metrikalar ortidagi sharoitlarni ko‘rsatadigan bo‘lim qo‘sh.",
+    "heroNote": "O‘z loyihang va kodlash agentingdan foydalan. Avval so‘rovingni o‘zing yoz; quyidagi misollar ixtiyoriy yordamdir.",
+    "heroCaption": "Demo A → Demo B · validation",
+    "heroRows": "F1",
+    "heroColumns": "Precision",
+    "heroMissing": "Recall",
+    "heroAdded": "A",
+    "heroRemoved": "B",
+    "heroFoot": "Bu sonlar ko‘rinishni tekshirish uchun yaratilgan sun’iy ma’lumotlar; ular o‘lchangan Telco natijalari yoki MLflow run’lari emas.",
+    "routeLabel": "Och → rejalashtir → yarat → tekshir → saqla",
+    "nav": [
+      "Davom et",
+      "Rejalashtir",
+      "AI’dan so‘ra",
+      "Tekshir",
+      "Saqla"
+    ],
+    "sideNote": "Bu sahifa yo‘riqnoma. Demo fayllarni yuklab olib, o‘z Explorer’ingga yukla.",
+    "openTitle": "Explorer’ingni och",
+    "openSub": "Mavjud loyihangdan boshla.",
+    "openItems": [
+      "Mavjud Python / Streamlit / pandas Dataset Explorer’ingni kodlash agentingda och.",
+      "Uni odatdagi buyruq bilan ishga tushir va mahalliy manzilni och. Kerak bo‘lsa, agentdan loyihani tekshirib, buyruqni topishni so‘ra.",
+      "Mavjud fayl yuklash, umumiy ma’lumot va grafiklar hali ham ishlashini tekshir."
+    ],
+    "openNote": "Ilova ishga tushmasa, agentga aniq xatoni ber va avval uni tuzat. Ilova ishlab turganda yangi bo‘limni tekshirish osonroq.",
+    "planTitle": "Solishtirishni rejalashtir",
+    "planSub": "Demo fayllarni yuklab ol, so‘ng ilovang nimalarni ko‘rsatishini hal qil. Qo‘lda tayyorlangan bu sun’iy JSON misollari alohida o‘quv formatidan foydalanadi; ular M4C5 yoki MLflow’ning asl eksportlari emas. Har bir JSON fayl bitta saqlangan xulosa; run_id va split_id mos ravishda run va split uchun qayd etilgan belgilardir.",
+    "planItems": [
+      "Ikkita JSON yuklash maydonini qo‘sh: <strong>A</strong> va <strong>B</strong>. Yo‘nalish aniq bo‘lishi uchun har bir fayl nomi va run ID’sini ko‘rsat.",
+      "Faqat uchta asosiy kartani ko‘rsat: <strong>F1, precision va recall</strong>. Har birida A → B va Δ = B − A bo‘lsin. O‘sishni yashil, kamayishni qizil, nolni neytral rangda, yozma belgi bilan birga ko‘rsat. Yo‘nalishning o‘zi sifatni aniqlamaydi.",
+      "Qayd etilgan model sozlamalari va ularning farqlarini ko‘rsat. Train–validation F1 farqini ochiladigan tafsilotlarga joyla; u faqat validation natijalari uchun mavjud.",
+      "Sonlarni talqin qilishdan oldin dataset ID, split ID, target, positive class, feature to‘plami (tartibga qaramay), threshold, seed va ma’lum, o‘zaro mos validation evaluation split’ni tekshir. Model, penalty va C — ko‘rsatiladigan sozlamalar; ularning farqi o‘z-o‘zidan nomuvofiqlik xatosi emas.",
+      "Uchta holatdan foydalan: <strong>Qayd etilgan sharoitlar bir xil</strong>, <strong>Sharoitlar farq qiladi</strong> va <strong>Kontekst yetarli emas</strong>. Mos belgilar tekshirilgan qator xeshlari emas va o‘lchovlarni yoki ularning sifatini isbotlay olmaydi."
+    ],
+    "predict": "Javoblar jadvalini ko‘rishdan oldin: C o‘zgarsa, metrikalar farqini talqin qilish uchun yana nimalar bir xil qayd etilgan bo‘lishi kerak?",
+    "beforeTitle": "A · birinchi demo",
+    "beforeText": "M4C5_RUN_A.json faylini yuklab ol. Bu misolda C = 1 bo‘lgan validation xulosasi bor.",
+    "afterTitle": "B · ikkinchi demo",
+    "afterText": "M4C5_RUN_B.json faylini yuklab ol. Bu misolda C = 0.1 bo‘lgan validation xulosasi bor.",
+    "challengeTitle": "Yakuniy sinov",
+    "challengeText": "Yakun uchun M4C5_CHALLENGE.json faylini yuklab ol. Javobni ochishdan oldin uni ilovangda sinab ko‘r.",
+    "missingContextTitle": "Kontekst yetishmaydi",
+    "missingContextText": "To‘liq bo‘lmagan qaydni tekshirish uchun M4C5_MISSING_CONTEXT.json faylini yuklab ol.",
+    "changedSplitTitle": "Split o‘zgargan",
+    "changedSplitText": "Boshqa split qayd etilgan holatni tekshirish uchun M4C5_CHANGED_SPLIT.json faylini yuklab ol.",
+    "upgradeTitle": "Imkoniyatni agentga tushuntir",
+    "upgradeSub": "Shu fikrlardan foydalanib, avval so‘rovingni o‘zing yoz.",
+    "promptIntro": "Ikkita sun’iy demo JSON faylni so‘rovingga biriktir yoki agentga ular uchun aniq, kirish mumkin bo‘lgan yo‘llarni ber va tuzilishini tekshirishni so‘ra. Sinash uchun fayllarni ilovaga ham alohida yuklaysan.",
+    "featurePoints": [
+      "Kontekst: mavjud Python / Streamlit / pandas Explorer’ing va uning muhiti. Oldingi imkoniyatlarni saqla.",
+      "Kirish: ikkita sun’iy JSON misolini biriktir yoki aniq, kirish mumkin bo‘lgan yo‘llarini ber; agentdan ularning tuzilishini tekshirishni so‘ra. Fayl nomlari va run ID’larni ko‘rsat. Noto‘g‘ri JSON va yo‘q fayllar haqida aniq xabar ber.",
+      "Ko‘rinish: uchta metrika kartasi, A → B va B − A; yo‘nalish ranglari bilan birga ko‘rinadigan belgilar. Sozlamalar va farqlarini ko‘rsat; validation farqini ochiladigan tafsilotlarga joyla. G‘olib e’lon qilma.",
+      "Talqin: solishtirish mumkin bo‘lgan validation ko‘rinishi uchun 2-qadamdagi qayd etilgan sharoitlarni talab qil. Uchta holatdan foydalan, yetishmayotgan yoki farq qiluvchi kontekstni taxminiy qiymatlarsiz tushuntir; kontekst yetishmasligini yaroqsiz metrikalardan farqla.",
+      "Ishonchlilik: yaroqsiz, chekli bo‘lmagan yoki ruxsat etilgan oraliqdan tashqaridagi metrikalarni rad et; nolni saqla. Kiritilgan fayllar o‘zgarganda eski natijalarni tozala. Agentdan amalda nimani ishga tushirganini so‘ra, keyin ilovani o‘zing tekshir."
+    ],
+    "promptLabel": "IXTIYORIY MISOL · TAJRIBALARNI SOLISHTIRISHNI QO‘SHISH",
+    "prompt": "Biriktirilgan sun’iy misollardan yoki men bergan aniq yo‘llardan [A yo‘li] va [B yo‘li] foydalanib, ularning sxemasini tekshir. Mavjud Python/Streamlit/pandas Dataset Explorer’imni joriy muhitida davom ettir. Eski imkoniyatlarini saqla. A va B deb belgilangan ikkita JSON yuklash maydonini qo‘sh, fayl nomlari va run ID’larni ko‘rsat.\n\nformat_version 1 yozuvlarini quyidagi maydonlar bilan o‘qi: run_id, dataset_id, split_id, features (satrlar ro‘yxati), target, positive_class, model, penalty, C, seed, threshold, evaluation_split, metrics (train_f1, f1, precision, recall) va note. Faqat uchta asosiy kartani ko‘rsat: F1, precision va recall; har birida A → B va delta = B − A bo‘lsin. O‘sishni yashil, kamayishni qizil, nolni neytral rangda va aniq belgilar bilan ko‘rsat; yo‘nalish sifat haqidagi hukm emas. Qayd etilgan sozlamalar va farqlarini ko‘rsat. Ochiladigan tafsilotlarda train_f1 − f1 ni faqat evaluation_split validation bo‘lganda ko‘rsat; aks holda bu farq mavjud emasligini bildir. G‘olib tanlama.\n\nSolishtirish uchun ma’lum va o‘zaro mos validation evaluation split’lar, dataset_id, split_id, target, positive_class, feature to‘plamlari (tartibga qaramay), threshold va seed mos bo‘lishini talab qil. Model, penalty va C — ataylab tanlanadigan sozlamalar: farqlarini ko‘rsat, lekin faqat shu farqlarni nomuvofiqlik deb hisoblama. Qayd etilgan sharoitlar bir xil, Sharoitlar farq qiladi yoki Kontekst yetarli emas holatidan foydalan; farq yoki yetishmayotgan kontekstni taxminiy qiymatlarsiz tushuntir. ID’lar tekshirilgan ma’lumot xeshlari emas, belgilardir.\n\nYo‘q fayllar, noto‘g‘ri JSON va yetishmayotgan maydonlar haqida aniq xabar ber. Qayd etilgan kontekst yetishmasligini yaroqsiz metrikalardan farqla. Metrikalar [0, 1] oralig‘idagi chekli sonlar ekanini tekshir, nolni saqla; yaroqsiz qiymatlar bilan hisoblama. Kiritilgan fayllar o‘zgarganda eski natijalarni tozala. O‘rnatilgan kutubxonalar yordamida vazifaga qaratilgan o‘zgarish qil. Ishga tushirish buyrug‘i, o‘zgargan fayllar va amalda bajargan tekshiruvlaringni ayt; ishga tushira olmasang, menga qaysi buyruqni bajarishni ayt. Qayta o‘qitish, MLflow, model fayllarini tahlil qilish yoki avtomatik xulosa qo‘shma.",
+    "afterPrompt": "Agent bergan buyruq yoki manzil bilan ilovani och. So‘rov bajarilishi — o‘z tekshiruvlaringning boshlanishi.",
+    "verifyTitle": "Solishtirishni tekshir",
+    "verifySub": "Yo‘nalish va yangilanishni tekshirish uchun ma’lum misollardan foydalan. Keyin quyidagi «Yetishmayotgan va o‘zgargan kontekstni tekshir» bo‘limini ochib, ikkala kontekst tekshiruvini bajar.",
+    "verifyItems": [
+      "M4C5_RUN_A.json faylini A’ga, M4C5_RUN_B.json faylini B’ga yukla. Holat, sozlamalar va kartalarni jadval bilan solishtir.",
+      "A faylini ikkala maydonga yukla. Uchala delta va C farqi 0 bo‘lishi kerak.",
+      "Asosiy juftlikni almashtir: B’ni A maydoniga, A’ni B maydoniga yukla. Metrikalar deltalari −0.03, −0.03 va −0.02 bo‘ladi; C farqi +0.9 bo‘ladi. Ko‘rinish yangilanishini tekshir."
+    ],
+    "expectedCaption": "Ma’lum natija · A → B",
+    "expectedHeads": [
+      "Tekshiruv",
+      "A → B",
+      "B − A / tafsilot"
+    ],
+    "expectedRows": [
+      [
+        "Holat",
+        "Qayd etilgan sharoitlar bir xil",
+        "Qayd etilgan belgilar mos; bu o‘lchovlarni tasdiqlamaydi"
+      ],
+      [
+        "C",
+        "1 → 0.1",
+        "−0.9"
+      ],
+      [
+        "F1",
+        "0.60 → 0.63",
+        "+0.03"
+      ],
+      [
+        "Precision",
+        "0.64 → 0.67",
+        "+0.03"
+      ],
+      [
+        "Recall",
+        "0.57 → 0.59",
+        "+0.02"
+      ],
+      [
+        "Train − validation F1",
+        "0.15 → 0.07",
+        "0.75 − 0.60; 0.70 − 0.63"
+      ]
+    ],
+    "verifyNote": "Bu misollardagi sonlar ko‘rinishni tekshirish uchun sun’iy yaratilgan. Qayd etilgan belgilar mosligi asosdagi qatorlar yoki o‘lchovlar mosligini isbotlamaydi.",
+    "edgeTitle": "Yetishmayotgan va o‘zgargan kontekstni tekshir",
+    "edgeText": "Bu tekshiruvlar kartadagi farq natijani tushuntirish uchun nega yetarli emasligini ko‘rsatadi. Quyidagi ixtiyoriy qo‘shimcha tekshiruvlar uchun matn muharririda B faylining nusxasini yarat, bitta maydonni o‘zgartir va uni yangi .json nomi bilan UTF-8 formatida saqla. Asl demo fayllarni o‘zgartirma.",
+    "missingTitle": "Evaluation split yetishmaydi",
+    "missingText": "A’ni M4C5_MISSING_CONTEXT.json bilan solishtir. Kutilgan holat: Kontekst yetarli emas; evaluation_split yo‘q. Validation deb taxmin qilma va to‘liq bo‘lmagan qayd uchun validation farqini hisoblama.",
+    "splitTitle": "Qayd etilgan split boshqacha",
+    "splitText": "A’ni M4C5_CHANGED_SPLIT.json bilan solishtir. Kutilgan holat: Sharoitlar farq qiladi; split_id demo_split_42 o‘rniga demo_split_99. Farqni faqat C bilan bog‘lama.",
+    "edgeChecks": [
+      "Yo‘q fayl va noto‘g‘ri JSON’ni sinab ko‘r: aniq xabar ko‘rsatilsin va eski natijalar qolmasin.",
+      "Metrikada 0 ni, keyin yaroqsiz, chekli bo‘lmagan va oraliqdan tashqaridagi qiymatlarni sinab ko‘r: nol saqlansin va yaroqsiz hisoblashlar rad etilsin.",
+      "Feature’lar tartibi o‘zgarsa-yu, to‘plam bir xil bo‘lsa, bu nomuvofiqlik deb ko‘rsatilmasligi kerak."
+    ],
+    "revealTitle": "Yakun · sinovni tekshir",
+    "revealTask": "Quyidagi javobni ochishdan oldin M4C5_RUN_A.json faylini A’ga, M4C5_CHALLENGE.json faylini B’ga yukla. Holat, kartalar va tafsilotlarni o‘qi. Farqni validation yaxshilanishi deb talqin qila olasanmi? Avval javobingni yozib qo‘y.",
+    "revealSummary": "Sinab ko‘rgandan keyin tushuntirishni och",
+    "revealText": "Sinov faylida evaluation_split = train. Uning F1 qiymati 0.86, A’ning validation F1 qiymati esa 0.60; sonlar farqi +0.26. Bular train va validation natijalari, shuning uchun +0.26 ni solishtirish mumkin bo‘lgan validation o‘sishi deb bo‘lmaydi. G‘olib yo‘q va sinov faylida train–validation farqi mavjud emas.",
+    "revealPoints": [
+      "Ilovang train/validation farqini belgilab, ularni solishtirib validation xulosasi chiqarmagan bo‘lsa, sen buni tutding. Fayllarni almashtirib va A/B’ni qayta sinab, himoya ishlashini tekshir.",
+      "Agar buni o‘tkazib yuborgan bo‘lsang, train va validation o‘rtasidagi xatoni aniqlab ol. Kattaroq ko‘rsatilgan qiymatning o‘zi validation natijasi yaxshilanganini bildirmaydi.",
+      "Sinov ma’lumotlari ataylab chalg‘ituvchi qilingan; bu agenting xato kiritganini anglatmaydi."
+    ],
+    "fixLabel": "IXTIYORIY MISOL · HIMOYANI TUZATISH YOKI TEKSHIRISH",
+    "fixPrompt": "Mavjud Explorer’imda A’ni M4C5_CHALLENGE.json bilan solishtir. A’da validation, sinov faylida esa train qayd etilgan. Ko‘rsatilgan F1 qiymatlari 0.60 va 0.86, ammo ularning +0.26 farqi solishtirish mumkin bo‘lgan validation o‘sishi emas. Sinov faylining validation farqi mavjud emas.\n\nIlovam aslida shuni ko‘rsatdi: [holat, qiymatlar va xabar]. Joriy solishtirish himoyasini tekshir. Agar u turli evaluation split’larni allaqachon to‘g‘ri hisobga olsa, buni tushuntir va tekshir; aks holda eng kichik tuzatishni qil. G‘olib tanlama va yetishmayotgan kontekstni o‘ylab topma. Amalda nimani ishga tushirganingni ayt. Men A/B, bir xil fayl, almashtirilgan fayllar va sinov tekshiruvlarini takrorlayman.",
+    "fixPoints": [
+      "Fayllar, haqiqiy holat va mavjud bo‘lsa, aniq xatoni tasvirla.",
+      "Kerak bo‘lsa, kichik tuzatish so‘ra; himoya allaqachon ishlasa, uni tekshirishni so‘ra.",
+      "Har qanday o‘zgarishdan keyin A/B, bir xil fayl, almashtirilgan fayllar va sinov tekshiruvlarini takrorla."
+    ],
+    "fixAfter": "Kontekst yetishmasligi va o‘zgargan split tekshiruvlarini ham takrorla. Explorer’ning oldingi imkoniyatlari ishlab tursin.",
+    "helpTitle": "Natija boshqacha yoki ilova ishlamayapti",
+    "helpText": "Agent bitta muammoni takrorlay olishi uchun unga yetarli ma’lumot ber.",
+    "repairPoints": [
+      "Fayl nomlari va qaysi biri A yoki B ekanligi.",
+      "Kutilgan holat yoki qiymat va ilova aslida nimani ko‘rsatgani.",
+      "Xato bo‘lsa, uning aniq matni. Kichik tuzatish so‘ra va tegishli tekshiruvlarni takrorla."
+    ],
+    "repairLabel": "IXTIYORIY MISOL · BITTA MUAMMONI TUZATISH",
+    "repair": "Mavjud Explorer’imdagi tajribalarni solishtirish imkoniyatini tekshir. A: [fayl nomi]; B: [fayl nomi]. Kutilgan natija: [holat yoki qiymat]. Haqiqiy natija: [ko‘rayotganim]. Aniq xato: [matn yoki xato yo‘q]. Eng kichik tuzatishni qil, eski imkoniyatlarni saqla va eski natijalarni tozala. Amalda nimani ishga tushirganingni ayt; tekshiruvlarni o‘zim takrorlayman.",
+    "helpAfter": "Tuzatishdan keyin asosiy juftlik, bir xil fayl va almashtirilgan fayllar tekshiruvlarini, so‘ng sinov va kontekst tekshiruvlarini takrorla.",
+    "saveTitle": "Tushuntir va saqla",
+    "saveSub": "Qisqa xulosangni loyiha bilan birga saqla.",
+    "explain": "O‘z so‘zlaring bilan: «Qayd etilgan sharoitlar … . F1 … ga o‘zgardi. Buni validation farqi deb talqin qila olaman yoki qila olmayman, chunki … . Mos belgilar … ni isbotlamaydi». ",
+    "saveText": "Loyihani saqla, ilovani qayta ishga tushir va A/B tekshiruvini takrorla. Istasang, o‘z xulosang bilan kichik ko‘rib chiqish JSON’ini eksport qil. Keyinchalik o‘z natijalaringni bu o‘quv formatiga qo‘lda moslashtirishing mumkin. Bugun qayta o‘qitish, MLflow o‘rnatish, ZIP yoki model fayllarini tahlil qilish yoki haqiqiy ma’lumotlarni yuklash talab qilinmaydi.",
+    "checks": [
+      "A/B kutilgan uchta metrika, deltalar, C farqi va qayd etilgan sharoitlar holatini ko‘rsatadi.",
+      "Bir xil va almashtirilgan fayllar tekshiruvlari ishlaydi; kiritilgan fayllar o‘zgarganda eski natijalar tozalanadi.",
+      "Yetishmayotgan kontekst va o‘zgargan split uchun taxminiy qiymatlarsiz to‘g‘ri holatlar ko‘rsatiladi.",
+      "Javobni ochishdan oldin sinovni bajardim va train/validation himoyasini tuzatdim yoki tekshirdim.",
+      "Qayta ishga tushirgach, Explorer’ning oldingi imkoniyatlari ishlaydi va men solishtirish chegaralarini tushuntira olaman."
+    ],
+    "complete": "Tekshiruvlardan keyin loyihang va tushuntirishingni saqla.",
+    "footer": "M4C5 · Dataset Explorer — tajribalarni solishtirish",
+    "footerNote": "Bitta oflayn yo‘riqnoma · Mavjud loyihang · Ixtiyoriy mashq",
+    "downloadStarted": "Faylni yuklab olish so‘raldi. Yuklamalar papkasini tekshir."
+  }
+};
+const STORAGE_KEY = "aiml-m4c5-experiment-compare-v1";
+const OS_NAMES = {win: "Windows", mac: "macOS", linux: "Linux"};
+const state = {lang: "en", os: "win", checks: [false, false, false, false, false]};
+try {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+  if (saved && typeof saved === "object") {
+    if (Object.prototype.hasOwnProperty.call(T, saved.lang)) state.lang = saved.lang;
+    if (Object.prototype.hasOwnProperty.call(OS_NAMES, saved.os)) state.os = saved.os;
+    if (Array.isArray(saved.checks)) state.checks = state.checks.map((_, i) => saved.checks[i] === true);
+  }
+} catch (_) { /* Offline/private browser storage can be unavailable. */ }
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
+const ICONS = {
+  inspect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5M10 7v4m0 2v.1"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m7.5 12 3 3 6-6"/></svg>',
+  print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 8V3h12v5M6 17H3V8h18v9h-3M6 14h12v7H6z"/><path d="M17 11h1"/></svg>'
+};
+function persist() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {} }
+function list(items) { return '<ol class="guide-list">' + items.map(s => '<li>' + s + '</li>').join("") + '</ol>'; }
+function head(n, title, sub) { return '<div class="section-head"><span class="step-num">0' + n + '</span><div><h2>' + esc(title) + '</h2><p>' + esc(sub) + '</p></div></div>'; }
+function block(text, label, id, prompt = true) {
+  return '<div class="cmd' + (prompt ? ' prompt-box' : '') + '"><div class="cmd-bar"><span class="cmd-label">' + esc(label) + '</span><button type="button" class="copy" data-copy="' + id + '" aria-label="' + esc(T[state.lang].copy + ': ' + label) + '">' + esc(T[state.lang].copy) + '</button></div><pre id="' + id + '">' + esc(text) + '</pre></div>';
+}
+function ownRequest(points, intro = "") {
+  const t = T[state.lang];
+  return '<div class="own-request"><h3>' + esc(t.ownTitle) + '</h3>' + (intro ? '<p>' + esc(intro) + '</p>' : '') + list(points) + '<p>' + esc(t.ownSend) + '</p></div>';
+}
+function promptHelp(text, label, id) {
+  const t = T[state.lang];
+  const context = t.systemContext + ': ' + OS_NAMES[state.os] + '.\n' + t.systemInstruction;
+  return '<details class="prompt-help" id="' + id + '-help" data-prompt-help><summary>' + esc(t.promptHelpTitle) + '</summary><div class="details-body"><p>' + esc(t.promptHelpIntro) + '</p>' + block(context + '\n\n' + text, label, id) + '</div></details>';
+}
+function table(caption, headers, rows) {
+  return '<div class="table-wrap" tabindex="0" role="region" aria-label="' + esc(caption) + '"><table><caption>' + esc(caption) + '</caption><thead><tr>' + headers.map(h => '<th scope="col">' + esc(h) + '</th>').join("") + '</tr></thead><tbody>' + rows.map(r => '<tr>' + r.map((c, i) => (i === 0 ? '<th scope="row">' : '<td>') + esc(c) + (i === 0 ? '</th>' : '</td>')).join("") + '</tr>').join("") + '</tbody></table></div>';
+}
+function downloadCard(kind, title, text) {
+  const t = T[state.lang];
+  return '<article class="download-card"><h3>' + esc(title) + '</h3><p>' + esc(text) + '</p><button type="button" class="action" data-download="' + kind + '">' + esc(t.download) + ' ' + FILES[kind] + '</button><details id="contents-' + kind + '"><summary>' + esc(t.csvContents) + '</summary><div class="details-body">' + block(CSV[kind], FILES[kind], 'csv-' + kind, false) + '<p class="empty-tip">' + esc(t.csvFallback) + '</p></div></details></article>';
+}
+function render() {
+  const t = T[state.lang];
+  document.documentElement.lang = state.lang;
+  document.title = "AI/ML · " + t.footer;
+  document.getElementById("skip").textContent = t.skip;
+  document.getElementById("language").setAttribute("aria-label", t.language);
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === state.lang)));
+  const osControl = '<div class="segmented" role="group" aria-label="' + esc(t.systemLabel) + '">' + Object.entries(OS_NAMES).map(([id, name]) => '<button type="button" data-os="' + id + '" aria-pressed="' + (id === state.os) + '">' + name + '</button>').join("") + '</div>';
+  const nav = t.nav.map((n, i) => '<a href="#' + IDS[i] + '"><b>0' + (i + 1) + '</b>' + esc(n) + '</a>').join("");
+  document.getElementById("app").innerHTML = `
+  <div class="wrap hero" id="top"><p class="eyebrow">${esc(t.eyebrow)}</p><div class="hero-grid">
+    <div><h1>${esc(t.title)} <span>${esc(t.accent)}</span></h1><p class="lede">${esc(t.lede)}</p><p class="hero-note">${esc(t.heroNote)}</p></div>
+    <figure class="hero-sketch" aria-label="${esc(t.heroCaption)}"><figcaption class="sketch-top"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>${esc(t.heroCaption)}</figcaption>
+      <div class="experiment-stats"><div class="experiment-stat"><span>${esc(t.heroRows)}</span><strong>0.60 → 0.63</strong><span class="experiment-delta">+0.03</span></div><div class="experiment-stat"><span>${esc(t.heroColumns)}</span><strong>0.64 → 0.67</strong><span class="experiment-delta">+0.03</span></div><div class="experiment-stat"><span>${esc(t.heroMissing)}</span><strong>0.57 → 0.59</strong><span class="experiment-delta">+0.02</span></div></div>
+      <p class="experiment-foot">${esc(t.heroFoot)}</p>
+    </figure></div></div>
+  <div class="wrap"><div class="settings-bar"><div class="setting-group"><span class="control-label">${esc(t.systemLabel)}</span>${osControl}</div><button class="print" type="button" data-print>${ICONS.print}${esc(t.print)}</button></div><p class="route-note">${esc(t.routeLabel)}</p></div>
+  <div class="wrap layout"><nav class="side" aria-label="${esc(t.navTitle)}"><p>${esc(t.navTitle)}</p>${nav}<div class="side-bottom">${esc(t.sideNote)}</div></nav>
+  <main class="content" id="guide" tabindex="-1">
+    <section id="open">${head(1,t.openTitle,t.openSub)}<p class="note" id="system-tip"><strong>${esc(t.systemLabel)}: ${esc(OS_NAMES[state.os])}.</strong> ${esc(t.osTips[state.os])}</p>${list(t.openItems)}<p class="note soft">${esc(t.openNote)}</p><details class="compact-details" id="launch-options"><summary>${esc(t.launchTitle)}</summary><div class="details-body">${ownRequest(t.launchPoints,t.launchTask)}${promptHelp(t.launchPrompt,t.launchLabel,'launch-prompt')}</div></details></section>
+    <section id="plan">${head(2,t.planTitle,t.planSub)}${list(t.planItems)}<p class="note">${esc(t.predict)}</p><div class="downloads">${downloadCard('run_a',t.beforeTitle,t.beforeText)}${downloadCard('run_b',t.afterTitle,t.afterText)}</div></section>
+    <section id="upgrade">${head(3,t.upgradeTitle,t.upgradeSub)}<p class="lede" style="margin-top:0;font-size:14px">${esc(t.promptIntro)}</p>${ownRequest(t.featurePoints)}${promptHelp(t.prompt,t.promptLabel,'feature-prompt')}<p class="note">${esc(t.afterPrompt)}</p></section>
+    <section id="verify">${head(4,t.verifyTitle,t.verifySub)}${list(t.verifyItems)}${table(t.expectedCaption,t.expectedHeads,t.expectedRows)}<p class="note">${esc(t.verifyNote)}</p>
+      <details id="context-checks"><summary>${esc(t.edgeTitle)}</summary><div class="details-body"><p>${esc(t.edgeText)}</p><div class="downloads">${downloadCard('missing',t.missingContextTitle,t.missingContextText)}${downloadCard('changed',t.changedSplitTitle,t.changedSplitText)}</div><h3 class="helper-head">${esc(t.missingTitle)}</h3><p>${esc(t.missingText)}</p><h3 class="helper-head">${esc(t.splitTitle)}</h3><p>${esc(t.splitText)}</p>${list(t.edgeChecks)}</div></details>
+      <details id="repair"><summary>${esc(t.helpTitle)}</summary><div class="details-body"><p>${esc(t.helpText)}</p>${ownRequest(t.repairPoints)}${promptHelp(t.repair,t.repairLabel,'repair-prompt')}<p class="note soft">${esc(t.helpAfter)}</p></div></details>
+    </section>
+    <section id="save">${head(5,t.saveTitle,t.saveSub)}
+      <div class="finale"><h3>${esc(t.revealTitle)}</h3><p>${esc(t.revealTask)}</p>${downloadCard('challenge',t.challengeTitle,t.challengeText)}
+        <details id="challenge-answer" data-reveal><summary>${esc(t.revealSummary)}</summary><div class="details-body"><p class="note">${esc(t.revealText)}</p>${list(t.revealPoints)}${ownRequest(t.fixPoints)}${promptHelp(t.fixPrompt,t.fixLabel,'fix-prompt')}<p class="note soft">${esc(t.fixAfter)}</p></div></details>
+      </div>
+      <p class="note">${esc(t.explain)}</p><p class="lede save-copy">${esc(t.saveText)}</p>
+      <div class="check-box"><div class="check-top"><div class="check-top-row"><h3>${esc(t.checkTitle)}</h3><span class="count" id="check-count" role="status" aria-live="polite"></span></div><div class="meter" aria-hidden="true"><div id="check-meter"></div></div></div><div class="checks">${t.checks.map((c,i)=>'<label class="check-row"><input type="checkbox" data-check="'+i+'"'+(state.checks[i]?' checked':'')+'><span>'+esc(c)+'</span></label>').join('')}</div><div class="check-bottom"><p>${esc(t.checkNote)}</p><button type="button" class="reset" data-reset>${esc(t.reset)}</button></div></div>
+      <p class="complete" id="complete" role="status" hidden>${esc(t.complete)}</p>
+    </section>
+  </main></div><footer><div class="wrap footer-row"><strong>${esc(t.footer)}</strong><span>${esc(t.footerNote)}</span></div></footer>`;
+  updateChecks();
+}
+function updateChecks() {
+  const count = state.checks.filter(Boolean).length;
+  document.getElementById("check-count").textContent = count + " / " + state.checks.length;
+  document.getElementById("check-meter").style.width = (count / state.checks.length * 100) + "%";
+  document.getElementById("complete").hidden = count !== state.checks.length;
+}
+let toastTimer;
+function toast(message) {
+  clearTimeout(toastTimer);
+  const el = document.getElementById("toast");
+  el.textContent = message; el.hidden = false;
+  toastTimer = setTimeout(() => { el.hidden = true; }, 6500);
+}
+async function copyText(id) {
+  const source = document.getElementById(id);
+  if (!source) return;
+  let copied = false;
+  if (navigator.clipboard && window.isSecureContext) {
+    try { await navigator.clipboard.writeText(source.textContent); copied = true; } catch (_) {}
+  }
+  if (!copied) {
+    const area = document.createElement("textarea");
+    area.value = source.textContent; area.readOnly = true;
+    area.style.position = "fixed"; area.style.top = "-9999px";
+    const previousFocus = document.activeElement;
+    document.body.appendChild(area); area.select();
+    try { copied = document.execCommand("copy"); } catch (_) {}
+    area.remove();
+    if (previousFocus && previousFocus.focus) previousFocus.focus({preventScroll: true});
+  }
+  if (copied) { toast(T[state.lang].copied); return; }
+  const range = document.createRange(); range.selectNodeContents(source);
+  const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
+  toast(T[state.lang].copyFail);
+}
+function downloadCsv(kind) {
+  if (!Object.prototype.hasOwnProperty.call(CSV, kind)) return;
+  const blob = new Blob([CSV[kind]], {type: "application/json;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href = url; a.download = FILES[kind];
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast(T[state.lang].downloadStarted);
+}
+function switchSetting(key, value) {
+  const y = window.scrollY;
+  const opened = [...document.querySelectorAll("details[open]")].map(d => d.id).filter(Boolean);
+  state[key] = value; persist(); render();
+  opened.forEach(id => { const detail = document.getElementById(id); if (detail) detail.open = true; });
+  document.getElementById("toast").hidden = true;
+  window.scrollTo({top: y, behavior: "instant"});
+  document.querySelector('[data-' + key + '="' + value + '"]').focus({preventScroll: true});
+}
+document.addEventListener("click", event => {
+  const b = event.target.closest("button");
+  if (!b) return;
+  if (b.dataset.lang && Object.prototype.hasOwnProperty.call(T, b.dataset.lang)) {
+    switchSetting('lang', b.dataset.lang);
+  } else if (b.dataset.os && Object.prototype.hasOwnProperty.call(OS_NAMES, b.dataset.os)) {
+    switchSetting('os', b.dataset.os);
+  } else if (b.dataset.copy) { copyText(b.dataset.copy); }
+  else if (b.dataset.download) { downloadCsv(b.dataset.download); }
+  else if (b.hasAttribute("data-print")) { window.print(); }
+  else if (b.hasAttribute("data-reset")) {
+    state.checks = state.checks.map(() => false); persist();
+    document.querySelectorAll("[data-check]").forEach(c => { c.checked = false; }); updateChecks();
+  }
+});
+document.addEventListener("change", event => {
+  if (!event.target.matches("[data-check]")) return;
+  const index = Number(event.target.dataset.check);
+  if (!Number.isInteger(index) || index < 0 || index >= state.checks.length) return;
+  state.checks[index] = event.target.checked; persist(); updateChecks();
+});
+let printDetails = [];
+window.addEventListener("beforeprint", () => {
+  printDetails = [...document.querySelectorAll("details")].map(el => ({el, open: el.open}));
+  printDetails.forEach(({el}) => { if (!el.hasAttribute('data-prompt-help') && !el.hasAttribute('data-reveal')) el.open = true; });
+});
+window.addEventListener("afterprint", () => { printDetails.forEach(({el, open}) => { el.open = open; }); });
+render();
+</script>
+</body>
+</html>

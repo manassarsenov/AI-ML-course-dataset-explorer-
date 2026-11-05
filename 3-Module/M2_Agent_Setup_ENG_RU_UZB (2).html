@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="AI/ML Fundamentals, Cohort 2. A simple first-time local coding-agent setup guide in English, Russian and Uzbek.">
+<meta name="color-scheme" content="light">
+<title>AI/ML • Your first coding agent</title>
+<style>
+:root{--blue:#0757ff;--blue-deep:#0045d4;--ink:#08112e;--muted:#34415a;--line:#bdcce4;--pale:#e4edfc;--paper:#fff;--green:#116644;--green-pale:#edf8f1;--radius:18px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:104px}
+body{margin:0;background:#fcfdff;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:600;line-height:1.58}
+body:before{content:"";position:fixed;top:0;bottom:0;left:0;width:6px;background:var(--blue);z-index:9}
+button,input{font:inherit}
+button,a,input,summary{-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+button{cursor:pointer}
+a{color:var(--blue);text-underline-offset:3px}
+a:hover{color:var(--blue-deep)}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #efb82f;outline-offset:4px}
+button:disabled{cursor:default}
+svg{display:block}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{line-height:1.16}
+.wrap{max-width:1192px;margin:auto;padding-left:36px;padding-right:36px}
+.top{position:sticky;top:0;z-index:8;border-bottom:1px solid var(--line);background:rgba(255,255,255,.97)}
+.top-row{min-height:78px;display:flex;gap:20px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-weight:800;font-size:14px;letter-spacing:.035em}
+.brand svg{width:34px;height:34px;color:var(--blue)}
+.brand small{display:block;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.13em}
+.segmented{display:inline-flex;border:1px solid var(--line);padding:4px;border-radius:12px;background:#fff;gap:2px;max-width:100%}
+.segmented button{border:0;background:transparent;padding:7px 14px;color:var(--muted);border-radius:8px;font-size:13px;font-weight:700;line-height:1.5;white-space:nowrap}
+.segmented button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.segmented button:hover:not([aria-pressed="true"]){background:var(--pale);color:var(--ink)}
+.hero{position:relative;overflow:hidden;padding-top:57px;padding-bottom:37px}
+.hero:after{content:"";position:absolute;width:285px;height:285px;border:1px solid #edf1f8;border-radius:50%;right:-95px;top:0;box-shadow:0 0 0 27px #f5f7fc,0 0 0 28px #edf1f8;z-index:-1}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:11px;color:var(--blue);font-weight:800}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;align-items:center;gap:64px;margin-top:21px}
+h1{font-size:clamp(42px,5.25vw,66px);font-weight:800;letter-spacing:-.055em;line-height:1.03}
+h1 span{color:var(--blue);display:block}
+.lede{font-size:17px;color:var(--muted);max-width:595px;margin-top:23px;line-height:1.65}
+.hero-note{font-size:12px;margin-top:17px;color:var(--muted)}
+.hero-sketch{position:relative;padding:20px 26px 22px;border:1px solid #bed0ff;background:#fff;border-radius:20px;box-shadow:0 12px 32px #0b316509;transform:rotate(1.5deg)}
+.sketch-top{display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:19px;font-size:12px;font-weight:700;color:var(--muted)}
+.sketch-top i{height:8px;width:8px;border:1px solid #a9c1f9;border-radius:50%}
+.sketch-folder{display:flex;gap:10px;align-items:center;font-size:15px;font-weight:700}
+.sketch-folder svg{height:25px;width:25px;color:var(--blue)}
+.sketch-file{margin:10px 0 0 35px;font-family:Consolas,Menlo,monospace;font-size:13px;color:var(--muted)}
+.sketch-file:before{content:"";display:inline-block;height:7px;width:7px;border-radius:2px;border:1px solid #b9c9e9;margin-right:9px}
+.sketch-bottom{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);color:var(--blue);font-weight:700;font-size:12px}
+.sketch-bottom svg{width:22px;height:22px}
+.settings-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0 23px;border-bottom:1px solid var(--line)}
+.setting-group{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.control-label{font-size:13px;font-weight:700}
+.print{display:flex;align-items:center;gap:7px;background:none;border:0;padding:10px 0;color:var(--muted);font-size:13px;white-space:nowrap}
+.print svg{height:17px;width:17px}
+.layout{display:grid;grid-template-columns:176px minmax(0,1fr);gap:42px;padding-top:31px;padding-bottom:55px}
+.side{align-self:start;position:sticky;top:109px}
+.side p{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:4px 0 13px}
+.side a{display:flex;align-items:center;gap:10px;color:var(--muted);text-decoration:none;font-size:13px;padding:10px 0;line-height:1.35}
+.side a:hover{color:var(--blue)}
+.side a b{display:grid;place-items:center;flex-shrink:0;height:27px;width:27px;border-radius:50%;border:1px solid #cbd9f7;font-size:10px;color:var(--blue);background:white}
+.side .side-bottom{font-size:11px;color:var(--muted);margin-top:23px;border-top:1px solid var(--line);padding-top:15px;line-height:1.6}
+.content{min-width:0}
+section{padding-bottom:39px;margin-bottom:35px;border-bottom:1px solid var(--line);scroll-margin-top:100px}
+section:last-of-type{border:0;margin-bottom:0}
+.section-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.step-num{display:grid;place-items:center;background:var(--blue);color:white;font-size:12px;font-weight:700;border-radius:50%;width:34px;height:34px;flex-shrink:0;margin-top:2px}
+h2{font-size:27px;letter-spacing:-.035em;font-weight:800}
+.section-head p{font-size:14px;color:var(--muted);margin-top:6px}
+.agents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.agent{border:1px solid var(--line);border-radius:var(--radius);background:white;text-align:left;padding:21px 18px 19px;position:relative;color:var(--ink);min-width:0}
+.agent:hover{border-color:#90aeff}
+.agent[aria-pressed="true"]{border:2px solid var(--blue);padding:20px 17px 18px;background:#f7faff}
+.agent-symbol{width:36px;height:36px;display:grid;place-items:center;border:1px solid #c3d4fc;border-radius:11px;margin-bottom:18px;color:var(--blue);font-size:18px;font-weight:800;background:white}
+.agent h3{font-size:18px;letter-spacing:-.03em}
+.agent p{font-size:12px;line-height:1.5;color:var(--muted);margin-top:8px}
+.agent .agent-tag{font-size:10px;font-weight:700;color:var(--blue);display:block;margin-top:14px}
+.select-dot{position:absolute;right:16px;top:18px;height:15px;width:15px;border:1px solid #bbcae8;border-radius:50%}
+.agent[aria-pressed="true"] .select-dot{border:4px solid var(--blue);background:white}
+.note{margin-top:17px;border-left:3px solid var(--blue);padding:10px 14px;background:var(--pale);font-size:13px;line-height:1.6;border-radius:0 10px 10px 0}
+.note.soft{background:#f6f8fc;border-left-color:#b8c7e6;color:var(--muted)}
+.install-box{border:1px solid #b9ceff;border-radius:var(--radius);overflow:hidden;background:white}
+.install-header{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px 23px;background:#f5f8ff;border-bottom:1px solid var(--line)}
+.install-header h3{font-size:21px;letter-spacing:-.03em}
+.small-tag{font-size:11px;font-weight:700;color:var(--blue);padding:4px 9px;border:1px solid #c1d3ff;border-radius:6px;white-space:nowrap;background:white}
+.install-steps{list-style:none;padding:8px 23px 5px;margin:0}
+.install-steps li{padding:17px 0;display:grid;grid-template-columns:25px minmax(0,1fr);gap:11px;border-bottom:1px solid #edf1f8}
+.install-steps li:last-child{border-bottom:0}
+.tiny-num{font-size:11px;font-weight:700;color:var(--blue);background:var(--pale);border-radius:6px;height:23px;display:grid;place-items:center}
+.install-steps h4{font-size:15px;margin:2px 0 7px;line-height:1.35}
+.install-steps p{font-size:14px;color:var(--muted)}
+.text-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;text-decoration:none;font-weight:700;font-size:12px}
+.text-link:after{content:"↗";font-size:14px}
+.access{padding:14px 23px;background:#f8faff;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.rule-card{padding:18px 19px;border:1px solid var(--line);background:#fff;border-radius:14px}
+.rule-label{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px}
+.rule-card h3{font-size:16px;margin-bottom:9px}
+.rule-card p{font-size:13px;color:var(--muted)}
+.rule-card .mini{margin-top:11px;font-size:12px;color:var(--ink)}
+.effort-line{display:flex;gap:6px;margin:12px 0}
+.effort-line span{font-size:10px;line-height:1.3;padding:6px 9px;background:#f3f6fc;border:1px solid var(--line);border-radius:6px}
+.effort-line span:nth-child(2){color:var(--blue);border-color:#c2d4ff;background:var(--pale)}
+details{border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:14px;overflow:hidden}
+summary{cursor:pointer;font-size:13px;font-weight:700;padding:15px 17px;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:21px;font-weight:400;color:var(--blue);line-height:1}
+details[open] summary:after{content:"−"}
+.details-body{padding:0 17px 17px;font-size:13px;color:var(--muted)}
+.details-body p+p{margin-top:12px}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tool{border:1px solid var(--line);border-radius:14px;background:#fff;padding:20px;min-width:0}
+.tool h3{font-size:17px;letter-spacing:-.02em;margin-bottom:9px}
+.tool p{font-size:13px;color:var(--muted)}
+.tool .cmd{margin-top:13px}
+.cmd{position:relative;border:1px solid #d4e0f8;border-radius:11px;background:#f5f8ff;margin:11px 0 6px;min-width:0;overflow:hidden}
+.cmd-bar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:8px 12px;border-bottom:1px solid #e1e9f8}
+.cmd-label{font-size:10px;font-weight:700;letter-spacing:.035em;color:var(--muted)}
+.copy{border:0;background:#fff;border-radius:5px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--blue);white-space:nowrap}
+.copy:hover{background:#e6eeff}
+pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;padding:14px;font-family:Consolas,"Liberation Mono",Menlo,monospace;font-size:12px;line-height:1.7;color:#15386b}
+code{font-family:Consolas,"Liberation Mono",Menlo,monospace;background:#edf3ff;color:#204a88;border-radius:4px;padding:2px 4px;font-size:.9em;overflow-wrap:anywhere}
+pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.substep{margin-top:24px}
+.substep h3{font-size:17px;letter-spacing:-.02em;margin-bottom:9px;line-height:1.35}
+.substep>p{font-size:14px;color:var(--muted)}
+.substep .tiny{font-size:12px;margin-top:8px}
+.package-choice{display:flex;gap:7px;margin:12px 0 3px;flex-wrap:wrap}
+.package-choice button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 11px;color:var(--muted);font-size:11px;font-weight:700}
+.package-choice button[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--pale)}
+.prompt-box{margin-top:13px}
+.prompt-box pre{font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.75;color:var(--ink);padding:18px 19px;white-space:pre-wrap}
+.result-box{border:1px solid #bfd4fd;border-radius:12px;padding:16px 18px;background:white;margin-top:17px}
+.result-box h4{font-size:13px;color:var(--blue);margin-bottom:8px}
+.result-box p{font-size:13px;color:var(--muted)}
+.microflow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:18px}
+.microflow div{border:1px solid var(--line);border-radius:9px;padding:11px 10px;font-size:11px;color:var(--muted);line-height:1.5;background:white}
+.microflow b{display:block;font-size:13px;color:var(--blue);margin-bottom:3px}
+.check-box{border:1px solid #b8ceff;border-radius:var(--radius);background:white;overflow:hidden}
+.check-top{padding:19px 22px;background:var(--pale);border-bottom:1px solid var(--line)}
+.check-top-row{display:flex;align-items:center;justify-content:space-between;gap:13px}
+.check-top h3{font-size:17px;line-height:1.3}
+.count{font-size:14px;color:var(--blue);font-weight:700;white-space:nowrap}
+.meter{background:#dbe6ff;height:4px;border-radius:3px;margin-top:14px;overflow:hidden}
+.meter div{height:100%;background:var(--blue);width:0;transition:width .2s}
+.checks{padding:5px 21px}
+.check-row{display:flex;gap:12px;align-items:flex-start;cursor:pointer;padding:14px 0;border-bottom:1px solid #edf1f8;font-size:13px;line-height:1.6}
+.check-row:last-child{border:0}
+.check-row input{margin:4px 0 0;flex:0 0 17px;width:17px;height:17px;accent-color:var(--blue);cursor:pointer}
+.check-row input:checked+span{color:var(--green)}
+.check-bottom{padding:15px 21px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.check-bottom p{font-size:11px;color:var(--muted);max-width:520px}
+.reset{padding:2px 0;border:0;background:none;color:var(--blue);font-size:11px;font-weight:700;white-space:nowrap}
+.complete{margin-top:14px;padding:15px 18px;color:var(--green);background:var(--green-pale);border:1px solid #bdddc9;border-radius:11px;font-size:13px}
+.helper-head{font-size:18px;margin-top:26px;letter-spacing:-.02em}
+.sources{margin-top:26px}
+.source-links{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}
+.source-links a{font-size:12px;line-height:1.5;text-decoration:none}
+.source-links a:hover{text-decoration:underline}
+.source-meta{margin-top:15px!important;font-size:11px}
+footer{border-top:1px solid var(--line);padding:24px 0 30px;background:white}
+.footer-row{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:11px;color:var(--muted)}
+.footer-row strong{color:var(--ink);font-size:12px}
+.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;font-size:13px;padding:10px 18px;border-radius:10px;z-index:15;box-shadow:0 5px 20px #08112e22;max-width:90vw;text-align:center}
+.skip{position:fixed;top:-80px;left:20px;z-index:20;background:white;padding:10px}
+.skip:focus{top:10px}
+.noscript{margin:30px;padding:25px;border:2px solid var(--blue);font-size:16px}
+[hidden]{display:none!important}
+@media(min-width:1500px){.wrap{max-width:1250px}.layout{gap:55px}}
+@media(max-width:900px){.hero-grid{gap:28px;grid-template-columns:1.3fr 1fr}.wrap{padding-left:28px;padding-right:24px}.layout{grid-template-columns:1fr;gap:0}.side{position:static;display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:28px}.side p,.side-bottom{display:none}.side a{padding:0;font-size:11px}.side a b{width:23px;height:23px;font-size:9px}.hero{padding-top:39px}.hero-sketch{padding:19px}.layout{padding-top:23px}}
+@media(max-width:620px){body{font-size:15px}body:before{width:4px}.wrap{padding-left:22px;padding-right:18px}.top-row{min-height:73px;gap:9px}.brand{font-size:11px;gap:7px;letter-spacing:0}.brand svg{width:25px;height:25px}.brand small{font-size:8px;letter-spacing:.09em}.segmented button{padding:7px 9px;font-size:11px}.hero{padding-top:31px;padding-bottom:23px}.hero-grid{display:block;margin-top:18px}.hero-sketch{display:none}h1{font-size:47px;letter-spacing:-.05em}.lede{font-size:15px;margin-top:20px}.hero-note{font-size:11px}.eyebrow{font-size:9px}.settings-bar{align-items:flex-start;padding:15px 0}.setting-group{gap:7px}.control-label{font-size:11px;display:block;width:100%}.print{font-size:11px;padding-top:27px}.print svg{display:none}.side{gap:10px 13px}.side a{font-size:10px;gap:5px}.side a b{width:21px;height:21px}.section-head{gap:10px}h2{font-size:24px}.section-head p{font-size:13px}.step-num{width:30px;height:30px;font-size:11px}.agents{grid-template-columns:1fr;gap:8px}.agent{display:grid;grid-template-columns:36px 1fr;gap:0 12px;padding:14px 37px 14px 14px;align-items:center}.agent[aria-pressed="true"]{padding:13px 36px 13px 13px}.agent-symbol{grid-column:1;grid-row:1 / span 3;margin:0}.agent h3{font-size:17px}.agent p{margin-top:4px}.agent .agent-tag{margin-top:4px;font-size:10px}.select-dot{top:20px;right:13px}.install-header{padding:17px}.install-header h3{font-size:19px}.install-steps{padding:3px 16px}.install-steps p{font-size:13px}.access{padding:13px 16px}.rules-grid,.tools-grid{grid-template-columns:1fr;gap:12px}.rules-grid{margin-top:17px}.tool{padding:17px}.rule-card{padding:17px}.microflow{grid-template-columns:1fr 1fr}.source-links{grid-template-columns:1fr}.check-top{padding:17px}.check-top h3{font-size:15px}.checks{padding:3px 16px}.check-bottom{padding:14px 16px}.check-bottom p{font-size:10px}.check-row{font-size:12px}.footer-row{align-items:flex-start;flex-direction:column;gap:6px}section{padding-bottom:28px;margin-bottom:26px}.cmd-label{font-size:9px}.substep h3{font-size:16px}pre{font-size:11px}.prompt-box pre{font-size:13px;padding:15px}.note{font-size:12px;padding:10px 12px}.source-meta{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+@media print{body{background:#fff;font-size:10pt}body:before,.top,.side,.settings-bar,.copy,.reset,.toast,.skip{display:none!important}.wrap{max-width:none;padding:0}.hero{padding:0 0 14px}.hero-grid{display:block}.hero-sketch{display:none}h1{font-size:30pt}h1 span{display:inline}.lede{font-size:11pt;max-width:none;margin-top:10px}.hero-note{font-size:9pt}.layout{display:block;padding:0}.section-head{break-after:avoid}section{margin:15px 0;padding-bottom:15px;break-inside:auto}.agent{display:none}.agent[aria-pressed="true"]{display:block;padding:12px;border:1px solid #a5bcf3}.agent-symbol,.select-dot{display:none}.agent p{font-size:9pt}.agent h3{font-size:13pt}.agent-tag{display:none!important}h2{font-size:18pt}.install-box{break-inside:auto}.install-steps li,.rule-card,.tool,.substep,.check-row,.result-box{break-inside:avoid}.cmd,pre{break-inside:avoid}.cmd-bar{padding:5px 10px}.rules-grid,.tools-grid{gap:12px}.check-row{padding:7px 0;font-size:9pt}.check-bottom p{font-size:8pt}.note,.access{font-size:9pt}.source-links a{font-size:8pt}.check-top{padding:12px}footer{margin-top:15px}.package-choice button{display:none}.package-choice button[aria-pressed="true"]{display:block}.complete{font-size:9pt}.details-body{display:block}details:not([open]) .details-body{display:none}.source-links a:after{content:""}a{text-decoration:none}.step-num{width:25px;height:25px;font-size:9pt}.section-head{margin-bottom:11px}}
+
+/* Readable instruction cards */
+.install-box{background:#eaf0fa;border-color:#afc3e6}
+.install-header,.check-top{background:#dce7fa}
+.install-steps li{border-bottom-color:#c5d3e9}
+.install-steps p,.substep>p,.rule-card p,.details-body,.result-box p,.check-row{font-weight:600}
+.install-steps h4,.substep h3{font-weight:800}
+.rule-card,.result-box,.tool,.microflow div,details{background:#eaf0fa;border-color:#bdcce4}
+.substep{padding:20px 22px;background:#eaf0fa;border:1px solid #bdcce4;border-radius:14px;margin-top:16px}
+.permission-card{background:#dfe9fb;border-color:#9fb9e8;border-left:4px solid var(--blue)}
+.note.soft{background:#e8edf5;border-left-color:#99adc9;color:#34415a}
+.access{background:#dde7f6;font-weight:600}
+.cmd{background:#dfe9fa;border-color:#adbfde}
+.cmd-bar{background:#cfddf4;border-bottom-color:#adbfde;padding:12px 16px}
+.cmd-label{font-size:11px;color:#263c62;font-weight:800}
+.copy{font-size:12px;padding:6px 12px;border:1px solid #b0c4e7}
+.prompt-box pre{font-size:15px;font-weight:600;background:#e8effc;line-height:1.8}
+.check-box{background:#edf2fa}
+.check-row{border-bottom-color:#c8d5e8}
+.agent p,.lede,.section-head p{font-weight:600}
+strong{font-weight:800}
+@media(max-width:620px){.substep{padding:17px}.prompt-box pre{font-size:14px}.cmd-label{font-size:10px}.copy{font-size:11px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#guide" id="skip">Skip to instructions</a>
+<header class="top"><div class="wrap top-row">
+  <a href="#top" class="brand" aria-label="AI/ML Fundamentals, Cohort 2">
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M17 7v26M23 7v26M12 11l5 5m11-5-5 5M9 20h8m14 0h-8m-11 9 5-5m11 5-5-5"/><circle cx="17" cy="5" r="2"/><circle cx="23" cy="5" r="2"/><circle cx="10" cy="9" r="2"/><circle cx="30" cy="9" r="2"/><circle cx="7" cy="20" r="2"/><circle cx="33" cy="20" r="2"/><circle cx="10" cy="31" r="2"/><circle cx="30" cy="31" r="2"/><circle cx="17" cy="35" r="2"/><circle cx="23" cy="35" r="2"/></svg>
+    <div>AI/ML FUNDAMENTALS<small>COHORT 2 · LOCAL DEVELOPMENT</small></div>
+  </a>
+  <div class="segmented" role="group" aria-label="Language">
+    <button type="button" data-lang="en" lang="en" aria-pressed="true" aria-label="English">ENG</button>
+    <button type="button" data-lang="ru" lang="ru" aria-pressed="false" aria-label="Русский">RU</button>
+    <button type="button" data-lang="uz" lang="uz" aria-pressed="false" aria-label="O‘zbekcha">UZB</button>
+  </div>
+</div></header>
+<div id="app"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<noscript><div class="noscript">Enable JavaScript in your browser to use the language and setup selectors. This file has no external scripts.<br>Включите JavaScript в браузере для выбора языка и инструкции.<br>Til va yo‘riqnomani tanlash uchun brauzerda JavaScript’ni yoqing.</div></noscript>
+<script>
+"use strict";
+const T = {
+ "en": {
+  "title": "Your first",
+  "accent": "coding agent.",
+  "eyebrow": "M2C5 → M2C6 / FIRST-TIME SETUP",
+  "lede": "Install one agent. Give it full access. Let it prepare Python and the project environment for you.",
+  "heroNote": "A computer + internet + your own account. No previous agent experience needed.",
+  "sketchTop": "One project. One place to work.",
+  "sketchBottom": "The agent sets it up. You check the result.",
+  "osLabel": "My computer",
+  "print": "Print guide",
+  "route": "YOUR ROUTE",
+  "nav": [
+   "Choose",
+   "Install",
+   "Full access",
+   "Setup request",
+   "Ready?"
+  ],
+  "sideNote": "Install one agent, then paste one setup request. The agent runs the installation commands.",
+  "chooseTitle": "Choose one agent",
+  "chooseSub": "All three can work with local files. Pick the one you can access.",
+  "agentSubs": [
+   "The standalone Antigravity app.",
+   "Codex in the OpenAI desktop app.",
+   "The Claude desktop app → Code."
+  ],
+  "agentTags": [
+   "Google · free tier",
+   "ChatGPT sign-in",
+   "Claude app · Code"
+  ],
+  "chooseNote": "<strong>One is enough.</strong> We use one agent for the course project. Installing all three will not improve your result.",
+  "installTitle": "Install & sign in",
+  "installSub": "Only your selected instructions are shown.",
+  "routeTag": "YOUR CHOICE",
+  "onlineNote": "Local development means the files and Python process are on your computer. The agent’s model still needs an internet connection; project context may be sent to its provider.",
+  "agent": {
+   "antigravity": {
+    "stepTitles": [
+     "Install Antigravity",
+     "Sign in",
+     "Connect your course folder",
+     "Choose a starting model"
+    ],
+    "steps": {
+     "win": "Download the <strong>Windows</strong> installer, run the <code>.exe</code> and finish setup. Choose x64 for a usual Intel/AMD PC; ARM64 is for Windows on ARM.",
+     "mac": "Download the macOS build for your chip: Apple Silicon or Intel. Open the <code>.dmg</code>, then drag Antigravity to Applications.",
+     "linux": "Download the Linux build for your processor. Extract the archive and start Antigravity from the extracted folder. Check the requirements on the download page."
+    },
+    "sign": "Open Antigravity → <strong>Sign in</strong>. Complete sign-in in your browser with your personal Google account, then return to the app.",
+    "project": "Create or locate your course folder, for example <code>Documents/AI_ML/M2C6</code>. In the app choose <strong>New Project → Add Folder → Create</strong>, then <strong>Local</strong> mode when offered.",
+    "model": "Use the model selector below the prompt box. Start with an available default model; choose <strong>Medium</strong> thinking if you need a simple starting setting.",
+    "access": "A personal Google account can have a free access tier with quotas. Model availability varies. Use a model your account already offers; a paid plan is not a course requirement.",
+    "download": "Download Antigravity",
+    "docs": "Official quickstart"
+   },
+   "codex": {
+    "stepTitles": [
+     "Install the desktop app for Codex",
+     "Sign in",
+     "Open the course project",
+     "Choose a starting model"
+    ],
+    "steps": {
+     "win": "Open the official OpenAI download page, choose the <strong>Windows desktop app</strong> and finish installation. Open the installed app and select <strong>Codex</strong>. The current download page may call the app ChatGPT.",
+     "mac": "Open the official OpenAI download page, choose the <strong>macOS desktop app</strong> for your Mac and install it. Open the app and select <strong>Codex</strong>. The current download page may call the app ChatGPT.",
+     "linux": "Open the official OpenAI download page and choose its <strong>Linux desktop package</strong> if offered for your distribution. Open the downloaded package with the graphical software installer, then open <strong>Codex</strong> in the app. If there is no compatible package, select Antigravity in this guide."
+    },
+    "sign": "In the installed app choose <strong>Sign in with ChatGPT</strong>. Complete browser sign-in and return to the app. Open <strong>Codex</strong>.",
+    "project": "Add or open <code>Documents/AI_ML/M2C6</code> as a project folder. Start <strong>New chat</strong> for that project and select <strong>Local</strong> work on this computer.",
+    "model": "In the Codex chat choose the recommended available coding model. Keep default effort or Medium when available. Enable full access in the next section.",
+    "access": "Use your own ChatGPT account with Codex access. Limits depend on the account. An API key is not required for ChatGPT sign-in.",
+    "download": "Download the desktop app for Codex",
+    "docs": "Official Codex desktop guide"
+   },
+   "claude": {
+    "stepTitles": [
+     "Install the Claude desktop app",
+     "Sign in and open Code",
+     "Open the course project",
+     "Choose a starting model"
+    ],
+    "steps": {
+     "win": "Open the official Claude download page. Choose <strong>Windows</strong> (ARM64 only for an ARM computer), run the installer and open <strong>Claude</strong>.",
+     "mac": "Open the official Claude download page, choose <strong>macOS</strong> and install the desktop app. Open <strong>Claude</strong>.",
+     "linux": "On the official Claude download page choose <strong>Linux</strong>. The desktop beta supports Ubuntu/Debian. Use the official package route and open the <code>.deb</code> in your graphical software installer. If this requires terminal setup you cannot complete, select Antigravity or ask your mentor to install the agent app."
+    },
+    "sign": "Sign in to the installed Claude app. Open the <strong>Code</strong> tab. Claude Code is included in the app; no separate terminal installation is needed.",
+    "project": "Under the prompt, select the <strong>Local</strong> environment. Choose <strong>Open folder…</strong> and select <code>Documents/AI_ML/M2C6</code> or the folder provided by your mentor.",
+    "model": "Use the model picker under the Code prompt. Choose an available Sonnet or the recommended default. Keep default effort; enable full access in the next section.",
+    "access": "The Code tab requires an eligible Pro, Max, Team or Enterprise subscription. Free Claude chat is not enough. Use another available agent if you have no Code access.",
+    "download": "Download Claude desktop",
+    "docs": "Official Claude desktop guide"
+   }
+  },
+  "modelLabel": "MODEL",
+  "modelTitle": "Which engine answers?",
+  "modelText": "Choose an available model suited to code. Start with the recommended or default option. A standard coding model is enough for environment setup.",
+  "effortLabel": "EFFORT",
+  "effortTitle": "How much thinking?",
+  "effortText": "Start with the default. Low suits a small clear task; Medium is a useful balance; High can help with a difficult bug. The same label can behave differently across models.",
+  "effortLabels": [
+   "Low · quick",
+   "Medium · balanced",
+   "High · deeper"
+  ],
+  "effortMini": "More effort can use more time and quota. It does not replace running and checking the result.",
+  "localTitle": "Give the agent full access",
+  "localSub": "Allow file changes, terminal commands and downloads so the agent can prepare the environment.",
+  "folderTitle": "1. Open your course folder",
+  "folderText": "Use the folder from your mentor. Extract the ZIP first. If there is no starter yet, create <code>Documents/AI_ML/M2C6</code> and open it in your agent. Keep the task on your local computer.",
+  "firstTitle": "Send one setup request",
+  "firstSub": "The agent performs the setup. You look at the actual checks and open the demo.",
+  "promptLabel": "COPY THE WHOLE REQUEST INTO YOUR AGENT",
+  "prompt": "Prepare this local folder for AI/ML Fundamentals. I am a beginner: perform the setup yourself, including downloads, installations and terminal commands. Do not give me a list of commands to run.\n\n1. Confirm the actual local project folder and detect the OS, shell and processor architecture. Briefly state your plan, then carry it out.\n2. Check Python and Git. Reuse working installations. If missing, install from official sources, preferably for this user. Use Python 3.13 when compatible with the project; otherwise choose a supported compatible version, at least 3.11. Keep the system Python intact.\n3. Inspect existing project files and requirements.txt. Create or reuse .venv in this folder. Install the project dependencies into it. If there is no dependency file, install pandas, numpy, matplotlib, scikit-learn and streamlit. Add missing course packages without overwriting the existing dependency file.\n4. Actually run version and import checks with the .venv interpreter. Print READY only after the required imports succeed. Resolve setup errors and rerun the checks. Configure the editor to use this interpreter if supported.\n5. Start Streamlit’s built-in demo using this environment, keep it running and give me the exact local URL. If the port is busy, choose a free port. Check that the server responds; say separately whether you could inspect the browser page.\n6. Save setup-check.txt in the project folder with actual versions, interpreter path, executed checks, their real outputs, the demo URL, and simple instructions for asking you to start it again later. Mark anything unverified as NOT RUN or BLOCKED.\n7. Do not solve the lesson assignment or change the existing application. Create only environment/setup files; preserve my existing work. Do not buy services, publish anything or read unrelated personal files.\n8. If an OS confirmation, password, restart or unavailable permission blocks you, explain the one action I must take, then continue after I confirm it. Never claim that an installation or test succeeded without running it.\n\nFinish with: what you installed, what you reused, what passed, what is blocked, and the link I should open.",
+  "compareTitle": "Check three visible results",
+  "compareText": "Open <code>setup-check.txt</code>, find the real version/import outputs, and open the local demo link. A message saying “done” is not enough. The demo checks the environment; it is not your M2C6 assignment.",
+  "cycleTitle": "Your part in this workflow",
+  "cycleLabels": [
+   "Give context",
+   "Agent runs",
+   "Check result",
+   "Keep evidence"
+  ],
+  "cycleTexts": [
+   "Open the right folder",
+   "Setup and real checks",
+   "Open the local demo",
+   "Keep setup-check.txt"
+  ],
+  "rulesNote": "Colab remains our place for visible ML calculations. The agent can run local setup and the app; you check the output and explain what happened.",
+  "readyTitle": "Check your readiness",
+  "readySub": "Tick each item only after you have observed it on your own computer.",
+  "checkTitle": "Ready for local work?",
+  "checked": "checked",
+  "reset": "Reset",
+  "checkItems": [
+   "My installed agent is signed in and responds.",
+   "The correct local course folder is open.",
+   "Full access is enabled for the setup task.",
+   "The agent checked Python, Git and the project .venv.",
+   "The real import checks passed and I can read setup-check.txt.",
+   "The local Streamlit demo opens in my browser.",
+   "I know my model/effort setting and can show the result to my mentor."
+  ],
+  "selfCheck": "This is your own checklist, not an automatic scan of your computer. Progress is saved in this browser if local storage is available.",
+  "complete": "Self-check complete. Show your mentor the local demo and setup-check.txt.",
+  "helpTitle": "If something does not work",
+  "help": [
+   [
+    "The agent only explains what to install",
+    "Reply: “Carry out the setup yourself in this local folder. Run the commands and checks. Ask me only for an operating system confirmation or a real blocker.” Check that full access and local mode are selected."
+   ],
+   [
+    "The system asks for a password or confirmation",
+    "Approve the installation in the operating system window yourself. Tell the agent when it is complete so it can continue. Full access does not remove operating system password prompts."
+   ],
+   [
+    "An installation or demo fails",
+    "Send the full error to the same agent: “Fix this environment error, rerun the checks, and update setup-check.txt.” Let the agent check the environment path, network and port."
+   ],
+   [
+    "A mode, account or quota is unavailable",
+    "Show your mentor the exact message. Managed devices may restrict permissions. Choose another accessible agent if needed; do not treat a browser chat as a successful local setup."
+   ]
+  ],
+  "sourcesTitle": "Official sources & version note",
+  "sourcesText": "Full-access controls checked against official documentation on 21 October 2026. Labels and availability can vary by client, OS and account. Course context: M2C5–M2C6; this guide prepares the environment.",
+  "sourceLabels": [
+   "Antigravity · download",
+   "Antigravity · getting started",
+   "Antigravity · full access",
+   "Codex · desktop download",
+   "Codex · desktop guide",
+   "Codex · full access",
+   "Claude · desktop download",
+   "Claude · first Code session",
+   "Claude · permissions",
+   "Claude · Linux desktop"
+  ],
+  "footerLeft": "AI/ML Fundamentals · Cohort 2",
+  "footerRight": "One HTML file · 3 languages · works offline for reading",
+  "copy": "Copy",
+  "copied": "Copied",
+  "copyFail": "Select the text and copy it manually.",
+  "skip": "Skip to instructions",
+  "newTab": "opens in a new tab",
+  "printHint": "Printing shows your selected agent, OS and language.",
+  "accessTitle": "2. Enable full access",
+  "accessNote": "Full access lets the agent change files and install tools on your computer. Keep this task about your course folder. Enter a system password only in your operating system’s own prompt, never in the agent chat.",
+  "handoffTitle": "3. Let the agent do the setup",
+  "handoffText": "Copy the request below into the installed agent. It checks your system, installs missing tools, creates the project environment and runs a local demo. You do not need to type terminal commands.",
+  "osPrompt": "My operating system is",
+  "accessInstructions": {
+   "antigravity": {
+    "win": "<strong>Settings → Agent.</strong> Set <strong>Terminal Command Auto Execution → Always Proceed</strong>. Enable <strong>Agent Non-Workspace File Access</strong> for tool installation. If <strong>Terminal Sandbox</strong> is shown and blocks installation, turn it off for this setup.",
+    "mac": "<strong>Settings → Projects</strong> → your course project → <strong>Permission Settings → Turbo</strong>. If the project setting is absent, use <strong>Settings → General → Permission Settings → Turbo</strong>.",
+    "linux": "<strong>Settings → Projects</strong> → your course project → <strong>Permission Settings → Turbo</strong>. If the project setting is absent, use <strong>Settings → General → Permission Settings → Turbo</strong>."
+   },
+   "codex": "In the <strong>Codex desktop chat</strong>, open the permissions control below the message box. Choose <strong>Full access</strong> and confirm. Keep this project running <strong>locally</strong>.",
+   "claude": "In the <strong>Claude desktop app</strong>, open <strong>Settings → Claude Code → Allow bypass permissions mode</strong> and enable it. Return to <strong>Code</strong> and choose <strong>Bypass permissions</strong> from the mode selector under the prompt. Organization policy may control availability."
+  }
+ },
+ "ru": {
+  "title": "Твой первый",
+  "accent": "ИИ-агент.",
+  "eyebrow": "M2C5 → M2C6 / ПЕРВАЯ УСТАНОВКА",
+  "lede": "Установи одного агента. Дай полный доступ. Он сам подготовит Python и окружение проекта.",
+  "heroNote": "Нужны компьютер, интернет и свой аккаунт. Опыт работы с агентами не требуется.",
+  "sketchTop": "Один проект. Одна рабочая папка.",
+  "sketchBottom": "Агент настраивает. Ты проверяешь результат.",
+  "osLabel": "Мой компьютер",
+  "print": "Печать",
+  "route": "ТВОЙ МАРШРУТ",
+  "nav": [
+   "Выбор",
+   "Установка",
+   "Полный доступ",
+   "Запрос агенту",
+   "Готово?"
+  ],
+  "sideNote": "Один агент и один запрос на настройку. Команды установки выполняет агент.",
+  "chooseTitle": "Выбери одного агента",
+  "chooseSub": "Все три умеют работать с локальными файлами. Выбирай доступный тебе вариант.",
+  "agentSubs": [
+   "Отдельное приложение Antigravity.",
+   "Codex в настольном приложении OpenAI.",
+   "Приложение Claude → вкладка Code."
+  ],
+  "agentTags": [
+   "Google · бесплатный уровень",
+   "Вход через ChatGPT",
+   "Приложение Claude · Code"
+  ],
+  "chooseNote": "<strong>Достаточно одного.</strong> В учебном проекте мы используем одного агента. Установка всех трёх не улучшит результат.",
+  "installTitle": "Установи и войди",
+  "installSub": "Показана инструкция только для выбранного агента.",
+  "routeTag": "ТВОЙ ВЫБОР",
+  "onlineNote": "Локальная разработка означает, что файлы и Python работают на твоём компьютере. Модели агента всё равно нужен интернет; контекст проекта может передаваться провайдеру.",
+  "agent": {
+   "antigravity": {
+    "stepTitles": [
+     "Установи Antigravity",
+     "Войди в аккаунт",
+     "Подключи учебную папку",
+     "Выбери модель для старта"
+    ],
+    "steps": {
+     "win": "Скачай установщик для <strong>Windows</strong>, запусти <code>.exe</code> и заверши установку. Для обычного компьютера Intel/AMD выбирай x64; ARM64 нужен для Windows на ARM.",
+     "mac": "Скачай сборку macOS для своего процессора: Apple Silicon или Intel. Открой <code>.dmg</code> и перетащи Antigravity в Applications.",
+     "linux": "Скачай сборку Linux для своего процессора. Распакуй архив и запусти Antigravity из полученной папки. Сверь требования на странице загрузки."
+    },
+    "sign": "Открой Antigravity → <strong>Sign in</strong>. Войди в личный аккаунт Google в браузере и вернись в приложение.",
+    "project": "Создай или найди учебную папку, например <code>Documents/AI_ML/M2C6</code>. В приложении выбери <strong>New Project → Add Folder → Create</strong>, затем режим <strong>Local</strong>, если появится выбор.",
+    "model": "Выбор модели находится под полем запроса. Начни с доступной модели по умолчанию; для простого начального режима можно выбрать <strong>Medium</strong>, если он доступен.",
+    "access": "Для личного аккаунта Google предусмотрен бесплатный уровень с лимитами. Набор моделей различается. Выбирай уже доступную модель; платная подписка не является условием курса.",
+    "download": "Скачать Antigravity",
+    "docs": "Официальная инструкция"
+   },
+   "codex": {
+    "stepTitles": [
+     "Установи приложение для Codex",
+     "Войди в аккаунт",
+     "Открой учебный проект",
+     "Выбери стартовую модель"
+    ],
+    "steps": {
+     "win": "Открой официальную страницу загрузки OpenAI, выбери <strong>приложение для Windows</strong> и заверши установку. Запусти приложение и открой <strong>Codex</strong>. На текущей странице загрузки приложение может называться ChatGPT.",
+     "mac": "Открой официальную страницу загрузки OpenAI, выбери <strong>приложение для macOS</strong> под свой Mac и установи его. Запусти приложение и открой <strong>Codex</strong>. На текущей странице загрузки приложение может называться ChatGPT.",
+     "linux": "Открой официальную страницу загрузки OpenAI и выбери <strong>настольный пакет Linux</strong>, если он доступен для твоего дистрибутива. Открой пакет графическим установщиком и затем выбери <strong>Codex</strong> в приложении. Если совместимого пакета нет, выбери Antigravity в этой памятке."
+    },
+    "sign": "В установленном приложении выбери <strong>Sign in with ChatGPT</strong>. Заверши вход в браузере, вернись в приложение и открой <strong>Codex</strong>.",
+    "project": "Добавь или открой папку <code>Documents/AI_ML/M2C6</code> как проект. Создай <strong>New chat</strong> в этом проекте и выбери выполнение <strong>Local</strong> на своём компьютере.",
+    "model": "В чате Codex выбери рекомендованную доступную модель для кода. Оставь стандартный effort или Medium, если он доступен. Полный доступ включи в следующем разделе.",
+    "access": "Используй свой аккаунт ChatGPT с доступом к Codex. Лимиты зависят от аккаунта. Для входа через ChatGPT API-ключ не нужен.",
+    "download": "Скачать приложение для Codex",
+    "docs": "Официальная инструкция приложения Codex"
+   },
+   "claude": {
+    "stepTitles": [
+     "Установи приложение Claude",
+     "Войди и открой Code",
+     "Открой учебный проект",
+     "Выбери стартовую модель"
+    ],
+    "steps": {
+     "win": "На официальной странице загрузки Claude выбери <strong>Windows</strong> (ARM64 — только для ARM-компьютера). Запусти установщик и открой приложение <strong>Claude</strong>.",
+     "mac": "На официальной странице загрузки Claude выбери <strong>macOS</strong> и установи настольное приложение. Открой <strong>Claude</strong>.",
+     "linux": "На официальной странице загрузки Claude выбери <strong>Linux</strong>. Настольная бета поддерживает Ubuntu/Debian. Используй официальный пакет и открой <code>.deb</code> графическим установщиком. Если требуется настройка через терминал, выбери Antigravity или попроси наставника установить приложение агента."
+    },
+    "sign": "Войди в аккаунт в установленном Claude. Переключись на вкладку <strong>Code</strong>. Claude Code уже входит в приложение; отдельная установка через терминал не нужна.",
+    "project": "Под полем запроса выбери среду <strong>Local</strong>. Нажми <strong>Open folder…</strong> и открой <code>Documents/AI_ML/M2C6</code> или папку от наставника.",
+    "model": "В списке моделей под запросом во вкладке Code выбери доступную Sonnet или рекомендованную модель. Effort оставь стандартным; полный доступ включи в следующем разделе.",
+    "access": "Для вкладки Code нужна подходящая подписка Pro, Max, Team или Enterprise. Бесплатного чата Claude недостаточно. Если доступа к Code нет, выбери другого доступного агента.",
+    "download": "Скачать приложение Claude",
+    "docs": "Официальная инструкция Claude Desktop"
+   }
+  },
+  "modelLabel": "МОДЕЛЬ",
+  "modelTitle": "Кто отвечает?",
+  "modelText": "Выбери доступную модель для работы с кодом. Начни с рекомендованной или стандартной. Для настройки среды достаточно обычной модели для кода.",
+  "effortLabel": "EFFORT / УСИЛИЕ",
+  "effortTitle": "Насколько глубоко думает?",
+  "effortText": "Начни с настройки по умолчанию. Low подходит для простой задачи; Medium — удобный баланс; High может помочь со сложной ошибкой. Одинаковое название уровня у разных моделей работает по-разному.",
+  "effortLabels": [
+   "Low · быстро",
+   "Medium · баланс",
+   "High · глубже"
+  ],
+  "effortMini": "Больше усилия может означать больше времени и расхода лимита. Запуск и проверку результата это не заменяет.",
+  "localTitle": "Дай агенту полный доступ",
+  "localSub": "Разреши изменение файлов, запуск команд и загрузку инструментов для настройки среды.",
+  "folderTitle": "1. Открой учебную папку",
+  "folderText": "Используй папку от наставника. Сначала распакуй ZIP. Если заготовки ещё нет, создай <code>Documents/AI_ML/M2C6</code> и открой её в агенте. Работа должна идти локально на твоём компьютере.",
+  "firstTitle": "Отправь один запрос на настройку",
+  "firstSub": "Агент выполняет настройку. Ты смотришь результаты проверок и открываешь демо.",
+  "promptLabel": "СКОПИРУЙ ВЕСЬ ЗАПРОС В ЧАТ АГЕНТА",
+  "prompt": "Подготовь эту локальную папку для AI/ML Fundamentals. Я начинающий: выполни настройку самостоятельно, включая загрузки, установки и команды терминала. Не выдавай мне список команд для ручного выполнения.\n\n1. Уточни фактический путь локального проекта, определи ОС, оболочку и архитектуру процессора. Кратко назови план и сразу выполни его.\n2. Проверь Python и Git. Переиспользуй рабочие установки. Если их нет, установи из официальных источников, по возможности для текущего пользователя. Используй Python 3.13, если он совместим с проектом; иначе выбери поддерживаемую совместимую версию не ниже 3.11. Системный Python сохрани.\n3. Прочитай существующие файлы проекта и requirements.txt. Создай или переиспользуй .venv в этой папке. Установи туда зависимости проекта. Если файла зависимостей нет, установи pandas, numpy, matplotlib, scikit-learn и streamlit. Недостающие учебные библиотеки добавь без перезаписи существующего файла зависимостей.\n4. Реально выполни проверки версий и импортов интерпретатором из .venv. Выведи READY только после успешных импортов нужных библиотек. Исправь ошибки настройки и повтори проверки. Если редактор поддерживает это, выбери данный интерпретатор для проекта.\n5. Запусти встроенное демо Streamlit из этого окружения, оставь его работающим и дай точный локальный адрес. Если порт занят, выбери свободный. Проверь ответ сервера; отдельно укажи, удалось ли тебе посмотреть страницу в браузере.\n6. Сохрани в учебной папке setup-check.txt: реальные версии, путь интерпретатора, выполненные проверки, их фактический вывод, адрес демо и простую подсказку, как попросить тебя запустить его снова. Непроверенное пометь NOT RUN или BLOCKED.\n7. Не решай учебное задание и не меняй существующее приложение. Создавай только файлы среды и настройки, сохраняя мои работы. Не покупай услуги, ничего не публикуй и не читай посторонние личные файлы.\n8. Если нужны системное подтверждение, пароль, перезапуск или недоступное разрешение, назови одно необходимое действие с моей стороны и продолжи после моего подтверждения. Не заявляй об успешной установке или проверке без фактического запуска.\n\nВ конце сообщи: что установлено, что переиспользовано, какие проверки прошли, что заблокировано и какую ссылку мне открыть.",
+  "compareTitle": "Проверь три видимых результата",
+  "compareText": "Открой <code>setup-check.txt</code>, найди фактический вывод версий и импортов и перейди по ссылке локального демо. Одного «готово» недостаточно. Демо проверяет среду; это не твоё задание M2C6.",
+  "cycleTitle": "Твоя роль в этом процессе",
+  "cycleLabels": [
+   "Дать контекст",
+   "Агент выполняет",
+   "Проверить",
+   "Сохранить"
+  ],
+  "cycleTexts": [
+   "Открыть нужную папку",
+   "Настройка и проверки",
+   "Открыть локальное демо",
+   "Оставить setup-check.txt"
+  ],
+  "rulesNote": "Colab остаётся средой для видимых ML-расчётов. Агент может запускать локальную настройку и приложение; ты проверяешь результат и объясняешь, что произошло.",
+  "readyTitle": "Проверь готовность",
+  "readySub": "Отмечай пункт только после того, как увидел результат на своём компьютере.",
+  "checkTitle": "Всё готово для локальной работы?",
+  "checked": "проверено",
+  "reset": "Сбросить",
+  "checkItems": [
+   "Установленный агент авторизован и отвечает.",
+   "Открыта правильная локальная учебная папка.",
+   "Для настройки включён полный доступ.",
+   "Агент проверил Python, Git и окружение .venv проекта.",
+   "Реальные проверки импортов прошли, я могу прочитать setup-check.txt.",
+   "Локальное демо Streamlit открывается в моём браузере.",
+   "Я знаю настройку модели и effort и могу показать результат наставнику."
+  ],
+  "selfCheck": "Это твой чек-лист, а не автоматическое сканирование компьютера. Отметки сохраняются в этом браузере, если доступно локальное хранилище.",
+  "complete": "Самопроверка завершена. Покажи наставнику локальное демо и setup-check.txt.",
+  "helpTitle": "Если что-то не работает",
+  "help": [
+   [
+    "Агент только объясняет, что установить",
+    "Ответь: «Выполни настройку сам в этой локальной папке. Запусти команды и проверки. Обращайся ко мне только за системным подтверждением или при реальном препятствии». Проверь полный доступ и локальный режим."
+   ],
+   [
+    "Система просит пароль или подтверждение",
+    "Сам подтверди установку в системном окне. Сообщи агенту, что всё завершено, чтобы он продолжил. Полный доступ не отменяет запрос пароля операционной системы."
+   ],
+   [
+    "Установка или демо завершились ошибкой",
+    "Отправь полный текст ошибки тому же агенту: «Исправь эту ошибку окружения, повтори проверки и обнови setup-check.txt». Агент проверит путь окружения, сеть и порт."
+   ],
+   [
+    "Нет нужного режима, доступа или лимита",
+    "Покажи наставнику точное сообщение. На управляемом компьютере разрешения могут быть ограничены. При необходимости выбери другого доступного агента; браузерный чат не считается успешной локальной настройкой."
+   ]
+  ],
+  "sourcesTitle": "Официальные источники и актуальность",
+  "sourcesText": "Режимы полного доступа сверены с официальной документацией 21 октября 2026 года. Названия и доступность зависят от клиента, ОС и аккаунта. Контекст курса: M2C5–M2C6; памятка подготавливает среду.",
+  "sourceLabels": [
+   "Antigravity · загрузка",
+   "Antigravity · первый запуск",
+   "Antigravity · полный доступ",
+   "Codex · загрузка приложения",
+   "Codex · приложение",
+   "Codex · полный доступ",
+   "Claude · загрузка приложения",
+   "Claude · первый запуск Code",
+   "Claude · разрешения",
+   "Claude · приложение Linux"
+  ],
+  "footerLeft": "AI/ML Fundamentals · Поток 2",
+  "footerRight": "Один HTML-файл · 3 языка · чтение без интернета",
+  "copy": "Копировать",
+  "copied": "Скопировано",
+  "copyFail": "Выдели текст и скопируй вручную.",
+  "skip": "К инструкции",
+  "newTab": "откроется в новой вкладке",
+  "printHint": "На печать пойдёт выбранный агент, система и язык.",
+  "accessTitle": "2. Включи полный доступ",
+  "accessNote": "Полный доступ позволяет агенту менять файлы и устанавливать инструменты на компьютере. Ограничь задачу учебной папкой. Системный пароль вводи только в окне самой операционной системы, не в чате агента.",
+  "handoffTitle": "3. Передай настройку агенту",
+  "handoffText": "Скопируй запрос ниже в установленного агента. Он проверит систему, установит недостающее, создаст окружение и запустит локальное демо. Вводить команды в терминале тебе не нужно.",
+  "osPrompt": "Моя операционная система",
+  "accessInstructions": {
+   "antigravity": {
+    "win": "<strong>Settings → Agent.</strong> Выбери <strong>Terminal Command Auto Execution → Always Proceed</strong>. Включи <strong>Agent Non-Workspace File Access</strong> для установки инструментов. Если отображается <strong>Terminal Sandbox</strong> и он мешает установке, отключи его для этой настройки.",
+    "mac": "<strong>Settings → Projects</strong> → учебный проект → <strong>Permission Settings → Turbo</strong>. Если настройки проекта нет, используй <strong>Settings → General → Permission Settings → Turbo</strong>.",
+    "linux": "<strong>Settings → Projects</strong> → учебный проект → <strong>Permission Settings → Turbo</strong>. Если настройки проекта нет, используй <strong>Settings → General → Permission Settings → Turbo</strong>."
+   },
+   "codex": "В <strong>настольном приложении Codex</strong> открой переключатель разрешений под полем сообщения. Выбери <strong>Full access</strong> и подтверди. Проект должен выполняться <strong>локально</strong>.",
+   "claude": "В <strong>приложении Claude</strong> открой <strong>Settings → Claude Code → Allow bypass permissions mode</strong> и включи настройку. Вернись во вкладку <strong>Code</strong> и выбери <strong>Bypass permissions</strong> в переключателе режима под запросом. Доступность может определяться политикой организации."
+  }
+ },
+ "uz": {
+  "title": "Birinchi",
+  "accent": "AI agenting.",
+  "eyebrow": "M2C5 → M2C6 / BIRINCHI O‘RNATISH",
+  "lede": "Bitta agentni o‘rnat. To‘liq ruxsat ber. Python va loyiha muhitini agentning o‘zi tayyorlaydi.",
+  "heroNote": "Kompyuter, internet va shaxsiy hisob kerak. Agent bilan ishlash tajribasi shart emas.",
+  "sketchTop": "Bitta loyiha. Bitta ish papkasi.",
+  "sketchBottom": "Agent sozlaydi. Sen natijani tekshirasan.",
+  "osLabel": "Mening kompyuterim",
+  "print": "Chop etish",
+  "route": "SENING YO‘LING",
+  "nav": [
+   "Tanlash",
+   "O‘rnatish",
+   "To‘liq ruxsat",
+   "Agentga so‘rov",
+   "Tayyormi?"
+  ],
+  "sideNote": "Bitta agent va bitta sozlash so‘rovi. O‘rnatish buyruqlarini agent bajaradi.",
+  "chooseTitle": "Bitta agentni tanla",
+  "chooseSub": "Uchala agent ham mahalliy fayllar bilan ishlaydi. O‘zing kira oladiganini tanla.",
+  "agentSubs": [
+   "Alohida Antigravity ilovasi.",
+   "OpenAI kompyuter ilovasidagi Codex.",
+   "Claude ilovasi → Code bo‘limi."
+  ],
+  "agentTags": [
+   "Google · bepul daraja",
+   "ChatGPT orqali kirish",
+   "Claude ilovasi · Code"
+  ],
+  "chooseNote": "<strong>Bittasi yetarli.</strong> Kurs loyihasida bitta agentdan foydalanamiz. Uchalasini o‘rnatish natijani yaxshilamaydi.",
+  "installTitle": "O‘rnat va hisobga kir",
+  "installSub": "Faqat tanlangan agent uchun ko‘rsatmalar ko‘rsatiladi.",
+  "routeTag": "SENING TANLOVING",
+  "onlineNote": "Mahalliy ishlab chiqishda fayllar va Python kompyuteringda ishlaydi. Agent modeli uchun baribir internet kerak; loyiha konteksti xizmat provayderiga yuborilishi mumkin.",
+  "agent": {
+   "antigravity": {
+    "stepTitles": [
+     "Antigravity’ni o‘rnat",
+     "Hisobga kir",
+     "Kurs papkasini ulash",
+     "Boshlash uchun model tanla"
+    ],
+    "steps": {
+     "win": "<strong>Windows</strong> o‘rnatuvchisini yuklab ol, <code>.exe</code> faylini ishga tushir va o‘rnatishni tugat. Oddiy Intel/AMD kompyuter uchun x64, Windows on ARM uchun ARM64 ni tanla.",
+     "mac": "Protsessoringga mos macOS versiyasini yuklab ol: Apple Silicon yoki Intel. <code>.dmg</code> faylini ochib, Antigravity’ni Applications papkasiga ko‘chir.",
+     "linux": "Protsessoringga mos Linux versiyasini yuklab ol. Arxivni och va hosil bo‘lgan papkadan Antigravity’ni ishga tushir. Yuklab olish sahifasidagi talablarni tekshir."
+    },
+    "sign": "Antigravity → <strong>Sign in</strong> ni och. Brauzerda shaxsiy Google hisobingga kir va ilovaga qayt.",
+    "project": "Kurs papkasini yarat yoki top, masalan <code>Documents/AI_ML/M2C6</code>. Ilovada <strong>New Project → Add Folder → Create</strong> ni tanla. Rejim so‘ralsa, <strong>Local</strong> ni tanla.",
+    "model": "Model tanlash menyusi so‘rov maydoni ostida joylashgan. Mavjud standart modeldan boshla; sodda boshlang‘ich sozlama kerak bo‘lsa, <strong>Medium</strong> fikrlash darajasini tanlash mumkin.",
+    "access": "Shaxsiy Google hisobida limitli bepul foydalanish darajasi mavjud. Modellar hisoblarga qarab farq qiladi. Senga allaqachon ochiq modeldan foydalan; pulli obuna kurs sharti emas.",
+    "download": "Antigravity’ni yuklab olish",
+    "docs": "Rasmiy yo‘riqnoma"
+   },
+   "codex": {
+    "stepTitles": [
+     "Codex uchun kompyuter ilovasini o‘rnat",
+     "Hisobga kir",
+     "Kurs loyihasini och",
+     "Boshlang‘ich modelni tanla"
+    ],
+    "steps": {
+     "win": "OpenAI rasmiy yuklab olish sahifasidan <strong>Windows ilovasini</strong> tanla va o‘rnat. Ilovani ochib, <strong>Codex</strong> ni tanla. Joriy yuklab olish sahifasida ilova ChatGPT deb atalishi mumkin.",
+     "mac": "OpenAI rasmiy yuklab olish sahifasidan Mac’ingga mos <strong>macOS ilovasini</strong> tanla va o‘rnat. Ilovani ochib, <strong>Codex</strong> ni tanla. Joriy sahifada ilova ChatGPT deb atalishi mumkin.",
+     "linux": "OpenAI rasmiy yuklab olish sahifasida distributivingga mos <strong>Linux kompyuter paketi</strong> mavjud bo‘lsa, tanla. Paketni grafik o‘rnatuvchida och, so‘ng ilovada <strong>Codex</strong> ni tanla. Mos paket bo‘lmasa, ushbu qo‘llanmada Antigravity’ni tanla."
+    },
+    "sign": "O‘rnatilgan ilovada <strong>Sign in with ChatGPT</strong> ni tanla. Brauzerda hisobga kirib, ilovaga qayt va <strong>Codex</strong> ni och.",
+    "project": "<code>Documents/AI_ML/M2C6</code> papkasini loyiha sifatida qo‘sh yoki och. Shu loyihada <strong>New chat</strong> yarat va kompyuteringda <strong>Local</strong> rejimini tanla.",
+    "model": "Codex chatida tavsiya etilgan mavjud kod modelini tanla. Standart effort yoki mavjud bo‘lsa Medium’ni qoldir. Keyingi bo‘limda to‘liq ruxsatni yoq.",
+    "access": "Codex’ga kirish imkoniga ega shaxsiy ChatGPT hisobingdan foydalan. Limitlar hisobga bog‘liq. ChatGPT orqali kirish uchun API kaliti kerak emas.",
+    "download": "Codex uchun kompyuter ilovasini yuklash",
+    "docs": "Codex ilovasi rasmiy qo‘llanmasi"
+   },
+   "claude": {
+    "stepTitles": [
+     "Claude kompyuter ilovasini o‘rnat",
+     "Hisobga kir va Code’ni och",
+     "Kurs loyihasini och",
+     "Boshlang‘ich modelni tanla"
+    ],
+    "steps": {
+     "win": "Claude rasmiy yuklab olish sahifasidan <strong>Windows</strong> ni tanla (ARM64 faqat ARM kompyuter uchun). O‘rnatuvchini ishga tushirib, <strong>Claude</strong> ilovasini och.",
+     "mac": "Claude rasmiy yuklab olish sahifasidan <strong>macOS</strong> ni tanlab, kompyuter ilovasini o‘rnat. <strong>Claude</strong> ni och.",
+     "linux": "Claude rasmiy yuklab olish sahifasida <strong>Linux</strong> ni tanla. Kompyuter beta versiyasi Ubuntu/Debian’ni qo‘llaydi. Rasmiy <code>.deb</code> paketini grafik o‘rnatuvchida och. Terminal orqali sozlash kerak bo‘lsa, Antigravity’ni tanla yoki mentordan agent ilovasini o‘rnatishni so‘ra."
+    },
+    "sign": "O‘rnatilgan Claude ilovasida hisobga kir. <strong>Code</strong> bo‘limini och. Claude Code ilovaga kiritilgan; terminalda alohida o‘rnatish kerak emas.",
+    "project": "So‘rov maydoni ostida <strong>Local</strong> muhitini tanla. <strong>Open folder…</strong> ni bosib, <code>Documents/AI_ML/M2C6</code> yoki mentor bergan papkani och.",
+    "model": "Code bo‘limida so‘rov ostidagi model tanlovidan mavjud Sonnet yoki tavsiya etilgan modelni tanla. Standart effort’ni qoldir; keyingi bo‘limda to‘liq ruxsatni yoq.",
+    "access": "Code bo‘limi uchun mos Pro, Max, Team yoki Enterprise obunasi kerak. Bepul Claude chati yetarli emas. Code’ga kira olmasang, boshqa mavjud agentni tanla.",
+    "download": "Claude kompyuter ilovasini yuklash",
+    "docs": "Claude Desktop rasmiy qo‘llanmasi"
+   }
+  },
+  "modelLabel": "MODEL",
+  "modelTitle": "Qaysi model javob beradi?",
+  "modelText": "Kod bilan ishlashga mos mavjud modelni tanla. Tavsiya etilgan yoki standart variantdan boshla. Muhitni sozlash uchun odatiy kod modeli yetarli.",
+  "effortLabel": "EFFORT / FIKRLASH DARAJASI",
+  "effortTitle": "Qanchalik chuqur fikrlaydi?",
+  "effortText": "Standart sozlamadan boshla. Low sodda vazifa uchun; Medium — qulay muvozanat; High murakkab xatoda yordam berishi mumkin. Bir xil daraja nomi turli modellarda bir xil ishlamaydi.",
+  "effortLabels": [
+   "Low · tez",
+   "Medium · muvozanat",
+   "High · chuqurroq"
+  ],
+  "effortMini": "Yuqori effort ko‘proq vaqt va limit sarflashi mumkin. Natijani ishga tushirish va tekshirish baribir kerak.",
+  "localTitle": "Agentga to‘liq ruxsat ber",
+  "localSub": "Muhitni tayyorlash uchun fayllarni o‘zgartirish, buyruqlarni bajarish va vositalarni yuklashga ruxsat ber.",
+  "folderTitle": "1. Kurs papkasini och",
+  "folderText": "Mentor bergan papkadan foydalan. Avval ZIP arxivini och. Boshlang‘ich fayllar bo‘lmasa, <code>Documents/AI_ML/M2C6</code> yaratib, agentda och. Ish o‘z kompyuteringda mahalliy bajarilsin.",
+  "firstTitle": "Bitta sozlash so‘rovini yubor",
+  "firstSub": "Sozlashni agent bajaradi. Sen tekshiruv natijalarini ko‘rib, demoni ochasan.",
+  "promptLabel": "SO‘ROVNI TO‘LIQ NUSXALAB AGENTGA YUBOR",
+  "prompt": "Ushbu mahalliy papkani AI/ML Fundamentals uchun tayyorla. Men boshlovchiman: yuklash, o‘rnatish va terminal buyruqlarini o‘zing bajar. Menga qo‘lda bajarish uchun buyruqlar ro‘yxatini berma.\n\n1. Loyihaning haqiqiy mahalliy yo‘lini tasdiqla, operatsion tizim, shell va protsessor arxitekturasini aniqla. Qisqa reja ayt va uni bajar.\n2. Python va Git’ni tekshir. Ishlayotgan o‘rnatmalarni qayta ishlat. Yetishmasa, rasmiy manbalardan, imkon bo‘lsa joriy foydalanuvchi uchun o‘rnat. Loyihaga mos bo‘lsa Python 3.13 ishlat; aks holda qo‘llab-quvvatlanadigan mos, kamida 3.11 versiyani tanla. Tizim Python’ini saqla.\n3. Mavjud loyiha fayllari va requirements.txt ni o‘qi. Shu papkada .venv yarat yoki mavjudini ishlat. Loyiha kutubxonalarini shu muhitga o‘rnat. Bog‘liqliklar fayli bo‘lmasa, pandas, numpy, matplotlib, scikit-learn va streamlit o‘rnat. Yetishmayotgan kurs kutubxonalarini mavjud bog‘liqliklar faylini ustidan yozmasdan qo‘sh.\n4. Versiya va import tekshiruvlarini .venv interpretatori orqali haqiqatan bajar. Kerakli importlar muvaffaqiyatli bo‘lgandan keyingina READY chiqar. Sozlash xatolarini tuzat va tekshiruvlarni qayta bajar. Muharrir qo‘llasa, loyihaga shu interpretatorni tanla.\n5. Shu muhitda Streamlit’ning tayyor demosini ishga tushir, ishlayotgan holda qoldir va aniq mahalliy URL ber. Port band bo‘lsa, bo‘sh port tanla. Server javobini tekshir; brauzer sahifasini ko‘ra olganingni alohida ayt.\n6. Loyiha papkasida setup-check.txt saqla: haqiqiy versiyalar, interpretator yo‘li, bajarilgan tekshiruvlar, haqiqiy natijalar, demo manzili va keyin uni qayta ishga tushirishni sendan qanday so‘rash bo‘yicha oddiy eslatma. Tekshirilmaganini NOT RUN yoki BLOCKED deb belgilagin.\n7. Dars topshirig‘ini yechma va mavjud ilovani o‘zgartirma. Faqat muhit va sozlash fayllarini yarat; mening ishlarimni saqla. Xizmat sotib olma, hech narsa e’lon qilma va begona shaxsiy fayllarni o‘qima.\n8. Tizim tasdig‘i, parol, qayta ishga tushirish yoki mavjud bo‘lmagan ruxsat to‘sqinlik qilsa, men bajarishim kerak bo‘lgan bitta amalni ayt va tasdiqlaganimdan keyin davom et. O‘rnatish yoki tekshiruvni bajarmasdan muvaffaqiyatli deb aytma.\n\nOxirida: nima o‘rnatildi, nima qayta ishlatildi, qaysi tekshiruvlar o‘tdi, nima bloklangan va qaysi havolani ochishim kerakligini yoz.",
+  "compareTitle": "Uchta ko‘rinadigan natijani tekshir",
+  "compareText": "<code>setup-check.txt</code> ni och, versiya va importlarning haqiqiy natijalarini top va mahalliy demo havolasini och. «Tayyor» degan xabar yetarli emas. Demo muhitni tekshiradi; bu M2C6 topshirig‘ing emas.",
+  "cycleTitle": "Bu jarayonda sening vazifang",
+  "cycleLabels": [
+   "Kontekst ber",
+   "Agent bajaradi",
+   "Tekshir",
+   "Saqlab qo‘y"
+  ],
+  "cycleTexts": [
+   "To‘g‘ri papkani och",
+   "Sozlash va tekshiruvlar",
+   "Mahalliy demoni och",
+   "setup-check.txt ni saqla"
+  ],
+  "rulesNote": "Ko‘rinadigan ML hisob-kitoblari uchun Colab qoladi. Mahalliy sozlash va ilovani agent ishga tushirishi mumkin; sen natijani tekshirib, nima bo‘lganini tushuntirasan.",
+  "readyTitle": "Tayyorlikni tekshir",
+  "readySub": "Faqat o‘z kompyuteringda natijani ko‘rgandan keyin belgi qo‘y.",
+  "checkTitle": "Mahalliy ishga tayyormisan?",
+  "checked": "tekshirildi",
+  "reset": "Tozalash",
+  "checkItems": [
+   "O‘rnatilgan agent hisobga kirgan va javob beryapti.",
+   "To‘g‘ri mahalliy kurs papkasi ochiq.",
+   "Sozlash vazifasi uchun to‘liq ruxsat yoqilgan.",
+   "Agent Python, Git va loyiha .venv muhitini tekshirdi.",
+   "Haqiqiy import tekshiruvlari o‘tdi, setup-check.txt ni o‘qiy olaman.",
+   "Mahalliy Streamlit demosi brauzerimda ochiladi.",
+   "Model va effort sozlamasini bilaman va natijani mentorga ko‘rsata olaman."
+  ],
+  "selfCheck": "Bu sening tekshiruv ro‘yxating; kompyuter avtomatik tekshirilmaydi. Mahalliy saqlash mavjud bo‘lsa, belgilar shu brauzerda saqlanadi.",
+  "complete": "O‘z tekshiruving tugadi. Mentorga mahalliy demo va setup-check.txt ni ko‘rsat.",
+  "helpTitle": "Biror narsa ishlamasa",
+  "help": [
+   [
+    "Agent faqat nima o‘rnatishni tushuntiryapti",
+    "Javob ber: «Sozlashni shu mahalliy papkada o‘zing bajar. Buyruqlar va tekshiruvlarni ishga tushir. Faqat tizim tasdig‘i yoki haqiqiy to‘siq bo‘lsa menga murojaat qil». To‘liq ruxsat va mahalliy rejim tanlanganini tekshir."
+   ],
+   [
+    "Tizim parol yoki tasdiq so‘rayapti",
+    "Operatsion tizim oynasida o‘rnatishni o‘zing tasdiqla. Tugagach agentga ayt, u davom etsin. To‘liq ruxsat tizimning parol so‘rashini bekor qilmaydi."
+   ],
+   [
+    "O‘rnatish yoki demoda xato chiqdi",
+    "To‘liq xatoni o‘sha agentga yubor: «Muhit xatosini tuzat, tekshiruvlarni takrorla va setup-check.txt ni yangila». Muhit yo‘li, tarmoq va portni agent tekshirsin."
+   ],
+   [
+    "Rejim, hisob yoki limit mavjud emas",
+    "Mentorga aniq xabarni ko‘rsat. Boshqariladigan kompyuterda ruxsatlar cheklanishi mumkin. Zarur bo‘lsa boshqa mavjud agentni tanla; brauzer chati mahalliy sozlash bajarilganini anglatmaydi."
+   ]
+  ],
+  "sourcesTitle": "Rasmiy manbalar va yangilik holati",
+  "sourcesText": "To‘liq ruxsat sozlamalari 2026-yil 21-oktabrda rasmiy hujjatlar bilan tekshirildi. Nomlar va mavjudlik dastur, tizim va hisobga bog‘liq. Kurs konteksti: M2C5–M2C6; qo‘llanma muhitni tayyorlaydi.",
+  "sourceLabels": [
+   "Antigravity · yuklab olish",
+   "Antigravity · birinchi ishga tushirish",
+   "Antigravity · to‘liq ruxsat",
+   "Codex · ilovani yuklash",
+   "Codex · kompyuter ilovasi",
+   "Codex · to‘liq ruxsat",
+   "Claude · ilovani yuklash",
+   "Claude · birinchi Code sessiyasi",
+   "Claude · ruxsatlar",
+   "Claude · Linux ilovasi"
+  ],
+  "footerLeft": "AI/ML Fundamentals · 2-oqim",
+  "footerRight": "Bitta HTML fayl · 3 til · o‘qish uchun internet shart emas",
+  "copy": "Nusxalash",
+  "copied": "Nusxalandi",
+  "copyFail": "Matnni belgilab, qo‘lda nusxala.",
+  "skip": "Yo‘riqnomaga o‘tish",
+  "newTab": "yangi varaqda ochiladi",
+  "printHint": "Chop etishda tanlangan agent, tizim va til ko‘rsatiladi.",
+  "accessTitle": "2. To‘liq ruxsatni yoq",
+  "accessNote": "To‘liq ruxsat agentga kompyuterda fayllarni o‘zgartirish va vositalarni o‘rnatish imkonini beradi. Vazifani kurs papkasi bilan chekla. Tizim parolini faqat operatsion tizim oynasiga kirit, agent chatiga emas.",
+  "handoffTitle": "3. Sozlashni agentga topshir",
+  "handoffText": "Quyidagi so‘rovni o‘rnatilgan agentga yubor. U tizimni tekshiradi, yetishmayotgan vositalarni o‘rnatadi, muhit yaratadi va mahalliy demoni ishga tushiradi. Terminal buyruqlarini o‘zing yozishing shart emas.",
+  "osPrompt": "Mening operatsion tizimim",
+  "accessInstructions": {
+   "antigravity": {
+    "win": "<strong>Settings → Agent.</strong> <strong>Terminal Command Auto Execution → Always Proceed</strong> ni tanla. Vositalarni o‘rnatish uchun <strong>Agent Non-Workspace File Access</strong> ni yoq. <strong>Terminal Sandbox</strong> ko‘rsatilsa va o‘rnatishga to‘sqinlik qilsa, ushbu sozlash uchun o‘chir.",
+    "mac": "<strong>Settings → Projects</strong> → kurs loyihasi → <strong>Permission Settings → Turbo</strong>. Loyiha sozlamasi bo‘lmasa, <strong>Settings → General → Permission Settings → Turbo</strong> dan foydalan.",
+    "linux": "<strong>Settings → Projects</strong> → kurs loyihasi → <strong>Permission Settings → Turbo</strong>. Loyiha sozlamasi bo‘lmasa, <strong>Settings → General → Permission Settings → Turbo</strong> dan foydalan."
+   },
+   "codex": "<strong>Codex kompyuter ilovasida</strong> xabar maydoni ostidagi ruxsatlar tanlovini och. <strong>Full access</strong> ni tanlab, tasdiqla. Loyiha <strong>mahalliy</strong> bajarilsin.",
+   "claude": "<strong>Claude ilovasida</strong> <strong>Settings → Claude Code → Allow bypass permissions mode</strong> ni ochib, yoq. <strong>Code</strong> bo‘limiga qaytib, so‘rov ostidagi rejim tanlovidan <strong>Bypass permissions</strong> ni tanla. Mavjudlik tashkilot siyosatiga bog‘liq bo‘lishi mumkin."
+  }
+ }
+};
+const AGENTS=["antigravity","codex","claude"];
+const NAMES={antigravity:"Antigravity",codex:"Codex",claude:"Claude Code"};
+const IDS=["choose","install","local","first","ready"];
+const SOURCES=[
+ "https://antigravity.google/download",
+ "https://antigravity.google/docs/getting-started/",
+ "https://antigravity.google/docs/agent-settings",
+ "https://chatgpt.com/download/",
+ "https://developers.openai.com/codex/app",
+ "https://developers.openai.com/codex/sandboxing",
+ "https://claude.com/download",
+ "https://code.claude.com/docs/en/desktop-quickstart",
+ "https://code.claude.com/docs/en/desktop",
+ "https://code.claude.com/docs/en/desktop-linux"
+];
+const ICONS={
+ folder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 10h18"/></svg>',
+ check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m7.5 12 3 3 6-6"/></svg>',
+ print:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 8V3h12v5M6 17H3V8h18v9h-3M6 14h12v7H6z"/><path d="M17 11h1"/></svg>'
+};
+const STORAGE_KEY="aiml-cohort2-agent-setup-v3";
+let state={lang:"en",os:"win",agent:"antigravity",checks:{}};
+try{
+ const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
+ if(saved&&typeof saved==="object"){
+  if(Object.hasOwn(T,saved.lang))state.lang=saved.lang;
+  if(["win","mac","linux"].includes(saved.os))state.os=saved.os;
+  if(AGENTS.includes(saved.agent))state.agent=saved.agent;
+  if(saved.checks&&typeof saved.checks==="object"&&!Array.isArray(saved.checks))state.checks=saved.checks;
+ }
+}catch(e){}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}}
+function checkKey(){return state.agent+"-"+state.os}
+function checks(){const v=state.checks[checkKey()];return Array.isArray(v)?v:[]}
+function link(url,label){return '<a class="text-link" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer" title="'+esc(T[state.lang].newTab)+'">'+label+'</a>'}
+function cmd(text,label,id){const t=T[state.lang];return '<div class="cmd"><div class="cmd-bar"><span class="cmd-label">'+esc(label)+'</span><button type="button" class="copy" data-copy="'+id+'">'+t.copy+'</button></div><pre id="'+id+'"><code>'+esc(text)+'</code></pre></div>'}
+function details(title,body,extra){return '<details'+(extra?' class="'+extra+'"':"")+'><summary>'+title+'</summary><div class="details-body">'+body+'</div></details>'}
+function head(n,title,sub){return '<div class="section-head"><span class="step-num">0'+n+'</span><div><h2>'+title+'</h2><p>'+sub+'</p></div></div>'}
+function render(){
+ const t=T[state.lang],a=t.agent[state.agent];
+ document.documentElement.lang=state.lang;
+ document.title="AI/ML · "+t.title+" "+t.accent;
+ document.querySelector("#skip").textContent=t.skip;
+ document.querySelectorAll("[data-lang]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===state.lang)));
+ const nav=t.nav.map((n,i)=>'<a href="#'+IDS[i]+'"><b>0'+(i+1)+'</b>'+n+'</a>').join("");
+ const agentCards=AGENTS.map((id,i)=>'<button type="button" class="agent" data-agent="'+id+'" aria-pressed="'+(id===state.agent)+'"><span class="agent-symbol" aria-hidden="true">'+["A","C","C"][i]+'</span><span class="select-dot" aria-hidden="true"></span><h3>'+NAMES[id]+'</h3><p>'+t.agentSubs[i]+'</p><span class="agent-tag">'+t.agentTags[i]+'</span></button>').join("");
+ const downloadUrl={antigravity:SOURCES[0],codex:SOURCES[3],claude:SOURCES[6]}[state.agent];
+ const stepBodies=[a.steps[state.os]+link(downloadUrl,a.download),a.sign,a.project,a.model];
+ const stepHtml=stepBodies.map((body,i)=>'<li><span class="tiny-num">'+(i+1)+'</span><div><h4>'+a.stepTitles[i]+'</h4><p>'+body+'</p></div></li>').join("");
+ const accessText=state.agent==="antigravity"?t.accessInstructions.antigravity[state.os]:t.accessInstructions[state.agent];
+ const localSteps='<div class="substep"><h3>'+t.folderTitle+'</h3><p>'+t.folderText+'</p></div>'+
+ '<div class="substep permission-card"><h3>'+t.accessTitle+' · '+NAMES[state.agent]+'</h3><p>'+accessText+'</p></div>'+
+ '<p class="note soft">'+t.accessNote+'</p>'+
+ '<div class="substep"><h3>'+t.handoffTitle+'</h3><p>'+t.handoffText+'</p></div>';
+ const setupPrompt=t.osPrompt+': '+({win:'Windows',mac:'macOS',linux:'Linux'}[state.os])+'.\n\n'+t.prompt;
+ const activeChecks=checks();
+ const checksHTML=t.checkItems.map((item,i)=>'<label class="check-row"><input type="checkbox" data-check="'+i+'"'+(activeChecks[i]?" checked":"")+'><span>'+item+'</span></label>').join("");
+ const count=activeChecks.filter(Boolean).length;
+ const helps=t.help.map(x=>details(x[0],'<p>'+x[1]+'</p>')).join("");
+ const sourceHtml=details(t.sourcesTitle,'<div class="source-links">'+SOURCES.map((url,i)=>'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+t.sourceLabels[i]+' ↗</a>').join("")+'</div><p class="source-meta">'+t.sourcesText+'</p>',"sources");
+ document.querySelector("#app").innerHTML=
+ '<div class="wrap" id="top"><div class="hero"><p class="eyebrow">'+t.eyebrow+'</p><div class="hero-grid"><div><h1>'+t.title+'<span>'+t.accent+'</span></h1><p class="lede">'+t.lede+'</p><p class="hero-note">'+t.heroNote+'</p></div><div class="hero-sketch" aria-hidden="true"><div class="sketch-top"><i></i><i></i><i></i><span>'+t.sketchTop+'</span></div><div class="sketch-folder">'+ICONS.folder+'M2C6 /</div><div class="sketch-file">setup-check.txt</div><div class="sketch-file">.venv /</div><div class="sketch-bottom">'+ICONS.check+t.sketchBottom+'</div></div></div></div>'+
+ '<div class="settings-bar"><div class="setting-group"><span class="control-label">'+t.osLabel+'</span><div class="segmented" role="group" aria-label="'+esc(t.osLabel)+'">'+["win","mac","linux"].map((id,i)=>'<button type="button" data-os="'+id+'" aria-pressed="'+(state.os===id)+'">'+["Windows","macOS","Linux"][i]+'</button>').join("")+'</div></div><button type="button" class="print" data-print title="'+esc(t.printHint)+'">'+ICONS.print+t.print+'</button></div>'+
+ '<div class="layout"><nav class="side" aria-label="'+esc(t.route)+'"><p>'+t.route+'</p>'+nav+'<div class="side-bottom">'+t.sideNote+'</div></nav><main class="content" id="guide">'+
+ '<section id="choose">'+head(1,t.chooseTitle,t.chooseSub)+'<div class="agents" role="group" aria-label="'+esc(t.chooseTitle)+'">'+agentCards+'</div><div class="note">'+t.chooseNote+'</div></section>'+
+ '<section id="install">'+head(2,t.installTitle,t.installSub)+'<div class="install-box"><div class="install-header"><h3>'+NAMES[state.agent]+'</h3><span class="small-tag">'+t.routeTag+'</span></div><ol class="install-steps">'+stepHtml+'</ol><div class="access">'+a.access+'</div></div>'+
+ '<div class="rules-grid"><article class="rule-card"><div class="rule-label">'+t.modelLabel+'</div><h3>'+t.modelTitle+'</h3><p>'+t.modelText+'</p></article><article class="rule-card"><div class="rule-label">'+t.effortLabel+'</div><h3>'+t.effortTitle+'</h3><p>'+t.effortText+'</p><div class="effort-line">'+t.effortLabels.map(s=>'<span>'+s+'</span>').join("")+'</div><p class="mini">'+t.effortMini+'</p></article></div>'+'<p class="note soft">'+t.onlineNote+'</p></section>'+
+ '<section id="local">'+head(3,t.localTitle,t.localSub)+localSteps+'</section>'+
+ '<section id="first">'+head(4,t.firstTitle,t.firstSub)+'<div class="prompt-box">'+cmd(setupPrompt,t.promptLabel,"first-prompt")+'</div>'+
+ '<div class="result-box"><h4>'+t.compareTitle+'</h4><p>'+t.compareText+'</p></div><div class="substep"><h3>'+t.cycleTitle+'</h3><div class="microflow">'+t.cycleLabels.map((s,i)=>'<div><b>'+s+'</b>'+t.cycleTexts[i]+'</div>').join("")+'</div></div><p class="note soft">'+t.rulesNote+'</p></section>'+
+ '<section id="ready">'+head(5,t.readyTitle,t.readySub)+'<div class="check-box"><div class="check-top"><div class="check-top-row"><h3>'+t.checkTitle+'</h3><span class="count" id="check-count" aria-live="polite">'+count+' / 7</span></div><div class="meter" role="progressbar" aria-label="'+esc(t.checked)+'" aria-valuemin="0" aria-valuemax="7" aria-valuenow="'+count+'"><div id="meter-fill" style="width:'+(count/7*100)+'%"></div></div></div><div class="checks">'+checksHTML+'</div><div class="check-bottom"><p>'+t.selfCheck+'</p><button type="button" class="reset" data-reset>'+t.reset+'</button></div></div><p class="complete" id="complete"'+(count===7?"":" hidden")+'>'+t.complete+'</p><h3 class="helper-head">'+t.helpTitle+'</h3>'+helps+sourceHtml+'</section>'+
+ '</main></div></div><footer><div class="wrap footer-row"><strong>'+t.footerLeft+'</strong><span>'+t.footerRight+'</span></div></footer>';
+}
+function updateChecks(){
+ const items=checks(),n=items.filter(Boolean).length;
+ document.querySelector("#check-count").textContent=n+" / 7";
+ document.querySelector("#meter-fill").style.width=(n/7*100)+"%";
+ document.querySelector(".meter").setAttribute("aria-valuenow",String(n));
+ document.querySelector("#complete").hidden=n!==7;
+}
+let toastTimer;
+function toast(message){const el=document.querySelector("#toast");el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,2400)}
+async function copyText(id){
+ const source=document.getElementById(id),text=source.textContent,t=T[state.lang];
+ try{
+  if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}
+  else{
+   const textarea=document.createElement("textarea");textarea.value=text;textarea.style.position="fixed";textarea.style.top="-9999px";textarea.setAttribute("readonly","");document.body.appendChild(textarea);textarea.select();
+   const ok=document.execCommand("copy");textarea.remove();if(!ok)throw new Error("Clipboard unavailable");
+  }
+  toast(t.copied);
+ }catch(e){const range=document.createRange();range.selectNodeContents(source);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);toast(t.copyFail)}
+}
+function switchSetting(key,value){
+ const currentY=window.scrollY;
+ state[key]=value;save();render();
+ window.scrollTo({top:currentY,behavior:"instant"});
+ const attr={lang:"data-lang",agent:"data-agent",os:"data-os"}[key];
+ const target=document.querySelector("["+attr+'="'+value+'"]');
+ if(target)target.focus({preventScroll:true});
+}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("button");if(!b)return;
+ if(b.dataset.lang){switchSetting("lang",b.dataset.lang)}
+ else if(b.dataset.os){switchSetting("os",b.dataset.os)}
+ else if(b.dataset.agent){switchSetting("agent",b.dataset.agent)}
+ else if(b.dataset.copy){copyText(b.dataset.copy)}
+ else if(b.hasAttribute("data-print")){window.print()}
+ else if(b.hasAttribute("data-reset")){state.checks[checkKey()]=[];save();render();document.querySelector("#ready").scrollIntoView({behavior:"smooth",block:"start"})}
+});
+document.addEventListener("change",e=>{
+ if(e.target.matches("[data-check]")){
+  const items=checks().slice(0,7);items[Number(e.target.dataset.check)]=e.target.checked;state.checks[checkKey()]=items;save();updateChecks();
+ }
+});
+render();
+</script>
+</body>
+</html>

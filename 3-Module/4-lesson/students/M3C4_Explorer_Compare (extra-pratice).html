@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="M3C4 optional practice: compare BEFORE and AFTER CSV versions in your own Dataset Explorer. English, Russian and Uzbek.">
+<meta name="color-scheme" content="light">
+<title>AI/ML · Dataset Explorer — compare two versions</title>
+<style>
+:root{--blue:#0757ff;--blue-deep:#0045d4;--ink:#08112e;--muted:#34415a;--line:#bdcce4;--pale:#e4edfc;--paper:#fff;--green:#116644;--green-pale:#edf8f1;--radius:18px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:104px}
+body{margin:0;background:#fcfdff;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:600;line-height:1.58}
+body:before{content:"";position:fixed;top:0;bottom:0;left:0;width:6px;background:var(--blue);z-index:9}
+button,input{font:inherit}
+button,a,input,summary{-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+button{cursor:pointer}
+a{color:var(--blue);text-underline-offset:3px}
+a:hover{color:var(--blue-deep)}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #efb82f;outline-offset:4px}
+button:disabled{cursor:default}
+svg{display:block}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{line-height:1.16}
+.wrap{max-width:1192px;margin:auto;padding-left:36px;padding-right:36px}
+.top{position:sticky;top:0;z-index:8;border-bottom:1px solid var(--line);background:rgba(255,255,255,.97)}
+.top-row{min-height:78px;display:flex;gap:20px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-weight:800;font-size:14px;letter-spacing:.035em}
+.brand svg{width:34px;height:34px;color:var(--blue)}
+.brand small{display:block;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.13em}
+.segmented{display:inline-flex;border:1px solid var(--line);padding:4px;border-radius:12px;background:#fff;gap:2px;max-width:100%}
+.segmented button{border:0;background:transparent;padding:7px 14px;color:var(--muted);border-radius:8px;font-size:13px;font-weight:700;line-height:1.5;white-space:nowrap}
+.segmented button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.segmented button:hover:not([aria-pressed="true"]){background:var(--pale);color:var(--ink)}
+.hero{position:relative;overflow:hidden;padding-top:57px;padding-bottom:37px}
+.hero:after{content:"";position:absolute;width:285px;height:285px;border:1px solid #edf1f8;border-radius:50%;right:-95px;top:0;box-shadow:0 0 0 27px #f5f7fc,0 0 0 28px #edf1f8;z-index:-1}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:11px;color:var(--blue);font-weight:800}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;align-items:center;gap:64px;margin-top:21px}
+h1{font-size:clamp(42px,5.25vw,66px);font-weight:800;letter-spacing:-.055em;line-height:1.03}
+h1 span{color:var(--blue);display:block}
+.lede{font-size:17px;color:var(--muted);max-width:595px;margin-top:23px;line-height:1.65}
+.hero-note{font-size:12px;margin-top:17px;color:var(--muted)}
+.hero-sketch{position:relative;padding:20px 26px 22px;border:1px solid #bed0ff;background:#fff;border-radius:20px;box-shadow:0 12px 32px #0b316509;transform:rotate(1.5deg)}
+.sketch-top{display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:19px;font-size:12px;font-weight:700;color:var(--muted)}
+.sketch-top i{height:8px;width:8px;border:1px solid #a9c1f9;border-radius:50%}
+.sketch-folder{display:flex;gap:10px;align-items:center;font-size:15px;font-weight:700}
+.sketch-folder svg{height:25px;width:25px;color:var(--blue)}
+.sketch-file{margin:10px 0 0 35px;font-family:Consolas,Menlo,monospace;font-size:13px;color:var(--muted)}
+.sketch-file:before{content:"";display:inline-block;height:7px;width:7px;border-radius:2px;border:1px solid #b9c9e9;margin-right:9px}
+.sketch-bottom{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);color:var(--blue);font-weight:700;font-size:12px}
+.sketch-bottom svg{width:22px;height:22px}
+.settings-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0 23px;border-bottom:1px solid var(--line)}
+.setting-group{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.control-label{font-size:13px;font-weight:700}
+.print{display:flex;align-items:center;gap:7px;background:none;border:0;padding:10px 0;color:var(--muted);font-size:13px;white-space:nowrap}
+.print svg{height:17px;width:17px}
+.layout{display:grid;grid-template-columns:176px minmax(0,1fr);gap:42px;padding-top:31px;padding-bottom:55px}
+.side{align-self:start;position:sticky;top:109px}
+.side p{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:4px 0 13px}
+.side a{display:flex;align-items:center;gap:10px;color:var(--muted);text-decoration:none;font-size:13px;padding:10px 0;line-height:1.35}
+.side a:hover{color:var(--blue)}
+.side a b{display:grid;place-items:center;flex-shrink:0;height:27px;width:27px;border-radius:50%;border:1px solid #cbd9f7;font-size:10px;color:var(--blue);background:white}
+.side .side-bottom{font-size:11px;color:var(--muted);margin-top:23px;border-top:1px solid var(--line);padding-top:15px;line-height:1.6}
+.content{min-width:0}
+section{padding-bottom:39px;margin-bottom:35px;border-bottom:1px solid var(--line);scroll-margin-top:100px}
+section:last-of-type{border:0;margin-bottom:0}
+.section-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.step-num{display:grid;place-items:center;background:var(--blue);color:white;font-size:12px;font-weight:700;border-radius:50%;width:34px;height:34px;flex-shrink:0;margin-top:2px}
+h2{font-size:27px;letter-spacing:-.035em;font-weight:800}
+.section-head p{font-size:14px;color:var(--muted);margin-top:6px}
+.agents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.agent{border:1px solid var(--line);border-radius:var(--radius);background:white;text-align:left;padding:21px 18px 19px;position:relative;color:var(--ink);min-width:0}
+.agent:hover{border-color:#90aeff}
+.agent[aria-pressed="true"]{border:2px solid var(--blue);padding:20px 17px 18px;background:#f7faff}
+.agent-symbol{width:36px;height:36px;display:grid;place-items:center;border:1px solid #c3d4fc;border-radius:11px;margin-bottom:18px;color:var(--blue);font-size:18px;font-weight:800;background:white}
+.agent h3{font-size:18px;letter-spacing:-.03em}
+.agent p{font-size:12px;line-height:1.5;color:var(--muted);margin-top:8px}
+.agent .agent-tag{font-size:10px;font-weight:700;color:var(--blue);display:block;margin-top:14px}
+.select-dot{position:absolute;right:16px;top:18px;height:15px;width:15px;border:1px solid #bbcae8;border-radius:50%}
+.agent[aria-pressed="true"] .select-dot{border:4px solid var(--blue);background:white}
+.note{margin-top:17px;border-left:3px solid var(--blue);padding:10px 14px;background:var(--pale);font-size:13px;line-height:1.6;border-radius:0 10px 10px 0}
+.note.soft{background:#f6f8fc;border-left-color:#b8c7e6;color:var(--muted)}
+.install-box{border:1px solid #b9ceff;border-radius:var(--radius);overflow:hidden;background:white}
+.install-header{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px 23px;background:#f5f8ff;border-bottom:1px solid var(--line)}
+.install-header h3{font-size:21px;letter-spacing:-.03em}
+.small-tag{font-size:11px;font-weight:700;color:var(--blue);padding:4px 9px;border:1px solid #c1d3ff;border-radius:6px;white-space:nowrap;background:white}
+.install-steps{list-style:none;padding:8px 23px 5px;margin:0}
+.install-steps li{padding:17px 0;display:grid;grid-template-columns:25px minmax(0,1fr);gap:11px;border-bottom:1px solid #edf1f8}
+.install-steps li:last-child{border-bottom:0}
+.tiny-num{font-size:11px;font-weight:700;color:var(--blue);background:var(--pale);border-radius:6px;height:23px;display:grid;place-items:center}
+.install-steps h4{font-size:15px;margin:2px 0 7px;line-height:1.35}
+.install-steps p{font-size:14px;color:var(--muted)}
+.text-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;text-decoration:none;font-weight:700;font-size:12px}
+.text-link:after{content:"↗";font-size:14px}
+.access{padding:14px 23px;background:#f8faff;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.rule-card{padding:18px 19px;border:1px solid var(--line);background:#fff;border-radius:14px}
+.rule-label{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px}
+.rule-card h3{font-size:16px;margin-bottom:9px}
+.rule-card p{font-size:13px;color:var(--muted)}
+.rule-card .mini{margin-top:11px;font-size:12px;color:var(--ink)}
+.effort-line{display:flex;gap:6px;margin:12px 0}
+.effort-line span{font-size:10px;line-height:1.3;padding:6px 9px;background:#f3f6fc;border:1px solid var(--line);border-radius:6px}
+.effort-line span:nth-child(2){color:var(--blue);border-color:#c2d4ff;background:var(--pale)}
+details{border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:14px;overflow:hidden}
+summary{cursor:pointer;font-size:13px;font-weight:700;padding:15px 17px;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:21px;font-weight:400;color:var(--blue);line-height:1}
+details[open] summary:after{content:"−"}
+.details-body{padding:0 17px 17px;font-size:13px;color:var(--muted)}
+.details-body p+p{margin-top:12px}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tool{border:1px solid var(--line);border-radius:14px;background:#fff;padding:20px;min-width:0}
+.tool h3{font-size:17px;letter-spacing:-.02em;margin-bottom:9px}
+.tool p{font-size:13px;color:var(--muted)}
+.tool .cmd{margin-top:13px}
+.cmd{position:relative;border:1px solid #d4e0f8;border-radius:11px;background:#f5f8ff;margin:11px 0 6px;min-width:0;overflow:hidden}
+.cmd-bar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:8px 12px;border-bottom:1px solid #e1e9f8}
+.cmd-label{font-size:10px;font-weight:700;letter-spacing:.035em;color:var(--muted)}
+.copy{border:0;background:#fff;border-radius:5px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--blue);white-space:nowrap}
+.copy:hover{background:#e6eeff}
+pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;padding:14px;font-family:Consolas,"Liberation Mono",Menlo,monospace;font-size:12px;line-height:1.7;color:#15386b}
+code{font-family:Consolas,"Liberation Mono",Menlo,monospace;background:#edf3ff;color:#204a88;border-radius:4px;padding:2px 4px;font-size:.9em;overflow-wrap:anywhere}
+pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.substep{margin-top:24px}
+.substep h3{font-size:17px;letter-spacing:-.02em;margin-bottom:9px;line-height:1.35}
+.substep>p{font-size:14px;color:var(--muted)}
+.substep .tiny{font-size:12px;margin-top:8px}
+.package-choice{display:flex;gap:7px;margin:12px 0 3px;flex-wrap:wrap}
+.package-choice button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 11px;color:var(--muted);font-size:11px;font-weight:700}
+.package-choice button[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--pale)}
+.prompt-box{margin-top:13px}
+.prompt-box pre{font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.75;color:var(--ink);padding:18px 19px;white-space:pre-wrap}
+.result-box{border:1px solid #bfd4fd;border-radius:12px;padding:16px 18px;background:white;margin-top:17px}
+.result-box h4{font-size:13px;color:var(--blue);margin-bottom:8px}
+.result-box p{font-size:13px;color:var(--muted)}
+.microflow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:18px}
+.microflow div{border:1px solid var(--line);border-radius:9px;padding:11px 10px;font-size:11px;color:var(--muted);line-height:1.5;background:white}
+.microflow b{display:block;font-size:13px;color:var(--blue);margin-bottom:3px}
+.check-box{border:1px solid #b8ceff;border-radius:var(--radius);background:white;overflow:hidden}
+.check-top{padding:19px 22px;background:var(--pale);border-bottom:1px solid var(--line)}
+.check-top-row{display:flex;align-items:center;justify-content:space-between;gap:13px}
+.check-top h3{font-size:17px;line-height:1.3}
+.count{font-size:14px;color:var(--blue);font-weight:700;white-space:nowrap}
+.meter{background:#dbe6ff;height:4px;border-radius:3px;margin-top:14px;overflow:hidden}
+.meter div{height:100%;background:var(--blue);width:0;transition:width .2s}
+.checks{padding:5px 21px}
+.check-row{display:flex;gap:12px;align-items:flex-start;cursor:pointer;padding:14px 0;border-bottom:1px solid #edf1f8;font-size:13px;line-height:1.6}
+.check-row:last-child{border:0}
+.check-row input{margin:4px 0 0;flex:0 0 17px;width:17px;height:17px;accent-color:var(--blue);cursor:pointer}
+.check-row input:checked+span{color:var(--green)}
+.check-bottom{padding:15px 21px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.check-bottom p{font-size:11px;color:var(--muted);max-width:520px}
+.reset{padding:2px 0;border:0;background:none;color:var(--blue);font-size:11px;font-weight:700;white-space:nowrap}
+.complete{margin-top:14px;padding:15px 18px;color:var(--green);background:var(--green-pale);border:1px solid #bdddc9;border-radius:11px;font-size:13px}
+.helper-head{font-size:18px;margin-top:26px;letter-spacing:-.02em}
+.sources{margin-top:26px}
+.source-links{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}
+.source-links a{font-size:12px;line-height:1.5;text-decoration:none}
+.source-links a:hover{text-decoration:underline}
+.source-meta{margin-top:15px!important;font-size:11px}
+footer{border-top:1px solid var(--line);padding:24px 0 30px;background:white}
+.footer-row{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:11px;color:var(--muted)}
+.footer-row strong{color:var(--ink);font-size:12px}
+.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;font-size:13px;padding:10px 18px;border-radius:10px;z-index:15;box-shadow:0 5px 20px #08112e22;max-width:90vw;text-align:center}
+.skip{position:fixed;top:-80px;left:20px;z-index:20;background:white;padding:10px}
+.skip:focus{top:10px}
+.noscript{margin:30px;padding:25px;border:2px solid var(--blue);font-size:16px}
+[hidden]{display:none!important}
+@media(min-width:1500px){.wrap{max-width:1250px}.layout{gap:55px}}
+@media(max-width:900px){.hero-grid{gap:28px;grid-template-columns:1.3fr 1fr}.wrap{padding-left:28px;padding-right:24px}.layout{grid-template-columns:1fr;gap:0}.side{position:static;display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:28px}.side p,.side-bottom{display:none}.side a{padding:0;font-size:11px}.side a b{width:23px;height:23px;font-size:9px}.hero{padding-top:39px}.hero-sketch{padding:19px}.layout{padding-top:23px}}
+@media(max-width:620px){body{font-size:15px}body:before{width:4px}.wrap{padding-left:22px;padding-right:18px}.top-row{min-height:73px;gap:9px}.brand{font-size:11px;gap:7px;letter-spacing:0}.brand svg{width:25px;height:25px}.brand small{font-size:8px;letter-spacing:.09em}.segmented button{padding:7px 9px;font-size:11px}.hero{padding-top:31px;padding-bottom:23px}.hero-grid{display:block;margin-top:18px}.hero-sketch{display:none}h1{font-size:47px;letter-spacing:-.05em}.lede{font-size:15px;margin-top:20px}.hero-note{font-size:11px}.eyebrow{font-size:9px}.settings-bar{align-items:flex-start;padding:15px 0}.setting-group{gap:7px}.control-label{font-size:11px;display:block;width:100%}.print{font-size:11px;padding-top:27px}.print svg{display:none}.side{gap:10px 13px}.side a{font-size:10px;gap:5px}.side a b{width:21px;height:21px}.section-head{gap:10px}h2{font-size:24px}.section-head p{font-size:13px}.step-num{width:30px;height:30px;font-size:11px}.agents{grid-template-columns:1fr;gap:8px}.agent{display:grid;grid-template-columns:36px 1fr;gap:0 12px;padding:14px 37px 14px 14px;align-items:center}.agent[aria-pressed="true"]{padding:13px 36px 13px 13px}.agent-symbol{grid-column:1;grid-row:1 / span 3;margin:0}.agent h3{font-size:17px}.agent p{margin-top:4px}.agent .agent-tag{margin-top:4px;font-size:10px}.select-dot{top:20px;right:13px}.install-header{padding:17px}.install-header h3{font-size:19px}.install-steps{padding:3px 16px}.install-steps p{font-size:13px}.access{padding:13px 16px}.rules-grid,.tools-grid{grid-template-columns:1fr;gap:12px}.rules-grid{margin-top:17px}.tool{padding:17px}.rule-card{padding:17px}.microflow{grid-template-columns:1fr 1fr}.source-links{grid-template-columns:1fr}.check-top{padding:17px}.check-top h3{font-size:15px}.checks{padding:3px 16px}.check-bottom{padding:14px 16px}.check-bottom p{font-size:10px}.check-row{font-size:12px}.footer-row{align-items:flex-start;flex-direction:column;gap:6px}section{padding-bottom:28px;margin-bottom:26px}.cmd-label{font-size:9px}.substep h3{font-size:16px}pre{font-size:11px}.prompt-box pre{font-size:13px;padding:15px}.note{font-size:12px;padding:10px 12px}.source-meta{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+@media print{body{background:#fff;font-size:10pt}body:before,.top,.side,.settings-bar,.copy,.reset,.toast,.skip{display:none!important}.wrap{max-width:none;padding:0}.hero{padding:0 0 14px}.hero-grid{display:block}.hero-sketch{display:none}h1{font-size:30pt}h1 span{display:inline}.lede{font-size:11pt;max-width:none;margin-top:10px}.hero-note{font-size:9pt}.layout{display:block;padding:0}.section-head{break-after:avoid}section{margin:15px 0;padding-bottom:15px;break-inside:auto}.agent{display:none}.agent[aria-pressed="true"]{display:block;padding:12px;border:1px solid #a5bcf3}.agent-symbol,.select-dot{display:none}.agent p{font-size:9pt}.agent h3{font-size:13pt}.agent-tag{display:none!important}h2{font-size:18pt}.install-box{break-inside:auto}.install-steps li,.rule-card,.tool,.substep,.check-row,.result-box{break-inside:avoid}.cmd,pre{break-inside:avoid}.cmd-bar{padding:5px 10px}.rules-grid,.tools-grid{gap:12px}.check-row{padding:7px 0;font-size:9pt}.check-bottom p{font-size:8pt}.note,.access{font-size:9pt}.source-links a{font-size:8pt}.check-top{padding:12px}footer{margin-top:15px}.package-choice button{display:none}.package-choice button[aria-pressed="true"]{display:block}.complete{font-size:9pt}.details-body{display:block}details:not([open]) .details-body{display:none}.source-links a:after{content:""}a{text-decoration:none}.step-num{width:25px;height:25px;font-size:9pt}.section-head{margin-bottom:11px}}
+
+/* Readable instruction cards */
+.install-box{background:#eaf0fa;border-color:#afc3e6}
+.install-header,.check-top{background:#dce7fa}
+.install-steps li{border-bottom-color:#c5d3e9}
+.install-steps p,.substep>p,.rule-card p,.details-body,.result-box p,.check-row{font-weight:600}
+.install-steps h4,.substep h3{font-weight:800}
+.rule-card,.result-box,.tool,.microflow div,details{background:#eaf0fa;border-color:#bdcce4}
+.substep{padding:20px 22px;background:#eaf0fa;border:1px solid #bdcce4;border-radius:14px;margin-top:16px}
+.permission-card{background:#dfe9fb;border-color:#9fb9e8;border-left:4px solid var(--blue)}
+.note.soft{background:#e8edf5;border-left-color:#99adc9;color:#34415a}
+.access{background:#dde7f6;font-weight:600}
+.cmd{background:#dfe9fa;border-color:#adbfde}
+.cmd-bar{background:#cfddf4;border-bottom-color:#adbfde;padding:12px 16px}
+.cmd-label{font-size:11px;color:#263c62;font-weight:800}
+.copy{font-size:12px;padding:6px 12px;border:1px solid #b0c4e7}
+.prompt-box pre{font-size:15px;font-weight:600;background:#e8effc;line-height:1.8}
+.check-box{background:#edf2fa}
+.check-row{border-bottom-color:#c8d5e8}
+.agent p,.lede,.section-head p{font-weight:600}
+strong{font-weight:800}
+@media(max-width:620px){.substep{padding:17px}.prompt-box pre{font-size:14px}.cmd-label{font-size:10px}.copy{font-size:11px}}
+
+/* M3C2 additions; colors, type, spacing and components follow the M2 setup reference. */
+.hero-sketch{transform:none;margin:0;padding:22px;background:#fff;box-shadow:0 12px 32px #0b316509}
+.hero-sketch .sketch-top{margin-bottom:18px;line-height:1.5}
+.value-groups{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:12px;align-items:stretch}
+.value-group{min-width:0;padding:14px 12px 12px;border:1px solid #d6e2fa;border-radius:13px;background:#f5f8ff}
+.value-group-label{font-size:11px;font-weight:700;line-height:1.45;color:var(--muted);min-height:32px}
+.number-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:10px}
+.number-tiles span{display:grid;place-items:center;min-height:29px;background:#fff;border:1px solid #d5e2fa;border-radius:6px;font-size:14px;font-weight:700;color:#1e4382;font-variant-numeric:tabular-nums}
+.value-group.flagged{background:#fff7e9;border-color:#efc879;text-align:center}
+.flagged .value-group-label{color:#825212}
+.flagged-number{display:block;font-size:46px;font-weight:800;letter-spacing:-.06em;line-height:1.2;color:#a15d08;margin-top:9px;font-variant-numeric:tabular-nums}
+.iqr-boundaries{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding:12px 13px;border:1px solid var(--line);border-radius:10px}
+.iqr-boundaries span{font-size:11px;font-weight:600;color:var(--muted);line-height:1.5;max-width:185px}
+.iqr-boundaries strong{font-size:25px;font-weight:800;letter-spacing:-.04em;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums}
+.iqr-explanation{font-size:12px;line-height:1.6;margin-top:10px;color:var(--ink)}
+.hero-sketch .sketch-bottom{margin-top:15px;font-size:12px;line-height:1.5}
+.hero-sketch .sketch-bottom svg{flex-shrink:0}
+.route-label{font-size:13px;color:var(--muted)}
+.downloads{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.download-card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:20px;min-width:0}
+.download-card h3{font-size:17px;margin-bottom:9px}
+.download-card p{font-size:13px;color:var(--muted)}
+.action{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:9px;padding:10px 14px;font-size:12px;font-weight:700;min-height:42px;margin-top:15px}
+.action:hover{background:var(--blue-deep)}
+.download-card .cmd{margin-top:14px}
+.guide-list{padding-left:20px;margin:12px 0 0;font-size:14px;color:var(--muted)}
+.guide-list li{padding:4px 0 7px}
+.guide-list strong{color:var(--ink)}
+.table-wrap{overflow-x:auto;margin-top:15px;border:1px solid var(--line);border-radius:10px;background:white}
+table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.5}
+caption{text-align:left;padding:12px 14px;font-weight:700;background:#f5f8ff;color:var(--ink)}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-top:1px solid #e3ebfa}
+th{font-weight:700;color:var(--ink)}
+td{font-weight:500;color:var(--muted)}
+thead th{font-size:11px;color:var(--blue);background:#f9fbff}
+.note strong{color:var(--ink)}
+.bonus{margin-top:26px;border:1px solid #b9ceff;border-radius:14px}
+.bonus summary{font-size:15px;color:var(--blue);padding:18px}
+.bonus .details-body{padding:0 18px 20px}
+.bonus h3{font-size:17px;margin:18px 0 9px;color:var(--ink)}
+.bonus p{font-size:14px}
+.bonus .prompt-box pre{font-size:13px}
+.empty-tip{font-size:12px;color:var(--muted);margin-top:12px}
+.complete[hidden]{display:none!important}
+.cmd-bar{flex-wrap:wrap;gap:8px}
+.cmd-label{min-width:0;overflow-wrap:anywhere;flex:1 1 170px}
+.copy{min-height:32px;flex:0 0 auto}
+.action{max-width:100%;overflow-wrap:anywhere;white-space:normal}
+[tabindex]:focus-visible{outline:3px solid #efb82f;outline-offset:4px}
+.own-request{margin-top:20px;border:1px solid #b9ceff;background:#f8faff;border-radius:14px;padding:20px}
+.own-request h3{font-size:17px;margin-bottom:10px;line-height:1.35}
+.own-request>p,.own-request .guide-list{font-size:14px;color:var(--muted)}
+.prompt-help{border-left:3px solid var(--blue);margin-top:18px}
+.prompt-help>summary{color:var(--blue);line-height:1.5}
+.prompt-help .details-body>p{font-size:13px}
+.route-note{padding:14px 0 0;font-size:12px;color:var(--muted)}
+@media(max-width:620px){.own-request{padding:16px}.own-request>p,.own-request .guide-list{font-size:13px}.settings-bar{flex-wrap:wrap;align-items:flex-start}.settings-bar .setting-group{flex:1 1 225px;max-width:100%}.settings-bar .segmented{flex-wrap:nowrap}.settings-bar .segmented button{padding:7px 8px}.settings-bar .print{margin-left:auto;align-self:flex-end}}
+@media print{.own-request{padding:12px}.own-request>p,.own-request .guide-list{font-size:10pt}.route-note{display:none}details[data-prompt-help]:not([open])>.details-body{display:none!important}}
+@media(max-width:620px){.downloads{grid-template-columns:1fr}.download-card{padding:17px}.route-label{font-size:11px}h1{font-size:clamp(36px,10vw,47px)}.guide-list{font-size:13px}th,td{padding:9px 10px;font-size:12px}.bonus summary{font-size:14px}.hero-sketch{display:none}.print{padding-top:0}.settings-bar{align-items:center}.brand{max-width:61%}.brand div{min-width:0}.brand small{font-size:7px;letter-spacing:.04em}.top-row>.segmented{flex-shrink:0}.segmented button{min-height:38px}}
+@media print{.downloads{grid-template-columns:1fr 1fr}.action{display:none}.table-wrap{overflow:visible}table{font-size:9pt}.bonus .details-body{display:block!important}.bonus{break-inside:auto}.cmd{break-inside:auto}.prompt-box pre{font-size:9pt}.guide-list{font-size:10pt}.check-row{font-size:9pt}.hero-sketch{display:none}}
+@media screen and (max-width:620px){.hero-sketch{display:block;margin-top:26px;padding:18px}.value-groups{gap:10px}.value-group{padding:12px 10px}.value-group-label{font-size:11px}.number-tiles{gap:4px}.number-tiles span{font-size:13px}.flagged-number{font-size:clamp(34px,10vw,42px)}.iqr-boundaries span{max-width:155px}.iqr-boundaries strong{font-size:23px}}
+
+.compare-hero-stats{display:grid;gap:9px}
+.compare-stat{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:13px 12px;border:1px solid var(--line);border-radius:11px;background:#f8faff}
+.compare-stat>span:first-child{font-size:12px;color:var(--muted)}
+.compare-stat strong{font-size:22px;letter-spacing:-.04em;white-space:nowrap;color:var(--ink)}
+.delta{font-size:12px;font-weight:800;border-radius:6px;padding:4px 7px;white-space:nowrap;background:#fff4d8;color:#815000}
+.delta.same{background:#e9eef5;color:#45546a}
+.record-changes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.record-change{border-radius:10px;padding:12px;border:1px solid #a8d2b8;background:#edf8f1;color:#155d39;font-size:11px;line-height:1.5}
+.record-change strong{display:block;font-size:26px;line-height:1.2;margin-bottom:4px}
+.record-change.removed{border-color:#ebbdc2;background:#fff0f1;color:#92333e}
+.compare-hero-foot{font-size:12px;line-height:1.6;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted)}
+.compact-details{margin-top:17px}
+.bonus .code-sample pre{font-family:Consolas,Menlo,monospace;font-size:12px}
+.download-card details .copy{max-width:100%}
+@media screen and (max-width:620px){.compare-stat{gap:8px;padding:11px 10px}.compare-stat strong{font-size:20px}.compare-stat>span:first-child{font-size:11px}.record-change{padding:10px}.record-change strong{font-size:24px}}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#guide" id="skip">Skip to instructions</a>
+<header class="top"><div class="wrap top-row"><a href="#top" class="brand" aria-label="AI/ML Fundamentals, Cohort 2">
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M17 7v26M23 7v26M12 11l5 5m11-5-5 5M9 20h8m14 0h-8m-11 9 5-5m11 5-5-5"/><circle cx="17" cy="5" r="2"/><circle cx="23" cy="5" r="2"/><circle cx="10" cy="9" r="2"/><circle cx="30" cy="9" r="2"/><circle cx="7" cy="20" r="2"/><circle cx="33" cy="20" r="2"/><circle cx="10" cy="31" r="2"/><circle cx="30" cy="31" r="2"/><circle cx="17" cy="35" r="2"/><circle cx="23" cy="35" r="2"/></svg>
+    <div>AI/ML FUNDAMENTALS<small>COHORT 2 · DATASET EXPLORER</small></div>
+  </a>
+<div class="segmented" role="group" id="language" aria-label="Language">
+<button type="button" data-lang="en" lang="en" aria-pressed="true" aria-label="English">ENG</button>
+<button type="button" data-lang="ru" lang="ru" aria-pressed="false" aria-label="Русский">RU</button>
+<button type="button" data-lang="uz" lang="uz" aria-pressed="false" aria-label="O‘zbekcha">UZB</button>
+</div></div></header>
+<div id="app"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<noscript><div class="noscript">Enable JavaScript to display this offline guide.<br>Включите JavaScript, чтобы открыть эту офлайн-инструкцию.<br>Ushbu oflayn yo‘riqnomani ochish uchun JavaScript’ni yoqing.</div></noscript>
+<script>
+"use strict";
+const CSV = {"before": "row_id,name,age,city,score,legacy_note\nA,Amina,20,Tashkent,70,old\nB,Bek,21,Samarkand,,old\nC,Chen,,Bukhara,80,old\nD,Dina,23,,90,old\nE,Eli,24,Nukus,60,old\nF,Fara,25,Tashkent,75,old\n", "after": "row_id,name,age,city,score,segment\nA,Amina,20,Samarkand,70,A\nB,Bek,21,Samarkand,85,A\nC,Chen,22,Bukhara,80,B\nD,Dina,23,Bukhara,92,B\nG,Gul,26,Khiva,88,A\nH,Hasan,27,Nukus,   ,B\nI,Iman,28,Khiva,0,C\n", "reordered": "row_id,name,age,city,score,legacy_note\nF,Fara,25,Tashkent,75,old\nC,Chen,,Bukhara,80,old\nA,Amina,20,Tashkent,70,old\nE,Eli,24,Nukus,60,old\nD,Dina,23,,90,old\nB,Bek,21,Samarkand,,old\n", "duplicate": "row_id,name,age,city,score,segment\nA,Amina,20,Samarkand,70,A\nB,Bek,21,Samarkand,85,A\nC,Chen,22,Bukhara,80,B\nD,Dina,23,Bukhara,92,B\nG,Gul,26,Khiva,88,A\nH,Hasan,27,Nukus,   ,B\nG,Iman,28,Khiva,0,C\n", "textids": "row_id,label,value\n001,NA,0\n1,null,5\n", "bug": "# Intentionally faulty exercise. Run separately from your Explorer.\ndef count_added(old_ids, new_ids):\n    return len(new_ids) - len(old_ids)\n\nif __name__ == \"__main__\":\n    before = {\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"}\n    after = {\"A\", \"B\", \"C\", \"D\", \"G\", \"H\", \"I\"}\n    print(count_added(before, after))\n"};
+const FILES = {"before": "M3C4_BEFORE.csv", "after": "M3C4_AFTER.csv", "reordered": "M3C4_REORDERED_BEFORE.csv", "duplicate": "M3C4_DUPLICATE_ID.csv", "textids": "M3C4_TEXT_IDS.csv", "bug": "M3C4_COUNT_ADDED_BUG.py"};
+const IDS = ["open","plan","upgrade","verify","save"];
+const T = {
+  "en": {
+    "systemLabel": "My computer",
+    "systemContext": "My system",
+    "systemInstruction": "Use the current project environment and a launch command for this system and my actual terminal. Check the existing project instead of guessing filenames or creating a new environment.",
+    "ownTitle": "Build your own request",
+    "ownSend": "Use these points to write a short request in your own words. Send it to your agent in the existing project. There is no single required wording.",
+    "promptHelpTitle": "Having trouble writing your request? Use a ready-made example",
+    "promptHelpIntro": "Try your own wording first. If you get stuck, you may use this optional example. Your selected system is already included. Replace any [placeholders] with your actual details before sending.",
+    "launchTitle": "If you need the launch command",
+    "launchTask": "Ask the agent to help you open the existing app. Include:",
+    "launchLabel": "OPTIONAL EXAMPLE · OPEN THE EXISTING APP",
+    "launchPrompt": "Help me start the existing Dataset Explorer in the current project folder. Inspect the project instructions and reuse its existing Python environment. Preserve the files and features; do not create a new project or reinstall tools. Check which terminal to use and ask me if it is unclear. Start the app if you can. Give me the actual launch command, the terminal it belongs in and the local URL. Clearly state what you actually ran and what I must run myself.",
+    "print": "Print guide",
+    "skip": "Skip to instructions",
+    "language": "Language",
+    "navTitle": "YOUR ROUTE",
+    "download": "Download",
+    "csvContents": "CSV contents / manual fallback",
+    "csvFallback": "If a download is blocked, copy the CSV text into a plain-text file and save it with the exact .csv filename shown here, using UTF-8. Do not add .txt.",
+    "checkTitle": "Your manual check",
+    "checkNote": "Tick only what you personally checked. This guide does not inspect your app; the check marks are stored only in this browser when storage is available.",
+    "reset": "Reset checks",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFail": "Copy unavailable. The text is selected: press Ctrl+C / Cmd+C, or copy it manually.",
+    "launchPoints": [
+      "Your selected system and the name of the terminal you used before, if you know it.",
+      "The same Explorer project folder; the agent should inspect the project and reuse its existing environment.",
+      "The actual launch command and local URL, plus what to do if it cannot start the app itself."
+    ],
+    "osTips": {
+      "win": "Tell the agent that you use Windows and name your terminal, for example PowerShell. Ask for a command for that terminal and the existing project environment. If you use WSL or Git Bash, say so explicitly.",
+      "mac": "Tell the agent that you use macOS and the terminal you used before. Ask for the launch command for that terminal and the existing project environment.",
+      "linux": "Tell the agent that you use Linux and the terminal you used before. Ask for the launch command for that terminal and the existing project environment."
+    },
+    "title": "Two versions.",
+    "accent": "What changed?",
+    "eyebrow": "M3C4 / OPTIONAL CODING PRACTICE",
+    "lede": "Keep improving the Dataset Explorer you built in earlier lessons. Today, add a comparison of an old CSV and a new CSV so you can see what changed after your work.",
+    "heroNote": "Continue your own project with your familiar coding agent. Write your requests first; ready-made examples are optional help.",
+    "heroCaption": "Example from the two test files",
+    "heroRows": "Rows",
+    "heroColumns": "Columns",
+    "heroMissing": "Missing cells",
+    "heroAdded": "Added records",
+    "heroRemoved": "Removed records",
+    "heroFoot": "The total grew by 1, but 3 records arrived and 2 left. A valid ID reveals the difference.",
+    "routeLabel": "Open → describe → build → check → save",
+    "nav": [
+      "Continue",
+      "Compare",
+      "Ask AI",
+      "Test",
+      "Save"
+    ],
+    "sideNote": "This page is a guide. Upload the CSV files into your own Explorer, in the BEFORE and AFTER fields.",
+    "openTitle": "Continue your Explorer",
+    "openSub": "Use the same project folder and environment.",
+    "openItems": [
+      "Open your Explorer project in the coding agent you used before.",
+      "Start the app with your existing command and open its local URL. If you need help, describe your system and ask the agent to inspect the project and find the launch command.",
+      "Check the existing upload, summary and chart. Keep the earlier space-only counter and numeric inspection if you added them."
+    ],
+    "openNote": "If the existing app fails to start, restore that first. Give your agent the exact error. A new comparison feature is easier to check when the old app already works.",
+    "planTitle": "Decide what the comparison should show",
+    "planSub": "One clear summary first; details can open below it.",
+    "planItems": [
+      "Two uploads with clear roles: <strong>BEFORE — old file</strong> and <strong>AFTER — new file</strong>. Show their filenames so the direction is visible.",
+      "Three summary cards: <strong>rows, columns, missing cells</strong>. Each shows old → new and <strong>Δ = new − old</strong>. A missing cell is empty or contains only spaces; zero is a value.",
+      "Details below: column names added/removed and a small missing-count table aligned by the names of common columns.",
+      "To find which records arrived or left, choose a shared <strong>ID</strong>: a label that stays with the same record, such as <code>row_id</code>. It must be nonblank and unique in both files. Without a valid ID, show the summary and explain that record matching is unavailable.",
+      "Use labels with the colors: green <strong>Added</strong>, red <strong>Removed</strong>, amber <strong>Changed</strong>, neutral <strong>Unchanged</strong>. These describe differences, not whether the work was good or bad."
+    ],
+    "predict": "The test files have 6 and 7 rows. Does that prove exactly one record was added? Predict before opening the answer table in step 4.",
+    "beforeTitle": "BEFORE · the old copy",
+    "beforeText": "6 rows and 6 columns. Three cells are missing. Keep this file unchanged.",
+    "afterTitle": "AFTER · the new copy",
+    "afterText": "7 rows and 6 columns. Some records and one column have been replaced. The total size alone will not tell the whole story.",
+    "upgradeTitle": "Describe the feature to your agent",
+    "upgradeSub": "First write your own request using these points.",
+    "promptIntro": "Ask for one new comparison section in the existing app. The agent works with your project files. You will upload the test CSVs into the app yourself; they do not need to be attached to your first request.",
+    "featurePoints": [
+      "Context: your current Python / Streamlit / pandas Explorer, selected system and terminal. Preserve the app and earlier features.",
+      "Result: BEFORE/AFTER uploads, filenames, three old → new cards with deltas; green Added, red Removed, amber Changed and neutral Unchanged labels. Put detailed lists and tables in collapsible sections.",
+      "Rules: compare all rows and align columns by name. Empty and space-only cells are missing; zero and literal NA/null are values. Keep IDs as text, including leading zeros: 001 and 1 are different labels. Do not clean, delete or overwrite source data.",
+      "Record matching: let the user choose a common ID. Count added and removed IDs separately only when that ID is nonblank and unique in both files. Match the exact text, not row position; otherwise explain that matching is unavailable.",
+      "Check: make results refresh when a file or ID changes. Ask for the actual launch command, local URL and what the agent really ran. You will check the known answers yourself."
+    ],
+    "promptLabel": "OPTIONAL EXAMPLE · ADD CSV COMPARISON",
+    "prompt": "Continue my existing Dataset Explorer in the current Python/Streamlit/pandas project. Add one comparison section, reusing the current environment and installed libraries.\n\n1. Preserve existing CSV upload, summary, charts and any earlier M3 features. Add two independent uploads labelled BEFORE (old) and AFTER (new); show filenames. Do not change uploaded source tables, clean data automatically, delete rows or overwrite files.\n2. Show three compact cards: row count, column count and missing-cell count, each old → new and delta = new − old. Use every row, not just a preview. For this comparison, preserve cell text, including leading zeros in IDs; empty strings and whitespace-only strings are missing. Zero is not missing. Literal text such as NA or null must not silently become missing. Use separate temporary comparison views if the existing app parses values differently.\n3. Put details in collapsible sections: added/removed column names; missing counts for common columns aligned by name; and added/removed records if a user-selected common ID is valid. A valid ID is nonblank and unique in both files. Match ID values exactly as text; never match by position or infer added records from the net row delta. With no selected ID, absent ID, blanks or duplicates, keep the summary available and explain why record matching is unavailable. Do not show fake zero counts. With a valid ID, show both counts and the corresponding original records.\n4. Use accessible text labels alongside color: green Added, red Removed, amber Changed, neutral Unchanged. A color describes a difference, not data quality. Keep the first view to three summary cards; zero/unchanged results and invalid/missing-upload states must be clear. Refresh everything when either file or the chosen ID changes; do not leave stale results. Reordered rows with the same IDs must not create additions or removals.\n5. Make the smallest focused change. Run the existing app if possible and report the actual command, local URL, changed files and checks actually performed. Otherwise tell me what I must run. Stop after this feature; do not add model training, an automatic best-version verdict or a cell-by-cell diff.",
+    "afterPrompt": "After the change, launch the app or open the URL the agent actually started. Find the two comparison uploads. The agent saying “done” is a cue to start checking, not proof that the feature works.",
+    "verifyTitle": "Test the result yourself",
+    "verifySub": "First use BEFORE and AFTER below, then select row_id.",
+    "verifyItems": [
+      "Upload <code>M3C4_BEFORE.csv</code> into BEFORE and <code>M3C4_AFTER.csv</code> into AFTER. Select <code>row_id</code> for record matching. Compare your app with this answer table.",
+      "Upload BEFORE into <strong>both</strong> fields. Every summary delta must be 0; added/removed columns and records must be empty. An explicit “No changes” message is useful.",
+      "Swap the main pair: AFTER becomes the old file and BEFORE becomes the new file. Row delta becomes −1; added IDs are E/F (2), removed IDs are G/H/I (3); added/removed column names switch sides. Check that the app refreshes."
+    ],
+    "expectedCaption": "Known result · BEFORE → AFTER · ID = row_id",
+    "expectedHeads": [
+      "Check",
+      "BEFORE → AFTER",
+      "Difference / detail"
+    ],
+    "expectedRows": [
+      [
+        "Rows",
+        "6 → 7",
+        "+1 net row"
+      ],
+      [
+        "Columns",
+        "6 → 6",
+        "0 net columns"
+      ],
+      [
+        "Missing cells (whole table)",
+        "3 → 1",
+        "−2 net missing cells"
+      ],
+      [
+        "Added column",
+        "— → segment",
+        "+ segment"
+      ],
+      [
+        "Removed column",
+        "legacy_note → —",
+        "− legacy_note"
+      ],
+      [
+        "Added records",
+        "— → G, H, I",
+        "3 records"
+      ],
+      [
+        "Removed records",
+        "E, F → —",
+        "2 records"
+      ],
+      [
+        "IDs present in both",
+        "A, B, C, D",
+        "4 records"
+      ]
+    ],
+    "missingCaption": "Extra detail · missing counts in common columns",
+    "missingHeads": [
+      "Column",
+      "BEFORE",
+      "AFTER"
+    ],
+    "missingRows": [
+      [
+        "age",
+        "1",
+        "0"
+      ],
+      [
+        "city",
+        "1",
+        "0"
+      ],
+      [
+        "score",
+        "1",
+        "1"
+      ]
+    ],
+    "missingTitle": "Why score can still have one missing value",
+    "missingText": "In BEFORE, B has no score. In AFTER, B has a score, but new record H has no score. The count stayed at one, while the affected record changed. A lower total missing count alone does not prove which cleaning steps were done.",
+    "verifyNote": "With a valid ID, +3 arrivals and −2 departures explain the net row change +1. Without that ID, the summary +1 alone cannot tell you the two separate counts.",
+    "edgeTitle": "Optional · a few quick reliability checks",
+    "edgeText": "Use these after the three main checks above work. They test row order, the ID guard and preservation of text values.",
+    "reorderTitle": "Same old records, different order",
+    "reorderText": "Compare BEFORE with this reordered copy and select row_id. All deltas, added/removed columns and added/removed records must be zero or empty.",
+    "duplicateTitle": "A new copy with a repeated ID",
+    "duplicateText": "Compare BEFORE with this file and select row_id. Its final row repeats G. The app should explain the duplicate ID and disable record matching, while still showing summary counts (6 → 7 rows, 6 → 6 columns, 3 → 1 missing cells). “Unavailable” is different from zero changes.",
+    "textTitle": "IDs are text labels",
+    "textText": "Upload this file into both fields. Its row_id values 001 and 1 are different labels; NA/null and 0 are values. Expect 2 rows, 3 columns and 0 missing cells on both sides. The ID is valid, every delta and added/removed count is 0, and there must be no duplicate-ID warning.",
+    "helpTitle": "A number differs or the app fails",
+    "helpText": "Describe the problem in your own words. Keep these facts together so the agent can reproduce it.",
+    "repairPoints": [
+      "The actual files in BEFORE and AFTER, their direction and the selected ID.",
+      "The expected result from the table above and the actual result shown by the app.",
+      "The exact error text if there is one. Ask for one small correction, then repeat the main pair, same-file and swapped-file checks."
+    ],
+    "repairLabel": "OPTIONAL EXAMPLE · FIX ONE COMPARISON PROBLEM",
+    "repair": "Fix only the comparison feature in my existing Dataset Explorer. Preserve source data and all old features.\n\nBEFORE filename: [actual name]. AFTER filename: [actual name]. Selected ID: [column name, or no ID selected].\nExpected for this run: [copy the relevant result from the guide, including the file direction].\nActual: [numbers, filenames or behavior shown].\nExact error: [full text, or no error message].\n\nRemember: delta is new − old; real arrivals/departures require a common nonblank unique ID and exact text matching, not row position or the net row-count change. Without a valid ID, summary counts remain available and matching must be marked unavailable. Count empty/space-only cells as missing, preserve zero, and compare common columns by name. Clear stale results after inputs change.\n\nInspect the current code, briefly explain the cause and make the smallest correction. State what you actually ran or give me the exact launch command. I will repeat the main pair, same-file and swapped-file checks myself.",
+    "helpAfter": "After a correction, repeat all three main checks and recheck the earlier Explorer features. If another result is wrong, report that exact new observation rather than asking for a full rewrite.",
+    "saveTitle": "Explain the change and save",
+    "saveSub": "Use the report to describe what happened to the two files.",
+    "explain": "In your own words: “Rows changed from … to … . The net change is …, but the valid ID shows … arrivals and … departures. The columns that changed are … . The missing count tells me …, but it does not prove … .”",
+    "saveText": "Save the project, restart the app and repeat the main-pair check. Then try an old/new pair from your own work. Choose an ID only if it really identifies the same record across both files. Keep your short explanation with the project. This optional block adds no new grading or separate submission rule.",
+    "checks": [
+      "The main pair gives 6 → 7 rows, 6 → 6 columns and 3 → 1 missing cells.",
+      "With row_id, the app finds +3 records G/H/I and −2 records E/F, plus the correct column lists.",
+      "Same-file and swapped-file checks work, and results refresh.",
+      "Without a valid ID, the app explains that matching is unavailable; source data and old features stay intact.",
+      "After restarting, the feature works and I can explain net change versus added/removed records."
+    ],
+    "complete": "Main comparison checked. Save the project and your explanation. The debugging exercise below is optional.",
+    "bonusTitle": "Optional · find one small bug",
+    "bonusIntro": "This is a separate, intentionally faulty example. Open it in a scratch file alongside your project; your working comparison stays as it is. The example claims to count added IDs, but prints 1 for the same ID sets used above.",
+    "bugDownload": "Download the small debugging example",
+    "bugLabel": "INTENTIONALLY FAULTY EXAMPLE · RUN SEPARATELY",
+    "bugTask": "Predict the correct answer, then run the example in your existing Python environment with your agent's help. Explain why +1 net row is different from 3 added records. Ask for a one-line correction and rerun it.",
+    "bonusPoints": [
+      "Give the agent the small faulty file, its actual output 1 and your expected count for G/H/I.",
+      "Ask it to explain what the current function really counts and change only the added-ID calculation.",
+      "Run the corrected example yourself. Expect 3; with identical ID sets, expect 0. Then return to your working app."
+    ],
+    "bonusLabel": "OPTIONAL EXAMPLE · ASK ABOUT THE SMALL BUG",
+    "bonusPrompt": "Help me understand the separate M3C4_COUNT_ADDED_BUG.py exercise. It is intentionally faulty. Work only on this scratch example; leave my working Explorer unchanged.\n\nThe old IDs are A/B/C/D/E/F; the new IDs are A/B/C/D/G/H/I. The current function prints 1 but there are 3 new IDs (G/H/I). Explain what it currently counts. Make a one-line correction to count new IDs absent from old IDs. Run it if possible and report the real output; otherwise give me the command to run. I will also check identical old/new sets, which must give 0.",
+    "bonusCheck": "Finish when the corrected scratch example prints 3 and a same-set check gives 0, and you can explain why. You may stop after the main task; this exercise is not required.",
+    "footer": "M3C4 · Dataset Explorer — compare two versions",
+    "footerNote": "One offline guide · Your existing project · Optional practice",
+    "downloadStarted": "File download requested. Check your Downloads folder."
+  },
+  "ru": {
+    "systemLabel": "Моя система",
+    "systemContext": "Моя система",
+    "systemInstruction": "Используй текущее окружение проекта и команду запуска для этой системы и моего фактического терминала. Проверь существующий проект, не угадывай имена файлов и не создавай новое окружение.",
+    "ownTitle": "Составь свой запрос",
+    "ownSend": "По этим опорам напиши короткий запрос своими словами и отправь агенту в прежнем проекте. Единственной правильной формулировки нет.",
+    "promptHelpTitle": "Не получилось придумать запрос? Открой готовый пример",
+    "promptHelpIntro": "Сначала попробуй сформулировать сам. Если возникли трудности, можно использовать этот необязательный пример. Выбранная система уже указана. Перед отправкой замени все [подсказки в скобках] своими фактическими данными.",
+    "launchTitle": "Если нужна команда запуска",
+    "launchTask": "Попроси агента помочь открыть прежнее приложение. Укажи:",
+    "launchLabel": "НЕОБЯЗАТЕЛЬНЫЙ ПРИМЕР · ОТКРЫТЬ ПРЕЖНЕЕ ПРИЛОЖЕНИЕ",
+    "launchPrompt": "Помоги запустить существующий Dataset Explorer в открытой папке проекта. Прочитай инструкции проекта и используй его прежнее Python-окружение. Сохрани файлы и функции; не создавай новый проект и не переустанавливай инструменты. Проверь, какой терминал использовать; если неясно, уточни у меня. Если можешь, запусти приложение. Дай фактическую команду запуска, название терминала, куда её вводить, и локальный адрес. Явно скажи, что ты реально запустил и что нужно выполнить мне.",
+    "print": "Распечатать",
+    "skip": "Перейти к инструкции",
+    "language": "Язык",
+    "navTitle": "ТВОЙ МАРШРУТ",
+    "download": "Скачать",
+    "csvContents": "Содержимое CSV / запасной способ",
+    "csvFallback": "Если скачивание заблокировано, скопируй CSV в обычный текстовый файл и сохрани в UTF-8 с точным именем .csv, указанным здесь. Расширение .txt добавлять не нужно.",
+    "checkTitle": "Твоя ручная проверка",
+    "checkNote": "Отмечай только то, что проверил лично. Эта инструкция не проверяет приложение за тебя; отметки сохраняются только в этом браузере, если хранилище доступно.",
+    "reset": "Сбросить отметки",
+    "copy": "Копировать",
+    "copied": "Скопировано",
+    "copyFail": "Не удалось скопировать. Текст выделен: нажми Ctrl+C / Cmd+C или скопируй вручную.",
+    "launchPoints": [
+      "Выбранную систему и название прежнего терминала, если знаешь его.",
+      "Ту же папку Explorer: агенту нужно изучить проект и использовать его существующее окружение.",
+      "Что тебе нужны фактическая команда запуска и локальный адрес, а также действия на случай, если агент не сможет запустить приложение сам."
+    ],
+    "osTips": {
+      "win": "Назови агенту Windows и свой терминал, например PowerShell. Попроси команду для этого терминала и прежнего окружения проекта. Если используешь WSL или Git Bash, скажи об этом отдельно.",
+      "mac": "Назови агенту macOS и терминал, в котором запускал приложение раньше. Попроси команду для этого терминала и прежнего окружения проекта.",
+      "linux": "Назови агенту Linux и терминал, в котором запускал приложение раньше. Попроси команду для этого терминала и прежнего окружения проекта."
+    },
+    "title": "Две версии.",
+    "accent": "Что изменилось?",
+    "eyebrow": "M3C4 / ДОПОЛНИТЕЛЬНАЯ ПРАКТИКА ПО ПРОГРАММИРОВАНИЮ",
+    "lede": "Продолжаем улучшать Dataset Explorer с прошлых занятий. Сегодня добавим сравнение старой и новой копий CSV и посмотрим, что изменилось.",
+    "heroNote": "Продолжай работать над своим проектом с привычным ИИ-агент. Сначала составь запрос самостоятельно; готовые примеры помогут, если понадобятся.",
+    "heroCaption": "Пример по двум тестовым файлам",
+    "heroRows": "Строки",
+    "heroColumns": "Столбцы",
+    "heroMissing": "Пропущенные ячейки",
+    "heroAdded": "Добавленные записи",
+    "heroRemoved": "Удалённые записи",
+    "heroFoot": "Всего стало на 1 запись больше, но добавились 3 записи, а удалились 2. Это различие можно увидеть с корректным ID.",
+    "routeLabel": "Открой → опиши → создай → проверь → сохрани",
+    "nav": [
+      "Продолжить",
+      "Сравнить",
+      "Попросить ИИ",
+      "Проверить",
+      "Сохранить"
+    ],
+    "sideNote": "Эта страница — инструкция. Загрузи CSV-файлы в свой Explorer в поля BEFORE и AFTER.",
+    "openTitle": "Продолжи работу над Explorer",
+    "openSub": "Используй ту же папку проекта и то же окружение.",
+    "openItems": [
+      "Открой проект Explorer в ИИ-агент, которым пользовался раньше.",
+      "Запусти приложение привычной командой и открой его локальный адрес. Если нужна помощь, опиши агенту свою систему и попроси его изучить проект и найти команду запуска.",
+      "Проверь загрузку файла, сводку и график. Сохрани счётчик ячеек только с пробелами и проверку числовых данных, если добавлял их раньше."
+    ],
+    "openNote": "Если приложение не запускается, сначала исправь это. Передай агенту точный текст ошибки. Новую функцию сравнения проще проверить, когда прежнее приложение работает.",
+    "planTitle": "Реши, что должно показывать сравнение",
+    "planSub": "Сначала — понятная сводка; подробности можно раскрыть ниже.",
+    "planItems": [
+      "Две загрузки с понятными ролями: <strong>BEFORE — старый файл</strong> и <strong>AFTER — новый файл</strong>. Покажи имена файлов, чтобы было видно направление сравнения.",
+      "Три карточки сводки: <strong>строки, столбцы, пропущенные ячейки</strong>. В каждой покажи старое → новое и <strong>Δ = новое − старое</strong>. Пропущенная ячейка пуста или содержит только пробелы; ноль — это значение.",
+      "Ниже покажи подробности: названия добавленных и удалённых столбцов и небольшую таблицу количества пропусков, сопоставленных по именам общих столбцов.",
+      "Чтобы найти добавленные и удалённые записи, выбери общий <strong>ID</strong> — метку, которая остаётся с одной и той же записью, например <code>row_id</code>. Он должен быть непустым и уникальным в обоих файлах. Без корректного ID покажи сводку и объясни, что сопоставление записей недоступно.",
+      "Добавь к цветам подписи: зелёный — <strong>Добавлено</strong>, красный — <strong>Удалено</strong>, янтарный — <strong>Изменено</strong>, нейтральный — <strong>Без изменений</strong>. Они описывают различия и не оценивают качество работы."
+    ],
+    "predict": "В тестовых файлах 6 и 7 строк. Доказывает ли это, что добавилась ровно одна запись? Предположи ответ, прежде чем открывать таблицу ответов в шаге 4.",
+    "beforeTitle": "BEFORE · старая копия",
+    "beforeText": "6 строк и 6 столбцов. Три ячейки пропущены. Оставь этот файл без изменений.",
+    "afterTitle": "AFTER · новая копия",
+    "afterText": "7 строк и 6 столбцов. Некоторые записи и один столбец заменены. Один только размер таблицы не покажет всей картины.",
+    "upgradeTitle": "Опиши функцию агенту",
+    "upgradeSub": "Сначала составь свой запрос, используя эти пункты.",
+    "promptIntro": "Попроси добавить один раздел сравнения в существующее приложение. Агент работает с файлами твоего проекта. Тестовые CSV ты загрузишь в приложение самостоятельно; прикреплять их к первому запросу не нужно.",
+    "featurePoints": [
+      "Контекст: твой текущий Explorer на Python / Streamlit / pandas, выбранная система и терминал. Сохрани приложение и прежние функции.",
+      "Результат: загрузки BEFORE/AFTER, имена файлов, три карточки старое → новое с разницей и понятные подписи с цветами: зелёный Added, красный Removed, янтарный Changed и нейтральный Unchanged. Подробные списки и таблицы размести в раскрывающихся разделах.",
+      "Правила: сравнивай все строки; считай пустые ячейки и ячейки только с пробелами пропущенными, а ноль — значением. Сохраняй ID как текст вместе с начальными нулями; буквальные NA и null тоже остаются значениями. Сравнивай столбцы по имени. Не очищай, не удаляй и не перезаписывай исходные данные.",
+      "Сопоставление записей: пользователь выбирает общий ID. Считай добавленные и удалённые ID отдельно только тогда, когда ID непустой и уникальный в обоих файлах. Сопоставляй ID точно как текст, а не по позиции строки; иначе объясни, что сопоставление недоступно.",
+      "Проверка: результаты должны обновляться при смене файла или ID. Попроси указать фактическую команду запуска, локальный адрес и то, что агент действительно выполнил. Известные ответы ты проверишь самостоятельно."
+    ],
+    "promptLabel": "ПРИМЕР ПО ЖЕЛАНИЮ · ДОБАВИТЬ СРАВНЕНИЕ CSV",
+    "prompt": "Продолжи мой существующий Dataset Explorer в текущем проекте Python/Streamlit/pandas. Добавь один раздел сравнения, используя текущее окружение и установленные библиотеки.\n\n1. Сохрани существующие загрузку CSV, сводку, графики и все ранее добавленные функции M3. Добавь две независимые загрузки с подписями BEFORE (старый файл) и AFTER (новый файл); покажи имена файлов. Не изменяй загруженные исходные таблицы, не очищай данные автоматически, не удаляй строки и не перезаписывай файлы.\n2. Покажи три компактные карточки: количество строк, столбцов и пропущенных ячеек. В каждой укажи старое → новое и delta = new − old. Используй все строки, а не только предварительный просмотр. Для сравнения сохраняй текст ячеек, включая начальные нули в ID; пустые строки и строки только из пробелов считай пропусками. Ноль не является пропуском. Буквальный текст, например NA или null, не должен незаметно превращаться в пропуск. Если существующее приложение иначе разбирает значения, используй отдельные временные представления для сравнения.\n3. Размести подробности в раскрывающихся разделах: названия добавленных и удалённых столбцов; количество пропусков в общих столбцах с сопоставлением по имени; добавленные и удалённые записи, если выбранный пользователем общий ID корректен. Корректный ID непустой и уникальный в обоих файлах. Сопоставляй значения ID точно как текст; никогда не сопоставляй по позиции и не определяй добавленные записи по общей разнице числа строк. Если ID не выбран, отсутствует, содержит пустые значения или дубликаты, оставь сводку доступной и объясни, почему сопоставление записей недоступно. Не показывай ложные нулевые значения. При корректном ID покажи оба количества и соответствующие исходные записи.\n4. Используй доступные текстовые подписи вместе с цветом: зелёный Added, красный Removed, янтарный Changed, нейтральный Unchanged. Цвет описывает различие, а не качество данных. В первом представлении оставь три карточки сводки; нулевые результаты, отсутствие изменений, некорректный ID и отсутствие загруженного файла должны быть понятны. Обновляй всё при изменении любого файла или выбранного ID; не оставляй устаревшие результаты. Перестановка строк с теми же ID не должна создавать добавленные или удалённые записи.\n5. Сделай минимальное точечное изменение. По возможности запусти существующее приложение и сообщи фактическую команду, локальный адрес, изменённые файлы и действительно выполненные проверки. Иначе укажи, что мне нужно запустить. Остановись после этой функции; не добавляй обучение модели, автоматический выбор лучшей версии или сравнение ячейка за ячейкой.",
+    "afterPrompt": "После изменения запусти приложение или открой адрес, по которому агент действительно его запустил. Найди две загрузки для сравнения. Слова агента «готово» — повод начать проверку, а не доказательство работы функции.",
+    "verifyTitle": "Проверь результат самостоятельно",
+    "verifySub": "Сначала используй BEFORE и AFTER ниже, затем выбери row_id.",
+    "verifyItems": [
+      "Загрузи <code>M3C4_BEFORE.csv</code> в BEFORE, а <code>M3C4_AFTER.csv</code> в AFTER. Выбери <code>row_id</code> для сопоставления записей. Сравни результат приложения с таблицей ответов.",
+      "Загрузи BEFORE в <strong>оба</strong> поля. Каждая разница в сводке должна быть равна 0; списки добавленных и удалённых столбцов и записей должны быть пустыми. Явное сообщение «Нет изменений» будет полезно.",
+      "Поменяй основную пару местами: AFTER станет старым файлом, а BEFORE — новым. Разница строк станет −1; добавленные ID — E/F (2), удалённые ID — G/H/I (3); названия добавленных и удалённых столбцов поменяются местами. Проверь, что приложение обновилось."
+    ],
+    "expectedCaption": "Известный результат · BEFORE → AFTER · ID = row_id",
+    "expectedHeads": [
+      "Проверка",
+      "BEFORE → AFTER",
+      "Разница / подробности"
+    ],
+    "expectedRows": [
+      [
+        "Строки",
+        "6 → 7",
+        "+1 строка в итоге"
+      ],
+      [
+        "Столбцы",
+        "6 → 6",
+        "0 столбцов в итоге"
+      ],
+      [
+        "Пропущенные ячейки (вся таблица)",
+        "3 → 1",
+        "−2 пропущенные ячейки в итоге"
+      ],
+      [
+        "Добавленный столбец",
+        "— → segment",
+        "+ segment"
+      ],
+      [
+        "Удалённый столбец",
+        "legacy_note → —",
+        "− legacy_note"
+      ],
+      [
+        "Добавленные записи",
+        "— → G, H, I",
+        "3 записи"
+      ],
+      [
+        "Удалённые записи",
+        "E, F → —",
+        "2 записи"
+      ],
+      [
+        "ID в обоих файлах",
+        "A, B, C, D",
+        "4 записи"
+      ]
+    ],
+    "missingCaption": "Дополнительно · количество пропусков в общих столбцах",
+    "missingHeads": [
+      "Столбец",
+      "BEFORE",
+      "AFTER"
+    ],
+    "missingRows": [
+      [
+        "age",
+        "1",
+        "0"
+      ],
+      [
+        "city",
+        "1",
+        "0"
+      ],
+      [
+        "score",
+        "1",
+        "1"
+      ]
+    ],
+    "missingTitle": "Почему в score всё ещё может быть один пропуск",
+    "missingText": "В BEFORE у B нет значения score. В AFTER у B значение есть, но у новой записи H его нет. Количество осталось равным одному, но запись с пропуском изменилась. Само по себе снижение общего числа пропусков не доказывает, какие действия по очистке были выполнены.",
+    "verifyNote": "При корректном ID добавление 3 и удаление 2 записей объясняют итоговое изменение числа строк на +1. Без такого ID одна лишь сводка +1 не позволяет узнать эти два отдельных количества.",
+    "edgeTitle": "По желанию · несколько коротких проверок",
+    "edgeText": "Используй их только после того, как заработают три основные проверки выше. Они проверяют порядок строк, защиту от некорректного ID и сохранение значений как текста.",
+    "reorderTitle": "Те же старые записи в другом порядке",
+    "reorderText": "Сравни BEFORE с этой копией, где строки переставлены, и выбери row_id. Все разницы должны быть нулевыми, а списки добавленных и удалённых столбцов и записей — пустыми.",
+    "duplicateTitle": "Новая копия с повторяющимся ID",
+    "duplicateText": "Сравни BEFORE с этим файлом и выбери row_id. В последней строке повторяется G. Приложение должно сообщить о дубликате ID и отключить сопоставление записей, сохранив сводку (6 → 7 строк, 6 → 6 столбцов, 3 → 1 пропущенная ячейка). «Недоступно» отличается от нуля изменений.",
+    "helpTitle": "Число отличается или приложение не работает",
+    "helpText": "Опиши проблему своими словами. Собери эти факты вместе, чтобы агент мог её воспроизвести.",
+    "repairPoints": [
+      "Фактические файлы в BEFORE и AFTER, направление сравнения и выбранный ID.",
+      "Ожидаемый результат из таблицы выше и фактический результат приложения.",
+      "Точный текст ошибки, если она есть. Попроси об одном небольшом исправлении, затем повтори проверки основной пары, одного и того же файла и переставленных файлов."
+    ],
+    "repairLabel": "ПРИМЕР ПО ЖЕЛАНИЮ · ИСПРАВИТЬ ОДНУ ПРОБЛЕМУ СРАВНЕНИЯ",
+    "repair": "Исправь только функцию сравнения в моём существующем Dataset Explorer. Сохрани исходные данные и все прежние функции.\n\nИмя файла BEFORE: [фактическое имя]. Имя файла AFTER: [фактическое имя]. Выбранный ID: [имя столбца или ID не выбран].\nОжидаемый результат этого запуска: [скопируй нужный результат из инструкции вместе с направлением сравнения файлов].\nФактический результат: [показанные числа, имена файлов или поведение].\nТочная ошибка: [полный текст или отсутствие сообщения об ошибке].\n\nПомни: delta — это new − old; для определения действительно добавленных и удалённых записей нужен общий непустой уникальный ID и точное сопоставление текста, а не позиция строки или итоговая разница числа строк. Без корректного ID сводка остаётся доступной, а сопоставление должно быть отмечено как недоступное. Считай пустые ячейки и ячейки только с пробелами пропущенными, сохраняй ноль и сравнивай общие столбцы по имени. Убирай устаревшие результаты после изменения входных данных.\n\nИзучи текущий код, кратко объясни причину и внеси минимальное исправление. Укажи, что ты действительно запустил, или дай мне точную команду запуска. Я самостоятельно повторю проверки основной пары, одного и того же файла и переставленных файлов.",
+    "helpAfter": "После исправления повтори все три основные проверки и заново проверь прежние функции Explorer. Если другой результат неверен, сообщи именно о новом наблюдении, не прося полностью переписать приложение.",
+    "saveTitle": "Объясни изменение и сохрани проект",
+    "saveSub": "Используй отчёт, чтобы описать, что произошло с двумя файлами.",
+    "explain": "Своими словами: «Количество строк изменилось с … до … . Итоговая разница — …, но корректный ID показывает … добавленных и … удалённых записей. Изменились столбцы … . Количество пропусков говорит мне …, но не доказывает … .»",
+    "saveText": "Сохрани проект, перезапусти приложение и повтори проверку основной пары. Затем попробуй старую и новую версии файлов из своей работы. Выбирай ID, только если он действительно обозначает одну и ту же запись в обоих файлах. Сохрани краткое объяснение вместе с проектом. Этот необязательный блок не добавляет баллов или отдельного правила сдачи.",
+    "checks": [
+      "Основная пара даёт 6 → 7 строк, 6 → 6 столбцов и 3 → 1 пропущенную ячейку.",
+      "С row_id приложение находит +3 записи G/H/I и −2 записи E/F, а также показывает правильные списки столбцов.",
+      "Проверки с одним и тем же файлом и с переставленными файлами проходят, результаты обновляются.",
+      "Без корректного ID приложение объясняет, что сопоставление недоступно; исходные данные и прежние функции сохранены.",
+      "После перезапуска функция работает, и я могу объяснить разницу между итоговым изменением и добавленными/удалёнными записями."
+    ],
+    "complete": "Основное сравнение проверено. Сохрани проект и своё объяснение. Упражнение по поиску ошибки ниже — по желанию.",
+    "bonusTitle": "По желанию · найди небольшую ошибку",
+    "bonusIntro": "Это отдельный пример с намеренной ошибкой. Открой его во временном файле рядом с проектом; работающее сравнение останется без изменений. Пример должен считать добавленные ID, но выводит 1 для тех же наборов ID, что использовались выше.",
+    "bugDownload": "Скачать небольшой пример для поиска ошибки",
+    "bugLabel": "ПРИМЕР С НАМЕРЕННОЙ ОШИБКОЙ · ЗАПУСКАЙ ОТДЕЛЬНО",
+    "bugTask": "Предположи правильный ответ, затем запусти пример в своём существующем окружении Python с помощью агента. Объясни, почему итоговое изменение +1 строки отличается от 3 добавленных записей. Попроси исправить одну строку и запусти пример снова.",
+    "bonusPoints": [
+      "Передай агенту небольшой файл с ошибкой, его фактический вывод 1 и ожидаемое количество для G/H/I.",
+      "Попроси объяснить, что текущая функция считает на самом деле, и изменить только расчёт добавленных ID.",
+      "Самостоятельно запусти исправленный пример. Ожидай 3; для одинаковых наборов ID ожидай 0. Затем вернись к работающему приложению."
+    ],
+    "bonusLabel": "ПРИМЕР ПО ЖЕЛАНИЮ · СПРОСИТЬ О НЕБОЛЬШОЙ ОШИБКЕ",
+    "bonusPrompt": "Помоги мне разобраться с отдельным упражнением M3C4_COUNT_ADDED_BUG.py. В нём намеренно допущена ошибка. Работай только с этим временным примером; оставь мой работающий Explorer без изменений.\n\nСтарые ID: A/B/C/D/E/F; новые ID: A/B/C/D/G/H/I. Текущая функция выводит 1, но новых ID — 3 (G/H/I). Объясни, что она сейчас считает. Исправь одну строку, чтобы посчитать новые ID, отсутствующие среди старых. По возможности запусти пример и сообщи фактический вывод; иначе дай мне команду запуска. Я также проверю одинаковые старый и новый наборы, для которых результат должен быть 0.",
+    "bonusCheck": "Закончи, когда исправленный временный пример выведет 3, проверка с одинаковыми наборами даст 0 и ты сможешь объяснить почему. Можно остановиться после основной задачи; это упражнение необязательно.",
+    "footer": "M3C4 · Dataset Explorer — сравнение двух версий",
+    "footerNote": "Одна инструкция без подключения к сети · Твой существующий проект · Практика по желанию",
+    "downloadStarted": "Запрос на скачивание файла отправлен. Проверь папку загрузок.",
+    "textTitle": "Проверь ID как текст",
+    "textText": "Загрузи этот файл в оба поля. Значения row_id 001 и 1 — разные метки; NA, null и 0 — значения. Ожидается 2 строки, 3 столбца и 0 пропусков; row_id корректен, все изменения равны 0, сообщения о дубликате нет."
+  },
+  "uz": {
+    "systemLabel": "Mening tizimim",
+    "systemContext": "Mening tizimim",
+    "systemInstruction": "Mavjud loyiha muhiti hamda shu tizim va amaldagi terminalim uchun ishga tushirish buyrug‘idan foydalan. Fayl nomlarini taxmin qilish yoki yangi muhit yaratish o‘rniga mavjud loyihani tekshir.",
+    "ownTitle": "O‘z so‘rovingni tuz",
+    "ownSend": "Shu tayanchlar yordamida o‘z so‘zlaring bilan qisqa so‘rov yoz va avvalgi loyihadagi agentga yubor. Yagona to‘g‘ri ifoda yo‘q.",
+    "promptHelpTitle": "So‘rov tuzishda qiynaldingmi? Tayyor misolni och",
+    "promptHelpIntro": "Avval o‘zing ifodalashga urin. Qiynalsang, bu ixtiyoriy misoldan foydalanishing mumkin. Tanlangan tizim allaqachon kiritilgan. Yuborishdan oldin barcha [qavsdagi joylarni] haqiqiy ma’lumotlaring bilan almashtir.",
+    "launchTitle": "Ishga tushirish buyrug‘i kerak bo‘lsa",
+    "launchTask": "Agentdan avvalgi ilovani ochishga yordam so‘ra. Quyidagilarni ayt:",
+    "launchLabel": "IXTIYORIY MISOL · AVVALGI ILOVANI OCHISH",
+    "launchPrompt": "Ochiq loyiha papkasidagi mavjud Dataset Explorer’ni ishga tushirishga yordam ber. Loyiha yo‘riqnomalarini o‘qi va avvalgi Python muhitidan foydalan. Fayllar va imkoniyatlarni saqla; yangi loyiha yaratma va vositalarni qayta o‘rnatma. Qaysi terminalni ishlatishni tekshir; noaniq bo‘lsa mendan so‘ra. Imkoning bo‘lsa, ilovani ishga tushir. Haqiqiy buyruq, uni qaysi terminalga kiritish va mahalliy manzilni ber. Amalda nimani ishga tushirganingni va men nima bajarishim kerakligini aniq ayt.",
+    "print": "Chop etish",
+    "skip": "Yo‘riqnomaga o‘tish",
+    "language": "Til",
+    "navTitle": "SENING YO‘LING",
+    "download": "Yuklab olish",
+    "csvContents": "CSV tarkibi / zaxira usul",
+    "csvFallback": "Yuklab olish bloklansa, CSV matnini oddiy matn fayliga nusxala. Uni shu yerda ko‘rsatilgan aniq .csv nomi bilan UTF-8 formatida saqla. .txt kengaytmasini qo‘shma.",
+    "checkTitle": "O‘zing tekshiradigan ro‘yxat",
+    "checkNote": "Faqat shaxsan tekshirganingni belgila. Bu yo‘riqnoma ilovangni tekshirmaydi; belgilar saqlash imkoniyati bo‘lsa, faqat shu brauzerda qoladi.",
+    "reset": "Belgilarni tozalash",
+    "copy": "Nusxalash",
+    "copied": "Nusxalandi",
+    "copyFail": "Nusxalab bo‘lmadi. Matn belgilandi: Ctrl+C / Cmd+C ni bos yoki qo‘lda nusxala.",
+    "launchPoints": [
+      "Tanlangan tizim va bilsang, avvalgi terminal nomi.",
+      "O‘sha Explorer papkasi: agent loyihani o‘rganib, uning mavjud muhitidan foydalansin.",
+      "Haqiqiy ishga tushirish buyrug‘i va mahalliy manzil kerakligi; agent ilovani o‘zi ishga tushira olmasa, sen nima qilishing kerakligi."
+    ],
+    "osTips": {
+      "win": "Agentga Windows ishlatayotganingni va terminalingni, masalan PowerShell’ni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra. WSL yoki Git Bash ishlatsang, buni alohida ayt.",
+      "mac": "Agentga macOS ishlatayotganingni va ilovani avval ishga tushirgan terminalingni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra.",
+      "linux": "Agentga Linux ishlatayotganingni va ilovani avval ishga tushirgan terminalingni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra."
+    },
+    "title": "Ikki versiya.",
+    "accent": "Nima o‘zgardi?",
+    "eyebrow": "M3C4 / IXTIYORIY KODLASH MASHQI",
+    "lede": "Oldingi darslarda yaratgan Dataset Explorer’ingni yaxshilashda davom et. Bugun eski va yangi CSV fayllarni solishtirish imkoniyatini qo‘shib, ishingdan keyin nima o‘zgarganini ko‘rasan.",
+    "heroNote": "O‘z loyihangni avval ishlatgan AI agent bilan davom ettir. Avval so‘rovingni o‘zing yoz; tayyor misollar ixtiyoriy yordamdir.",
+    "heroCaption": "Ikki test faylidagi misol",
+    "heroRows": "Qatorlar",
+    "heroColumns": "Ustunlar",
+    "heroMissing": "Yetishmayotgan kataklar",
+    "heroAdded": "Qo‘shilgan yozuvlar",
+    "heroRemoved": "Olib tashlangan yozuvlar",
+    "heroFoot": "Jami 1 taga oshdi, lekin 3 ta yozuv qo‘shildi va 2 tasi olib tashlandi. Yaroqli ID bu farqni ko‘rsatadi.",
+    "routeLabel": "Och → tushuntir → yarat → tekshir → saqla",
+    "nav": [
+      "Davom et",
+      "Solishtir",
+      "AI’dan so‘ra",
+      "Tekshir",
+      "Saqla"
+    ],
+    "sideNote": "Bu sahifa yo‘riqnoma. CSV fayllarni o‘z Explorer’ingdagi BEFORE va AFTER maydonlariga yukla.",
+    "openTitle": "Explorer’ingni davom ettir",
+    "openSub": "O‘sha loyiha papkasi va muhitidan foydalan.",
+    "openItems": [
+      "Explorer loyihangni avval ishlatgan AI agent’da och.",
+      "Ilovani mavjud buyrug‘ing bilan ishga tushir va uning mahalliy manzilini och. Yordam kerak bo‘lsa, tizimingni tushuntirib, agentdan loyihani tekshirish va ishga tushirish buyrug‘ini topishni so‘ra.",
+      "Mavjud yuklash, umumiy ma’lumot va grafikni tekshir. Avval faqat bo‘sh joydan iborat qiymatlar hisoblagichi va sonli qiymatlarni tekshirish imkoniyatini qo‘shgan bo‘lsang, ularni saqla."
+    ],
+    "openNote": "Mavjud ilova ishga tushmasa, avval uni tuzat. Agentga aniq xatoni ber. Eski ilova ishlab turganda yangi solishtirish imkoniyatini tekshirish osonroq.",
+    "planTitle": "Solishtirish nimalarni ko‘rsatishini hal qil",
+    "planSub": "Avval bitta aniq umumiy ko‘rinish; tafsilotlar uning pastida ochilishi mumkin.",
+    "planItems": [
+      "Aniq vazifali ikkita yuklash maydoni: <strong>BEFORE — eski fayl</strong> va <strong>AFTER — yangi fayl</strong>. Yo‘nalish ko‘rinishi uchun fayl nomlarini ko‘rsat.",
+      "Uchta umumiy ma’lumot kartasi: <strong>qatorlar, ustunlar, yetishmayotgan kataklar</strong>. Har biri eski → yangi va <strong>Δ = yangi − eski</strong> ni ko‘rsatadi. Bo‘sh yoki faqat bo‘sh joylardan iborat katak yetishmayotgan hisoblanadi; nol esa qiymatdir.",
+      "Pastdagi tafsilotlar: qo‘shilgan/olib tashlangan ustun nomlari va umumiy ustunlar nomi bo‘yicha moslangan yetishmayotgan qiymatlar sonining kichik jadvali.",
+      "Qaysi yozuvlar qo‘shilgan yoki olib tashlanganini bilish uchun umumiy <strong>ID</strong> tanla: bu <code>row_id</code> kabi bir yozuv bilan birga qoladigan belgi. U ikkala faylda ham bo‘sh bo‘lmasligi va takrorlanmasligi kerak. Yaroqli ID bo‘lmasa, umumiy ma’lumotni ko‘rsat va yozuvlarni moslashtirib bo‘lmasligini tushuntir.",
+      "Ranglar bilan birga matnli belgilarni ishlat: yashil <strong>Added</strong> (qo‘shilgan), qizil <strong>Removed</strong> (olib tashlangan), sariq <strong>Changed</strong> (o‘zgargan), neytral <strong>Unchanged</strong> (o‘zgarmagan). Ular ish yaxshi yoki yomonligini emas, farqlarni bildiradi."
+    ],
+    "predict": "Test fayllarda 6 va 7 ta qator bor. Bu aynan bitta yozuv qo‘shilganini isbotlaydimi? 4-qadamdagi javoblar jadvalini ochishdan oldin taxmin qil.",
+    "beforeTitle": "BEFORE · eski nusxa",
+    "beforeText": "6 ta qator va 6 ta ustun. Uchta katak yetishmaydi. Bu faylni o‘zgartirma.",
+    "afterTitle": "AFTER · yangi nusxa",
+    "afterText": "7 ta qator va 6 ta ustun. Ayrim yozuvlar va bitta ustun almashtirilgan. Faqat umumiy hajm butun holatni ko‘rsatmaydi.",
+    "upgradeTitle": "Imkoniyatni agentga tushuntir",
+    "upgradeSub": "Avval shu fikrlardan foydalanib, so‘rovingni o‘zing yoz.",
+    "promptIntro": "Mavjud ilovaga bitta yangi solishtirish bo‘limini qo‘shishni so‘ra. Agent loyihang fayllari bilan ishlaydi. Test CSV fayllarini ilovaga o‘zing yuklaysan; ularni birinchi so‘rovga biriktirish shart emas.",
+    "featurePoints": [
+      "Kontekst: hozirgi Python / Streamlit / pandas Explorer’ing, tanlangan tizim va terminal. Ilova va avvalgi imkoniyatlarni saqla.",
+      "Natija: BEFORE/AFTER yuklash maydonlari, fayl nomlari, farqlari bilan uchta eski → yangi karta va aniq yashil Added, qizil Removed, sariq Changed hamda neytral Unchanged belgilari. Batafsil ro‘yxat va jadvallarni yig‘iladigan bo‘limlarga joyla.",
+      "Qoidalar: barcha qatorlarni solishtir; bo‘sh va faqat bo‘sh joylardan iborat kataklarni yetishmayotgan deb hisobla, nol esa qiymat. ID’larni matn sifatida, boshidagi nollarni saqlab o‘qi; aynan yozilgan NA va null ham qiymat hisoblanadi. Ustunlarni nomi bo‘yicha solishtir. Asl ma’lumotlarni tozalama, o‘chirma va ustiga yozma.",
+      "Yozuvlarni moslashtirish: foydalanuvchi umumiy ID tanlasin. Faqat ID ikkala faylda bo‘sh bo‘lmasa va takrorlanmasa, qo‘shilgan va olib tashlangan ID’larni alohida hisobla. ID’larni matn sifatida aynan moslashtir, qator o‘rni bo‘yicha moslashtirma; aks holda moslashtirish imkonsizligini tushuntir.",
+      "Tekshiruv: fayl yoki ID o‘zgarganda natijalar yangilansin. Haqiqiy ishga tushirish buyrug‘i, mahalliy manzil va agent amalda nimalarni bajarganini so‘ra. Ma’lum javoblarni o‘zing tekshirasan."
+    ],
+    "promptLabel": "IXTIYORIY MISOL · CSV SOLISHTIRISHNI QO‘SHISH",
+    "prompt": "Joriy Python/Streamlit/pandas loyihamdagi Dataset Explorer’ni davom ettir. Mavjud muhit va o‘rnatilgan kutubxonalardan foydalanib, bitta solishtirish bo‘limini qo‘sh.\n\n1. Mavjud CSV yuklash, umumiy ma’lumot, grafiklar va oldingi M3 imkoniyatlarini saqla. BEFORE (eski) va AFTER (yangi) deb belgilangan ikkita mustaqil yuklash maydonini qo‘sh; fayl nomlarini ko‘rsat. Yuklangan asl jadvallarni o‘zgartirma, ma’lumotni avtomatik tozalama, qatorlarni o‘chirma va fayllar ustiga yozma.\n2. Uchta ixcham karta ko‘rsat: qatorlar soni, ustunlar soni va yetishmayotgan kataklar soni; har birida eski → yangi va delta = yangi − eski bo‘lsin. Faqat oldindan ko‘rishdagi qatorlarni emas, barcha qatorlarni ishlat. Bu solishtirishda katak matnini, jumladan ID boshidagi nollarni saqla; bo‘sh satrlar va faqat bo‘sh joylardan iborat satrlar yetishmayotgan hisoblanadi. Nol yetishmayotgan emas. NA yoki null kabi aynan yozilgan matnlar bildirmasdan yetishmayotgan qiymatga aylanmasin. Mavjud ilova qiymatlarni boshqacha o‘qisa, solishtirish uchun alohida vaqtinchalik ko‘rinishlardan foydalan.\n3. Tafsilotlarni yig‘iladigan bo‘limlarga joyla: qo‘shilgan/olib tashlangan ustun nomlari; umumiy ustunlardagi yetishmayotgan qiymatlar soni nom bo‘yicha moslangan holda; foydalanuvchi tanlagan umumiy ID yaroqli bo‘lsa, qo‘shilgan/olib tashlangan yozuvlar. Yaroqli ID ikkala faylda ham bo‘sh emas va takrorlanmaydi. ID qiymatlarini matn sifatida aynan moslashtir; hech qachon joylashuv bo‘yicha moslashtirma yoki qatorlar sonining umumiy farqidan qo‘shilgan yozuvlarni aniqlama. ID tanlanmagan, mavjud bo‘lmagan, bo‘sh yoki takrorlangan bo‘lsa, umumiy ma’lumotni ko‘rsatishda davom et va yozuvlarni nega moslashtirib bo‘lmasligini tushuntir. Soxta nol sonlarni ko‘rsatma. Yaroqli ID bo‘lsa, ikkala sonni va ularga mos asl yozuvlarni ko‘rsat.\n4. Ranglar bilan birga tushunarli matnli belgilarni ishlat: yashil Added, qizil Removed, sariq Changed, neytral Unchanged. Rang ma’lumot sifatini emas, farqni bildiradi. Birinchi ko‘rinishda uchta umumiy karta bo‘lsin; nol/o‘zgarmagan natijalar va yaroqsiz/yuklanmagan fayl holatlari aniq ko‘rsatilsin. Fayllardan biri yoki tanlangan ID o‘zgarganda hamma natijani yangila; eski natijalar qolib ketmasin. Bir xil ID’li qatorlar tartibi o‘zgarsa, qo‘shilgan yoki olib tashlangan yozuvlar paydo bo‘lmasin.\n5. Eng kichik, vazifaga qaratilgan o‘zgarishni qil. Imkon bo‘lsa, mavjud ilovani ishga tushir va haqiqiy buyruq, mahalliy manzil, o‘zgargan fayllar hamda amalda bajarilgan tekshiruvlarni ayt. Aks holda men qaysi buyruqni bajarishimni ayt. Shu imkoniyatdan keyin to‘xta; model o‘qitish, avtomatik eng yaxshi versiya xulosasi yoki katakma-katak farqni qo‘shma.",
+    "afterPrompt": "O‘zgarishdan keyin ilovani ishga tushir yoki agent haqiqatan ishga tushirgan manzilni och. Ikki solishtirish yuklash maydonini top. Agentning «tayyor» degani tekshirishni boshlash uchun signal, imkoniyat ishlashining isboti emas.",
+    "verifyTitle": "Natijani o‘zing tekshir",
+    "verifySub": "Avval quyidagi BEFORE va AFTER fayllarini ishlat, keyin row_id ni tanla.",
+    "verifyItems": [
+      "<code>M3C4_BEFORE.csv</code> faylini BEFORE’ga, <code>M3C4_AFTER.csv</code> faylini AFTER’ga yukla. Yozuvlarni moslashtirish uchun <code>row_id</code> ni tanla. Ilovang natijasini shu javoblar jadvali bilan solishtir.",
+      "BEFORE faylini <strong>ikkala</strong> maydonga yukla. Har bir umumiy farq 0 bo‘lishi; qo‘shilgan/olib tashlangan ustunlar va yozuvlar bo‘sh bo‘lishi kerak. Aniq «O‘zgarish yo‘q» xabari foydali.",
+      "Asosiy juftlikni almashtir: AFTER eski faylga, BEFORE yangi faylga aylanadi. Qatorlar farqi −1 bo‘ladi; qo‘shilgan ID’lar E/F (2), olib tashlangan ID’lar G/H/I (3); qo‘shilgan/olib tashlangan ustun nomlari tomonlarini almashtiradi. Ilova yangilanishini tekshir."
+    ],
+    "expectedCaption": "Ma’lum natija · BEFORE → AFTER · ID = row_id",
+    "expectedHeads": [
+      "Tekshiruv",
+      "BEFORE → AFTER",
+      "Farq / tafsilot"
+    ],
+    "expectedRows": [
+      [
+        "Qatorlar",
+        "6 → 7",
+        "+1 ta umumiy qator farqi"
+      ],
+      [
+        "Ustunlar",
+        "6 → 6",
+        "0 ta umumiy ustun farqi"
+      ],
+      [
+        "Yetishmayotgan kataklar (butun jadval)",
+        "3 → 1",
+        "−2 ta umumiy yetishmayotgan katak farqi"
+      ],
+      [
+        "Qo‘shilgan ustun",
+        "— → segment",
+        "+ segment"
+      ],
+      [
+        "Olib tashlangan ustun",
+        "legacy_note → —",
+        "− legacy_note"
+      ],
+      [
+        "Qo‘shilgan yozuvlar",
+        "— → G, H, I",
+        "3 ta yozuv"
+      ],
+      [
+        "Olib tashlangan yozuvlar",
+        "E, F → —",
+        "2 ta yozuv"
+      ],
+      [
+        "Ikkalasida mavjud ID’lar",
+        "A, B, C, D",
+        "4 ta yozuv"
+      ]
+    ],
+    "missingCaption": "Qo‘shimcha tafsilot · umumiy ustunlardagi yetishmayotgan qiymatlar soni",
+    "missingHeads": [
+      "Ustun",
+      "BEFORE",
+      "AFTER"
+    ],
+    "missingRows": [
+      [
+        "age",
+        "1",
+        "0"
+      ],
+      [
+        "city",
+        "1",
+        "0"
+      ],
+      [
+        "score",
+        "1",
+        "1"
+      ]
+    ],
+    "missingTitle": "Nega score’da hali ham bitta qiymat yetishmasligi mumkin",
+    "missingText": "BEFORE’da B ning score qiymati yo‘q. AFTER’da B ning score qiymati bor, lekin yangi H yozuvida score yo‘q. Son bitta bo‘lib qoldi, ammo qiymati yetishmayotgan yozuv o‘zgardi. Faqat yetishmayotgan qiymatlar umumiy sonining kamayishi qaysi tozalash qadamlari bajarilganini isbotlamaydi.",
+    "verifyNote": "Yaroqli ID bilan +3 ta qo‘shilish va −2 ta olib tashlanish qatorlarning umumiy +1 farqini tushuntiradi. Bunday ID bo‘lmasa, faqat umumiy +1 farq ikkita alohida sonni aniqlab bermaydi.",
+    "edgeTitle": "Ixtiyoriy · ishonchlilik uchun bir nechta qisqa tekshiruv",
+    "edgeText": "Bularni faqat yuqoridagi uchta asosiy tekshiruv ishlagandan keyin bajar. Ular qator tartibi, ID tekshiruvi va matn sifatida o‘qilishini sinaydi.",
+    "reorderTitle": "Eski yozuvlar o‘sha, tartib boshqa",
+    "reorderText": "BEFORE’ni tartibi o‘zgartirilgan shu nusxa bilan solishtir va row_id ni tanla. Barcha farqlar nol; qo‘shilgan/olib tashlangan ustunlar va yozuvlar bo‘sh bo‘lishi kerak.",
+    "duplicateTitle": "ID takrorlangan yangi nusxa",
+    "duplicateText": "BEFORE’ni shu fayl bilan solishtir va row_id ni tanla. Uning oxirgi qatorida G takrorlanadi. Ilova takrorlangan ID’ni tushuntirib, yozuvlarni moslashtirishni o‘chirishi, lekin umumiy sonlarni ko‘rsatishda davom etishi kerak (6 → 7 qator, 6 → 6 ustun, 3 → 1 yetishmayotgan katak). «Mavjud emas» nol o‘zgarishdan farq qiladi.",
+    "helpTitle": "Son boshqacha yoki ilova ishlamayapti",
+    "helpText": "Muammoni o‘z so‘zlaring bilan tushuntir. Agent uni takrorlay olishi uchun quyidagi ma’lumotlarni birga ber.",
+    "repairPoints": [
+      "BEFORE va AFTER’dagi haqiqiy fayllar, ularning yo‘nalishi va tanlangan ID.",
+      "Yuqoridagi jadvaldan kutilgan natija va ilova ko‘rsatgan haqiqiy natija.",
+      "Xato bo‘lsa, uning aniq matni. Bitta kichik tuzatish so‘ra, keyin asosiy juftlik, bir xil fayl va almashtirilgan fayllar tekshiruvlarini takrorla."
+    ],
+    "repairLabel": "IXTIYORIY MISOL · BIRTA SOLISHTIRISH MUAMMOSINI TUZATISH",
+    "repair": "Mavjud Dataset Explorer’imda faqat solishtirish imkoniyatini tuzat. Asl ma’lumotlar va barcha eski imkoniyatlarni saqla.\n\nBEFORE fayl nomi: [haqiqiy nom]. AFTER fayl nomi: [haqiqiy nom]. Tanlangan ID: [ustun nomi yoki ID tanlanmagan].\nBu tekshiruvda kutilgan natija: [yo‘riqnomadan tegishli natijani fayllar yo‘nalishi bilan birga nusxala].\nHaqiqiy natija: [ko‘rsatilgan sonlar, fayl nomlari yoki holat].\nAniq xato: [to‘liq matn yoki xato xabari yo‘q].\n\nEslab qol: delta — yangi − eski; haqiqiy qo‘shilgan/olib tashlangan yozuvlarni topish uchun umumiy, bo‘sh bo‘lmagan va takrorlanmaydigan ID hamda matnning aniq mosligi kerak; qator o‘rni yoki qatorlar sonining umumiy farqi yetarli emas. Yaroqli ID bo‘lmasa, umumiy sonlar ko‘rsatilsin va moslashtirish imkonsiz deb belgilansin. Bo‘sh yoki faqat bo‘sh joyli kataklarni yetishmayotgan deb hisobla, nolni saqla va umumiy ustunlarni nomi bo‘yicha solishtir. Kiritilgan ma’lumotlar o‘zgargach, eski natijalarni tozala.\n\nJoriy kodni tekshir, sababni qisqacha tushuntir va eng kichik tuzatishni qil. Amalda nima bajarganingni ayt yoki aniq ishga tushirish buyrug‘ini ber. Asosiy juftlik, bir xil fayl va almashtirilgan fayllar tekshiruvlarini o‘zim takrorlayman.",
+    "helpAfter": "Tuzatishdan keyin uchta asosiy tekshiruvni takrorla va Explorer’ning oldingi imkoniyatlarini qayta tekshir. Yana boshqa natija noto‘g‘ri bo‘lsa, to‘liq qayta yozishni so‘rash o‘rniga aynan yangi kuzatuvni ayt.",
+    "saveTitle": "O‘zgarishni tushuntir va saqla",
+    "saveSub": "Ikki faylda nima bo‘lganini hisobot orqali tushuntir.",
+    "explain": "O‘z so‘zlaring bilan: «Qatorlar soni … dan … ga o‘zgardi. Umumiy farq …, lekin yaroqli ID … ta qo‘shilgan va … ta olib tashlangan yozuvni ko‘rsatadi. O‘zgargan ustunlar … . Yetishmayotgan qiymatlar soni menga … ni aytadi, lekin … ni isbotlamaydi».",
+    "saveText": "Loyihani saqla, ilovani qayta ishga tushir va asosiy juftlik tekshiruvini takrorla. Keyin o‘z ishingdagi eski/yangi fayllar juftligini sinab ko‘r. ID’ni faqat u haqiqatan ikkala fayldagi bir xil yozuvni aniqlasa tanla. Qisqa tushuntirishingni loyiha bilan birga saqla. Bu ixtiyoriy bo‘lim yangi baholash yoki alohida topshirish qoidasini qo‘shmaydi.",
+    "checks": [
+      "Asosiy juftlik 6 → 7 qator, 6 → 6 ustun va 3 → 1 yetishmayotgan katakni beradi.",
+      "row_id bilan ilova +3 ta G/H/I yozuvini va −2 ta E/F yozuvini hamda to‘g‘ri ustun ro‘yxatlarini topadi.",
+      "Bir xil fayl va almashtirilgan fayllar tekshiruvlari ishlaydi, natijalar yangilanadi.",
+      "Yaroqli ID bo‘lmasa, ilova moslashtirish imkonsizligini tushuntiradi; asl ma’lumotlar va eski imkoniyatlar saqlanadi.",
+      "Qayta ishga tushirgach imkoniyat ishlaydi va men umumiy farq bilan qo‘shilgan/olib tashlangan yozuvlar farqini tushuntira olaman."
+    ],
+    "complete": "Asosiy solishtirish tekshirildi. Loyiha va tushuntirishingni saqla. Quyidagi xato tuzatish mashqi ixtiyoriy.",
+    "bonusTitle": "Ixtiyoriy · bitta kichik xatoni top",
+    "bonusIntro": "Bu alohida, ataylab xato qilingan misol. Uni loyihang yonidagi alohida sinov faylida och; ishlab turgan solishtirish imkoniyating o‘z holicha qoladi. Misol qo‘shilgan ID’larni hisoblashini aytadi, ammo yuqoridagi ID to‘plamlari uchun 1 chiqaradi.",
+    "bugDownload": "Kichik xato tuzatish misolini yuklab ol",
+    "bugLabel": "ATAYLAB XATO QILINGAN MISOL · ALOHIDA ISHGA TUSHIR",
+    "bugTask": "To‘g‘ri javobni taxmin qil, keyin agent yordami bilan misolni mavjud Python muhitingda ishga tushir. Nega umumiy +1 qator farqi 3 ta qo‘shilgan yozuvdan farq qilishini tushuntir. Bir qatorli tuzatishni so‘ra va qayta ishga tushir.",
+    "bonusPoints": [
+      "Agentga kichik xato faylni, uning haqiqiy 1 natijasini va G/H/I uchun kutgan soningni ber.",
+      "Joriy funksiya aslida nimani hisoblayotganini tushuntirishni va faqat qo‘shilgan ID hisobini o‘zgartirishni so‘ra.",
+      "Tuzatilgan misolni o‘zing ishga tushir. 3 natijasini kut; bir xil ID to‘plamlarida 0 kut. Keyin ishlab turgan ilovangga qayt."
+    ],
+    "bonusLabel": "IXTIYORIY MISOL · KICHIK XATO HAQIDA SO‘RA",
+    "bonusPrompt": "Alohida M3C4_COUNT_ADDED_BUG.py mashqini tushunishimga yordam ber. Unda ataylab xato bor. Faqat shu alohida sinov misolida ishlagin; ishlab turgan Explorer’imni o‘zgartirma.\n\nEski ID’lar A/B/C/D/E/F; yangi ID’lar A/B/C/D/G/H/I. Joriy funksiya 1 chiqaradi, lekin 3 ta yangi ID bor (G/H/I). Hozir u nimani hisoblashini tushuntir. Eskilarida yo‘q yangi ID’larni hisoblash uchun bir qatorli tuzatish qil. Imkon bo‘lsa, uni ishga tushir va haqiqiy natijani ayt; aks holda ishga tushirish buyrug‘ini ber. Men bir xil eski/yangi to‘plamlarni ham tekshiraman; ular 0 berishi kerak.",
+    "bonusCheck": "Tuzatilgan alohida misol 3 chiqarsa, bir xil to‘plamlar tekshiruvi 0 bersa va nega ekanini tushuntira olsang, mashqni tugat. Asosiy vazifadan keyin to‘xtashing mumkin; bu mashq majburiy emas.",
+    "footer": "M3C4 · Dataset Explorer — ikki versiyani solishtirish",
+    "footerNote": "Bitta oflayn yo‘riqnoma · Mavjud loyihang · Ixtiyoriy mashq",
+    "downloadStarted": "Faylni yuklab olish so‘raldi. Yuklamalar papkasini tekshir.",
+    "textTitle": "ID’ni matn sifatida tekshir",
+    "textText": "Bu faylni ikkala maydonga yukla. row_id dagi 001 va 1 — turli belgilar; NA/null va 0 — qiymatlar. Kutilgan natija: 2 ta qator, 3 ta ustun, 0 ta yetishmayotgan katak; row_id yaroqli, barcha o‘zgarishlar 0 va takrorlangan ID haqida hech qanday xabar yo‘q."
+  }
+};
+const STORAGE_KEY = "aiml-m3c4-explorer-compare-v1";
+const OS_NAMES = {win: "Windows", mac: "macOS", linux: "Linux"};
+const state = {lang: "en", os: "win", checks: [false, false, false, false, false]};
+try {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+  if (saved && typeof saved === "object") {
+    if (Object.prototype.hasOwnProperty.call(T, saved.lang)) state.lang = saved.lang;
+    if (Object.prototype.hasOwnProperty.call(OS_NAMES, saved.os)) state.os = saved.os;
+    if (Array.isArray(saved.checks)) state.checks = state.checks.map((_, i) => saved.checks[i] === true);
+  }
+} catch (_) { /* Offline/private browser storage can be unavailable. */ }
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
+const ICONS = {
+  inspect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5M10 7v4m0 2v.1"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m7.5 12 3 3 6-6"/></svg>',
+  print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 8V3h12v5M6 17H3V8h18v9h-3M6 14h12v7H6z"/><path d="M17 11h1"/></svg>'
+};
+function persist() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {} }
+function list(items) { return '<ol class="guide-list">' + items.map(s => '<li>' + s + '</li>').join("") + '</ol>'; }
+function head(n, title, sub) { return '<div class="section-head"><span class="step-num">0' + n + '</span><div><h2>' + esc(title) + '</h2><p>' + esc(sub) + '</p></div></div>'; }
+function block(text, label, id, prompt = true) {
+  return '<div class="cmd' + (prompt ? ' prompt-box' : '') + '"><div class="cmd-bar"><span class="cmd-label">' + esc(label) + '</span><button type="button" class="copy" data-copy="' + id + '" aria-label="' + esc(T[state.lang].copy + ': ' + label) + '">' + esc(T[state.lang].copy) + '</button></div><pre id="' + id + '">' + esc(text) + '</pre></div>';
+}
+function ownRequest(points, intro = "") {
+  const t = T[state.lang];
+  return '<div class="own-request"><h3>' + esc(t.ownTitle) + '</h3>' + (intro ? '<p>' + esc(intro) + '</p>' : '') + list(points) + '<p>' + esc(t.ownSend) + '</p></div>';
+}
+function promptHelp(text, label, id) {
+  const t = T[state.lang];
+  const context = t.systemContext + ': ' + OS_NAMES[state.os] + '.\n' + t.systemInstruction;
+  return '<details class="prompt-help" id="' + id + '-help" data-prompt-help><summary>' + esc(t.promptHelpTitle) + '</summary><div class="details-body"><p>' + esc(t.promptHelpIntro) + '</p>' + block(context + '\n\n' + text, label, id) + '</div></details>';
+}
+function table(caption, headers, rows) {
+  return '<div class="table-wrap" tabindex="0" role="region" aria-label="' + esc(caption) + '"><table><caption>' + esc(caption) + '</caption><thead><tr>' + headers.map(h => '<th scope="col">' + esc(h) + '</th>').join("") + '</tr></thead><tbody>' + rows.map(r => '<tr>' + r.map((c, i) => (i === 0 ? '<th scope="row">' : '<td>') + esc(c) + (i === 0 ? '</th>' : '</td>')).join("") + '</tr>').join("") + '</tbody></table></div>';
+}
+function downloadCard(kind, title, text) {
+  const t = T[state.lang];
+  return '<article class="download-card"><h3>' + esc(title) + '</h3><p>' + esc(text) + '</p><button type="button" class="action" data-download="' + kind + '">' + esc(t.download) + ' ' + FILES[kind] + '</button><details id="contents-' + kind + '"><summary>' + esc(t.csvContents) + '</summary><div class="details-body">' + block(CSV[kind], FILES[kind], 'csv-' + kind, false) + '<p class="empty-tip">' + esc(t.csvFallback) + '</p></div></details></article>';
+}
+function render() {
+  const t = T[state.lang];
+  document.documentElement.lang = state.lang;
+  document.title = "AI/ML · " + t.footer;
+  document.getElementById("skip").textContent = t.skip;
+  document.getElementById("language").setAttribute("aria-label", t.language);
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === state.lang)));
+  const osControl = '<div class="segmented" role="group" aria-label="' + esc(t.systemLabel) + '">' + Object.entries(OS_NAMES).map(([id, name]) => '<button type="button" data-os="' + id + '" aria-pressed="' + (id === state.os) + '">' + name + '</button>').join("") + '</div>';
+  const nav = t.nav.map((n, i) => '<a href="#' + IDS[i] + '"><b>0' + (i + 1) + '</b>' + esc(n) + '</a>').join("");
+  document.getElementById("app").innerHTML = `
+  <div class="wrap hero" id="top"><p class="eyebrow">${esc(t.eyebrow)}</p><div class="hero-grid">
+    <div><h1>${esc(t.title)} <span>${esc(t.accent)}</span></h1><p class="lede">${esc(t.lede)}</p><p class="hero-note">${esc(t.heroNote)}</p></div>
+    <figure class="hero-sketch" aria-label="${esc(t.heroCaption)}"><figcaption class="sketch-top"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>${esc(t.heroCaption)}</figcaption>
+      <div class="compare-hero-stats"><div class="compare-stat"><span>${esc(t.heroRows)}</span><strong>6 → 7</strong><span class="delta">+1</span></div><div class="compare-stat"><span>${esc(t.heroColumns)}</span><strong>6 → 6</strong><span class="delta same">0</span></div><div class="compare-stat"><span>${esc(t.heroMissing)}</span><strong>3 → 1</strong><span class="delta">−2</span></div></div>
+      <div class="record-changes"><div class="record-change"><strong>+3</strong>${esc(t.heroAdded)}</div><div class="record-change removed"><strong>−2</strong>${esc(t.heroRemoved)}</div></div><p class="compare-hero-foot">${esc(t.heroFoot)}</p>
+    </figure></div></div>
+  <div class="wrap"><div class="settings-bar"><div class="setting-group"><span class="control-label">${esc(t.systemLabel)}</span>${osControl}</div><button class="print" type="button" data-print>${ICONS.print}${esc(t.print)}</button></div><p class="route-note">${esc(t.routeLabel)}</p></div>
+  <div class="wrap layout"><nav class="side" aria-label="${esc(t.navTitle)}"><p>${esc(t.navTitle)}</p>${nav}<div class="side-bottom">${esc(t.sideNote)}</div></nav>
+  <main class="content" id="guide" tabindex="-1">
+    <section id="open">${head(1,t.openTitle,t.openSub)}<p class="note" id="system-tip"><strong>${esc(t.systemLabel)}: ${esc(OS_NAMES[state.os])}.</strong> ${esc(t.osTips[state.os])}</p>${list(t.openItems)}<p class="note soft">${esc(t.openNote)}</p><details class="compact-details" id="launch-options"><summary>${esc(t.launchTitle)}</summary><div class="details-body">${ownRequest(t.launchPoints,t.launchTask)}${promptHelp(t.launchPrompt,t.launchLabel,'launch-prompt')}</div></details></section>
+    <section id="plan">${head(2,t.planTitle,t.planSub)}${list(t.planItems)}<p class="note">${esc(t.predict)}</p><div class="downloads">${downloadCard('before',t.beforeTitle,t.beforeText)}${downloadCard('after',t.afterTitle,t.afterText)}</div></section>
+    <section id="upgrade">${head(3,t.upgradeTitle,t.upgradeSub)}<p class="lede" style="margin-top:0;font-size:14px">${esc(t.promptIntro)}</p>${ownRequest(t.featurePoints)}${promptHelp(t.prompt,t.promptLabel,'feature-prompt')}<p class="note">${esc(t.afterPrompt)}</p></section>
+    <section id="verify">${head(4,t.verifyTitle,t.verifySub)}${list(t.verifyItems)}${table(t.expectedCaption,t.expectedHeads,t.expectedRows)}<p class="note">${esc(t.verifyNote)}</p>
+      <details id="missing-detail"><summary>${esc(t.missingTitle)}</summary><div class="details-body">${table(t.missingCaption,t.missingHeads,t.missingRows)}<p class="note soft">${esc(t.missingText)}</p></div></details>
+      <details id="extra-checks"><summary>${esc(t.edgeTitle)}</summary><div class="details-body"><p>${esc(t.edgeText)}</p><div class="downloads">${downloadCard('reordered',t.reorderTitle,t.reorderText)}${downloadCard('duplicate',t.duplicateTitle,t.duplicateText)}</div>${downloadCard('textids',t.textTitle,t.textText)}</div></details>
+      <details id="repair"><summary>${esc(t.helpTitle)}</summary><div class="details-body"><p>${esc(t.helpText)}</p>${ownRequest(t.repairPoints)}${promptHelp(t.repair,t.repairLabel,'repair-prompt')}<p class="note soft">${esc(t.helpAfter)}</p></div></details>
+    </section>
+    <section id="save">${head(5,t.saveTitle,t.saveSub)}<p class="note">${esc(t.explain)}</p><p class="lede" style="font-size:14px;margin:18px 0 22px">${esc(t.saveText)}</p>
+      <div class="check-box"><div class="check-top"><div class="check-top-row"><h3>${esc(t.checkTitle)}</h3><span class="count" id="check-count" role="status" aria-live="polite"></span></div><div class="meter" aria-hidden="true"><div id="check-meter"></div></div></div><div class="checks">${t.checks.map((c,i)=>'<label class="check-row"><input type="checkbox" data-check="'+i+'"'+(state.checks[i]?' checked':'')+'><span>'+esc(c)+'</span></label>').join('')}</div><div class="check-bottom"><p>${esc(t.checkNote)}</p><button type="button" class="reset" data-reset>${esc(t.reset)}</button></div></div>
+      <p class="complete" id="complete" role="status" hidden>${esc(t.complete)}</p>
+      <details class="bonus" id="bonus"><summary>${esc(t.bonusTitle)}</summary><div class="details-body"><p>${esc(t.bonusIntro)}</p><button type="button" class="action" data-download="bug">${esc(t.bugDownload)}</button><div class="code-sample">${block(CSV.bug,t.bugLabel,'bug-code',false)}</div><p class="note">${esc(t.bugTask)}</p>${ownRequest(t.bonusPoints)}${promptHelp(t.bonusPrompt,t.bonusLabel,'bonus-prompt')}<p class="note soft">${esc(t.bonusCheck)}</p></div></details>
+    </section>
+  </main></div><footer><div class="wrap footer-row"><strong>${esc(t.footer)}</strong><span>${esc(t.footerNote)}</span></div></footer>`;
+  updateChecks();
+}
+function updateChecks() {
+  const count = state.checks.filter(Boolean).length;
+  document.getElementById("check-count").textContent = count + " / " + state.checks.length;
+  document.getElementById("check-meter").style.width = (count / state.checks.length * 100) + "%";
+  document.getElementById("complete").hidden = count !== state.checks.length;
+}
+let toastTimer;
+function toast(message) {
+  clearTimeout(toastTimer);
+  const el = document.getElementById("toast");
+  el.textContent = message; el.hidden = false;
+  toastTimer = setTimeout(() => { el.hidden = true; }, 6500);
+}
+async function copyText(id) {
+  const source = document.getElementById(id);
+  if (!source) return;
+  let copied = false;
+  if (navigator.clipboard && window.isSecureContext) {
+    try { await navigator.clipboard.writeText(source.textContent); copied = true; } catch (_) {}
+  }
+  if (!copied) {
+    const area = document.createElement("textarea");
+    area.value = source.textContent; area.readOnly = true;
+    area.style.position = "fixed"; area.style.top = "-9999px";
+    const previousFocus = document.activeElement;
+    document.body.appendChild(area); area.select();
+    try { copied = document.execCommand("copy"); } catch (_) {}
+    area.remove();
+    if (previousFocus && previousFocus.focus) previousFocus.focus({preventScroll: true});
+  }
+  if (copied) { toast(T[state.lang].copied); return; }
+  const range = document.createRange(); range.selectNodeContents(source);
+  const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
+  toast(T[state.lang].copyFail);
+}
+function downloadCsv(kind) {
+  if (!Object.prototype.hasOwnProperty.call(CSV, kind)) return;
+  const blob = new Blob([CSV[kind]], {type: kind === "bug" ? "text/x-python;charset=utf-8" : "text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href = url; a.download = FILES[kind];
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast(T[state.lang].downloadStarted);
+}
+function switchSetting(key, value) {
+  const y = window.scrollY;
+  const opened = [...document.querySelectorAll("details[open]")].map(d => d.id).filter(Boolean);
+  state[key] = value; persist(); render();
+  opened.forEach(id => { const detail = document.getElementById(id); if (detail) detail.open = true; });
+  document.getElementById("toast").hidden = true;
+  window.scrollTo({top: y, behavior: "instant"});
+  document.querySelector('[data-' + key + '="' + value + '"]').focus({preventScroll: true});
+}
+document.addEventListener("click", event => {
+  const b = event.target.closest("button");
+  if (!b) return;
+  if (b.dataset.lang && Object.prototype.hasOwnProperty.call(T, b.dataset.lang)) {
+    switchSetting('lang', b.dataset.lang);
+  } else if (b.dataset.os && Object.prototype.hasOwnProperty.call(OS_NAMES, b.dataset.os)) {
+    switchSetting('os', b.dataset.os);
+  } else if (b.dataset.copy) { copyText(b.dataset.copy); }
+  else if (b.dataset.download) { downloadCsv(b.dataset.download); }
+  else if (b.hasAttribute("data-print")) { window.print(); }
+  else if (b.hasAttribute("data-reset")) {
+    state.checks = state.checks.map(() => false); persist();
+    document.querySelectorAll("[data-check]").forEach(c => { c.checked = false; }); updateChecks();
+  }
+});
+document.addEventListener("change", event => {
+  if (!event.target.matches("[data-check]")) return;
+  const index = Number(event.target.dataset.check);
+  if (!Number.isInteger(index) || index < 0 || index >= state.checks.length) return;
+  state.checks[index] = event.target.checked; persist(); updateChecks();
+});
+let printDetails = [];
+window.addEventListener("beforeprint", () => {
+  printDetails = [...document.querySelectorAll("details")].map(el => ({el, open: el.open}));
+  printDetails.forEach(({el}) => { if (!el.hasAttribute('data-prompt-help')) el.open = true; });
+});
+window.addEventListener("afterprint", () => { printDetails.forEach(({el, open}) => { el.open = open; }); });
+render();
+</script>
+</body>
+</html>

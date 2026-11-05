@@ -1,0 +1,169 @@
+================================================================================
+DATASET M - APPLICATION VERIFICATION CHECKS
+================================================================================
+Date: 2026-10-24
+App: Dataset m (Streamlit + pandas)
+Environment: .venv (Python 3.13.14)
+
+--------------------------------------------------------------------------------
+PART 1: AUTOMATED CHECKS (RUN AND VERIFIED VIA TEST RUNNER & APPTEST)
+--------------------------------------------------------------------------------
+
+[CHECK 1] Main Test CSV Verification
+- Input Data:
+    category,value
+    A,10
+    A,20
+    B,
+    B,5
+    B,5
+- Expected Result:
+    * Total Rows: 5
+    * Total Columns: 2
+    * Missing in 'value': 1 (20.0%)
+    * Extra exact duplicate rows: 1 (the second B,5)
+    * Category A total: 30
+    * Category B total: 10
+- Observed Result:
+    * Total Rows metric: 5
+    * Total Columns metric: 2
+    * Missing analysis table: 'category' has 0 missing (0.0%), 'value' has 1 missing (20.0%)
+    * Duplicate rows metric & banner: 1 extra exact duplicate row detected
+    * Category totals table: Category A = 30, Category B = 10
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+[CHECK 2] Extra Feature - Missing Rows Inspection Button
+- Test Action:
+    Simulate button click: 'Show Rows with Missing Values (1)'
+- Expected Result:
+    Displays filtered table containing only rows with at least one missing cell; original data remains unchanged.
+- Observed Result:
+    Filtered table displayed exactly 1 row (index 2: category='B', value=NaN). Total dataset rows remained 5.
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+[CHECK 3] Text-Only Columns CSV
+- Input Data:
+    name,city
+    Alice,Tashkent
+    Bob,Samarkand
+- Expected Result:
+    Overview, preview, and column analysis remain fully functional. Chart section displays a clear explanation that no usable numeric columns exist.
+- Observed Result:
+    Overview showed 2 rows, 2 columns, 0 duplicates. Chart section displayed informational notice:
+    "Chart unavailable: There are no usable numeric columns in this dataset. The bar chart requires at least one numeric column to compute category sums. The dataset overview, preview, and column analysis above remain fully functional."
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+[CHECK 4] Empty CSV File (0 bytes)
+- Input Data:
+    0-byte empty file (b'')
+- Expected Result:
+    Clear error message explaining the file is empty and prompting for data.
+- Observed Result:
+    Error displayed: "The uploaded file is empty (0 bytes). Please upload a valid CSV file with data."
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+[CHECK 5] Empty CSV with Only Newlines / No Data
+- Input Data:
+    File containing only blank lines (b'\n\n')
+- Expected Result:
+    Clear error message explaining the file contains no readable columns or data.
+- Observed Result:
+    Error displayed: "Empty Data Error: The file does not contain any readable columns or data."
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+[CHECK 6] Corrupted / Non-UTF-8 Encoding File
+- Input Data:
+    Invalid binary payload (b'\x80\x81\x82\x83\xff')
+- Expected Result:
+    Clear encoding error message explaining UTF-8 is required.
+- Observed Result:
+    Error displayed: "Encoding Error: Could not read the file with UTF-8 encoding. Please save your CSV using UTF-8 encoding and try again."
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+[CHECK 7] Category Group with All Missing Numeric Values
+- Input Data:
+    category,value
+    X,
+    X,
+    Y,10
+- Expected Result:
+    Category X has all missing numeric values. It must NOT be converted to a known zero (0 or 0.0); it must display "No data". Category Y must total 10.
+- Observed Result:
+    Category exact totals table:
+      - Category Y: 10
+      - Category X: No data
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+[CHECK 8] ML Experiment Comparison - Metric Differences & Condition Match
+- Input Data:
+    M4C5_RUN_A.json and M4C5_RUN_B.json fixtures
+- Expected Result:
+    * F1-score: Run A = 0.60, Run B = 0.63, Difference (B − A) = +0.0300
+    * Precision: Run A = 0.64, Run B = 0.67, Difference (B − A) = +0.0300
+    * Recall: Run A = 0.57, Run B = 0.59, Difference (B − A) = +0.0200
+    * Evaluation conditions check: dataset_id, split_id, features, target, positive_class, threshold, evaluation_split, seed all match
+    * Model settings: C differs (1 in A vs 0.1 in B), model and penalty match
+    * No automated winner is declared
+- Observed Result:
+    * F1-score metric: 0.6300 (+0.0300 vs A: 0.6000)
+    * Precision metric: 0.6700 (+0.0300 vs A: 0.6400)
+    * Recall metric: 0.5900 (+0.0200 vs A: 0.5700)
+    * Evaluation conditions status: "Evaluation Conditions Match" success banner displayed
+    * Model settings table displayed hyperparameter C difference
+    * Objective evaluation notice displayed without picking a winner
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+[CHECK 9] ML Experiment Comparison - Mismatched & Missing Evaluation Conditions
+- Input Data:
+    Run A baseline vs Run B with modified threshold (0.65 vs 0.5) and omitted split_id
+- Expected Result:
+    Display warning alerting that evaluation conditions differ and/or are missing, preventing misleading comparisons.
+- Observed Result:
+    Displayed warning banner "Evaluation Conditions Mismatch / Missing Detected" detailing missing split_id in Run B and different threshold (0.5 vs 0.65).
+- Status: PASSED
+
+--------------------------------------------------------------------------------
+PART 2: MANUAL BROWSER CHECKS (NOT CHECKABLE HEADLESSLY)
+--------------------------------------------------------------------------------
+
+[MANUAL CHECK 1] Visual Colors and Theme Rendering
+- Manual Step:
+    1. Open http://localhost:8501 in Chrome, Edge, or Firefox.
+    2. Inspect page background color (expected: soft light blue #f7faff).
+    3. Inspect headers, metric values, and buttons (expected: vivid blue #0757ff).
+- Expected Result:
+    Visual styling matches specified theme colors.
+- Observed Result:
+    Headless server returned HTML/CSS rules; GUI browser visual canvas cannot be rendered by AI agent.
+- Status: NOT CHECKED
+
+--------------------------------------------------------------------------------
+[MANUAL CHECK 2] Graphical Bar Chart Rendering & Canvas Tooltips
+- Manual Step:
+    1. Upload the test CSV or superstore_source.csv.
+    2. Scroll to the "Category Sum Bar Chart" section.
+    3. Hover cursor over the bars.
+- Expected Result:
+    Interactive tooltips display category name and exact sum on hover; axes are labeled with category name and sum aggregation.
+- Observed Result:
+    Bar chart data structure verified via AppTest; interactive mouse hover in graphical window cannot be executed headlessly.
+- Status: NOT CHECKED
+
+--------------------------------------------------------------------------------
+[MANUAL CHECK 3] Desktop Drag-and-Drop File Upload Interaction
+- Manual Step:
+    1. Drag test.csv from Windows File Explorer directly onto the Streamlit file uploader widget.
+- Expected Result:
+    File uploader accepts the file, shows filename and size progress bar, then loads the dataset.
+- Observed Result:
+    File upload functionality verified programmatically; physical OS drag-and-drop gesture cannot be performed headlessly.
+- Status: NOT CHECKED
+================================================================================

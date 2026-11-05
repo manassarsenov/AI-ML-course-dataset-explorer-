@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="M3C2 optional homework: extend your existing Dataset Explorer with a numeric-column inspection. English, Russian and Uzbek. One offline HTML guide.">
+<meta name="color-scheme" content="light">
+<title>AI/ML · Dataset Explorer — M3C2</title>
+<style>
+:root{--blue:#0757ff;--blue-deep:#0045d4;--ink:#08112e;--muted:#34415a;--line:#bdcce4;--pale:#e4edfc;--paper:#fff;--green:#116644;--green-pale:#edf8f1;--radius:18px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:104px}
+body{margin:0;background:#fcfdff;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:600;line-height:1.58}
+body:before{content:"";position:fixed;top:0;bottom:0;left:0;width:6px;background:var(--blue);z-index:9}
+button,input{font:inherit}
+button,a,input,summary{-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+button{cursor:pointer}
+a{color:var(--blue);text-underline-offset:3px}
+a:hover{color:var(--blue-deep)}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #efb82f;outline-offset:4px}
+button:disabled{cursor:default}
+svg{display:block}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{line-height:1.16}
+.wrap{max-width:1192px;margin:auto;padding-left:36px;padding-right:36px}
+.top{position:sticky;top:0;z-index:8;border-bottom:1px solid var(--line);background:rgba(255,255,255,.97)}
+.top-row{min-height:78px;display:flex;gap:20px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-weight:800;font-size:14px;letter-spacing:.035em}
+.brand svg{width:34px;height:34px;color:var(--blue)}
+.brand small{display:block;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.13em}
+.segmented{display:inline-flex;border:1px solid var(--line);padding:4px;border-radius:12px;background:#fff;gap:2px;max-width:100%}
+.segmented button{border:0;background:transparent;padding:7px 14px;color:var(--muted);border-radius:8px;font-size:13px;font-weight:700;line-height:1.5;white-space:nowrap}
+.segmented button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.segmented button:hover:not([aria-pressed="true"]){background:var(--pale);color:var(--ink)}
+.hero{position:relative;overflow:hidden;padding-top:57px;padding-bottom:37px}
+.hero:after{content:"";position:absolute;width:285px;height:285px;border:1px solid #edf1f8;border-radius:50%;right:-95px;top:0;box-shadow:0 0 0 27px #f5f7fc,0 0 0 28px #edf1f8;z-index:-1}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:11px;color:var(--blue);font-weight:800}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;align-items:center;gap:64px;margin-top:21px}
+h1{font-size:clamp(42px,5.25vw,66px);font-weight:800;letter-spacing:-.055em;line-height:1.03}
+h1 span{color:var(--blue);display:block}
+.lede{font-size:17px;color:var(--muted);max-width:595px;margin-top:23px;line-height:1.65}
+.hero-note{font-size:12px;margin-top:17px;color:var(--muted)}
+.hero-sketch{position:relative;padding:20px 26px 22px;border:1px solid #bed0ff;background:#fff;border-radius:20px;box-shadow:0 12px 32px #0b316509;transform:rotate(1.5deg)}
+.sketch-top{display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:19px;font-size:12px;font-weight:700;color:var(--muted)}
+.sketch-top i{height:8px;width:8px;border:1px solid #a9c1f9;border-radius:50%}
+.sketch-folder{display:flex;gap:10px;align-items:center;font-size:15px;font-weight:700}
+.sketch-folder svg{height:25px;width:25px;color:var(--blue)}
+.sketch-file{margin:10px 0 0 35px;font-family:Consolas,Menlo,monospace;font-size:13px;color:var(--muted)}
+.sketch-file:before{content:"";display:inline-block;height:7px;width:7px;border-radius:2px;border:1px solid #b9c9e9;margin-right:9px}
+.sketch-bottom{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);color:var(--blue);font-weight:700;font-size:12px}
+.sketch-bottom svg{width:22px;height:22px}
+.settings-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0 23px;border-bottom:1px solid var(--line)}
+.setting-group{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.control-label{font-size:13px;font-weight:700}
+.print{display:flex;align-items:center;gap:7px;background:none;border:0;padding:10px 0;color:var(--muted);font-size:13px;white-space:nowrap}
+.print svg{height:17px;width:17px}
+.layout{display:grid;grid-template-columns:176px minmax(0,1fr);gap:42px;padding-top:31px;padding-bottom:55px}
+.side{align-self:start;position:sticky;top:109px}
+.side p{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:4px 0 13px}
+.side a{display:flex;align-items:center;gap:10px;color:var(--muted);text-decoration:none;font-size:13px;padding:10px 0;line-height:1.35}
+.side a:hover{color:var(--blue)}
+.side a b{display:grid;place-items:center;flex-shrink:0;height:27px;width:27px;border-radius:50%;border:1px solid #cbd9f7;font-size:10px;color:var(--blue);background:white}
+.side .side-bottom{font-size:11px;color:var(--muted);margin-top:23px;border-top:1px solid var(--line);padding-top:15px;line-height:1.6}
+.content{min-width:0}
+section{padding-bottom:39px;margin-bottom:35px;border-bottom:1px solid var(--line);scroll-margin-top:100px}
+section:last-of-type{border:0;margin-bottom:0}
+.section-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.step-num{display:grid;place-items:center;background:var(--blue);color:white;font-size:12px;font-weight:700;border-radius:50%;width:34px;height:34px;flex-shrink:0;margin-top:2px}
+h2{font-size:27px;letter-spacing:-.035em;font-weight:800}
+.section-head p{font-size:14px;color:var(--muted);margin-top:6px}
+.agents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.agent{border:1px solid var(--line);border-radius:var(--radius);background:white;text-align:left;padding:21px 18px 19px;position:relative;color:var(--ink);min-width:0}
+.agent:hover{border-color:#90aeff}
+.agent[aria-pressed="true"]{border:2px solid var(--blue);padding:20px 17px 18px;background:#f7faff}
+.agent-symbol{width:36px;height:36px;display:grid;place-items:center;border:1px solid #c3d4fc;border-radius:11px;margin-bottom:18px;color:var(--blue);font-size:18px;font-weight:800;background:white}
+.agent h3{font-size:18px;letter-spacing:-.03em}
+.agent p{font-size:12px;line-height:1.5;color:var(--muted);margin-top:8px}
+.agent .agent-tag{font-size:10px;font-weight:700;color:var(--blue);display:block;margin-top:14px}
+.select-dot{position:absolute;right:16px;top:18px;height:15px;width:15px;border:1px solid #bbcae8;border-radius:50%}
+.agent[aria-pressed="true"] .select-dot{border:4px solid var(--blue);background:white}
+.note{margin-top:17px;border-left:3px solid var(--blue);padding:10px 14px;background:var(--pale);font-size:13px;line-height:1.6;border-radius:0 10px 10px 0}
+.note.soft{background:#f6f8fc;border-left-color:#b8c7e6;color:var(--muted)}
+.install-box{border:1px solid #b9ceff;border-radius:var(--radius);overflow:hidden;background:white}
+.install-header{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px 23px;background:#f5f8ff;border-bottom:1px solid var(--line)}
+.install-header h3{font-size:21px;letter-spacing:-.03em}
+.small-tag{font-size:11px;font-weight:700;color:var(--blue);padding:4px 9px;border:1px solid #c1d3ff;border-radius:6px;white-space:nowrap;background:white}
+.install-steps{list-style:none;padding:8px 23px 5px;margin:0}
+.install-steps li{padding:17px 0;display:grid;grid-template-columns:25px minmax(0,1fr);gap:11px;border-bottom:1px solid #edf1f8}
+.install-steps li:last-child{border-bottom:0}
+.tiny-num{font-size:11px;font-weight:700;color:var(--blue);background:var(--pale);border-radius:6px;height:23px;display:grid;place-items:center}
+.install-steps h4{font-size:15px;margin:2px 0 7px;line-height:1.35}
+.install-steps p{font-size:14px;color:var(--muted)}
+.text-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;text-decoration:none;font-weight:700;font-size:12px}
+.text-link:after{content:"↗";font-size:14px}
+.access{padding:14px 23px;background:#f8faff;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.rule-card{padding:18px 19px;border:1px solid var(--line);background:#fff;border-radius:14px}
+.rule-label{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px}
+.rule-card h3{font-size:16px;margin-bottom:9px}
+.rule-card p{font-size:13px;color:var(--muted)}
+.rule-card .mini{margin-top:11px;font-size:12px;color:var(--ink)}
+.effort-line{display:flex;gap:6px;margin:12px 0}
+.effort-line span{font-size:10px;line-height:1.3;padding:6px 9px;background:#f3f6fc;border:1px solid var(--line);border-radius:6px}
+.effort-line span:nth-child(2){color:var(--blue);border-color:#c2d4ff;background:var(--pale)}
+details{border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:14px;overflow:hidden}
+summary{cursor:pointer;font-size:13px;font-weight:700;padding:15px 17px;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:21px;font-weight:400;color:var(--blue);line-height:1}
+details[open] summary:after{content:"−"}
+.details-body{padding:0 17px 17px;font-size:13px;color:var(--muted)}
+.details-body p+p{margin-top:12px}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tool{border:1px solid var(--line);border-radius:14px;background:#fff;padding:20px;min-width:0}
+.tool h3{font-size:17px;letter-spacing:-.02em;margin-bottom:9px}
+.tool p{font-size:13px;color:var(--muted)}
+.tool .cmd{margin-top:13px}
+.cmd{position:relative;border:1px solid #d4e0f8;border-radius:11px;background:#f5f8ff;margin:11px 0 6px;min-width:0;overflow:hidden}
+.cmd-bar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:8px 12px;border-bottom:1px solid #e1e9f8}
+.cmd-label{font-size:10px;font-weight:700;letter-spacing:.035em;color:var(--muted)}
+.copy{border:0;background:#fff;border-radius:5px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--blue);white-space:nowrap}
+.copy:hover{background:#e6eeff}
+pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;padding:14px;font-family:Consolas,"Liberation Mono",Menlo,monospace;font-size:12px;line-height:1.7;color:#15386b}
+code{font-family:Consolas,"Liberation Mono",Menlo,monospace;background:#edf3ff;color:#204a88;border-radius:4px;padding:2px 4px;font-size:.9em;overflow-wrap:anywhere}
+pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.substep{margin-top:24px}
+.substep h3{font-size:17px;letter-spacing:-.02em;margin-bottom:9px;line-height:1.35}
+.substep>p{font-size:14px;color:var(--muted)}
+.substep .tiny{font-size:12px;margin-top:8px}
+.package-choice{display:flex;gap:7px;margin:12px 0 3px;flex-wrap:wrap}
+.package-choice button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 11px;color:var(--muted);font-size:11px;font-weight:700}
+.package-choice button[aria-pressed="true"]{border-color:var(--blue);color:var(--blue);background:var(--pale)}
+.prompt-box{margin-top:13px}
+.prompt-box pre{font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.75;color:var(--ink);padding:18px 19px;white-space:pre-wrap}
+.result-box{border:1px solid #bfd4fd;border-radius:12px;padding:16px 18px;background:white;margin-top:17px}
+.result-box h4{font-size:13px;color:var(--blue);margin-bottom:8px}
+.result-box p{font-size:13px;color:var(--muted)}
+.microflow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:18px}
+.microflow div{border:1px solid var(--line);border-radius:9px;padding:11px 10px;font-size:11px;color:var(--muted);line-height:1.5;background:white}
+.microflow b{display:block;font-size:13px;color:var(--blue);margin-bottom:3px}
+.check-box{border:1px solid #b8ceff;border-radius:var(--radius);background:white;overflow:hidden}
+.check-top{padding:19px 22px;background:var(--pale);border-bottom:1px solid var(--line)}
+.check-top-row{display:flex;align-items:center;justify-content:space-between;gap:13px}
+.check-top h3{font-size:17px;line-height:1.3}
+.count{font-size:14px;color:var(--blue);font-weight:700;white-space:nowrap}
+.meter{background:#dbe6ff;height:4px;border-radius:3px;margin-top:14px;overflow:hidden}
+.meter div{height:100%;background:var(--blue);width:0;transition:width .2s}
+.checks{padding:5px 21px}
+.check-row{display:flex;gap:12px;align-items:flex-start;cursor:pointer;padding:14px 0;border-bottom:1px solid #edf1f8;font-size:13px;line-height:1.6}
+.check-row:last-child{border:0}
+.check-row input{margin:4px 0 0;flex:0 0 17px;width:17px;height:17px;accent-color:var(--blue);cursor:pointer}
+.check-row input:checked+span{color:var(--green)}
+.check-bottom{padding:15px 21px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.check-bottom p{font-size:11px;color:var(--muted);max-width:520px}
+.reset{padding:2px 0;border:0;background:none;color:var(--blue);font-size:11px;font-weight:700;white-space:nowrap}
+.complete{margin-top:14px;padding:15px 18px;color:var(--green);background:var(--green-pale);border:1px solid #bdddc9;border-radius:11px;font-size:13px}
+.helper-head{font-size:18px;margin-top:26px;letter-spacing:-.02em}
+.sources{margin-top:26px}
+.source-links{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}
+.source-links a{font-size:12px;line-height:1.5;text-decoration:none}
+.source-links a:hover{text-decoration:underline}
+.source-meta{margin-top:15px!important;font-size:11px}
+footer{border-top:1px solid var(--line);padding:24px 0 30px;background:white}
+.footer-row{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:11px;color:var(--muted)}
+.footer-row strong{color:var(--ink);font-size:12px}
+.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;font-size:13px;padding:10px 18px;border-radius:10px;z-index:15;box-shadow:0 5px 20px #08112e22;max-width:90vw;text-align:center}
+.skip{position:fixed;top:-80px;left:20px;z-index:20;background:white;padding:10px}
+.skip:focus{top:10px}
+.noscript{margin:30px;padding:25px;border:2px solid var(--blue);font-size:16px}
+[hidden]{display:none!important}
+@media(min-width:1500px){.wrap{max-width:1250px}.layout{gap:55px}}
+@media(max-width:900px){.hero-grid{gap:28px;grid-template-columns:1.3fr 1fr}.wrap{padding-left:28px;padding-right:24px}.layout{grid-template-columns:1fr;gap:0}.side{position:static;display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:28px}.side p,.side-bottom{display:none}.side a{padding:0;font-size:11px}.side a b{width:23px;height:23px;font-size:9px}.hero{padding-top:39px}.hero-sketch{padding:19px}.layout{padding-top:23px}}
+@media(max-width:620px){body{font-size:15px}body:before{width:4px}.wrap{padding-left:22px;padding-right:18px}.top-row{min-height:73px;gap:9px}.brand{font-size:11px;gap:7px;letter-spacing:0}.brand svg{width:25px;height:25px}.brand small{font-size:8px;letter-spacing:.09em}.segmented button{padding:7px 9px;font-size:11px}.hero{padding-top:31px;padding-bottom:23px}.hero-grid{display:block;margin-top:18px}.hero-sketch{display:none}h1{font-size:47px;letter-spacing:-.05em}.lede{font-size:15px;margin-top:20px}.hero-note{font-size:11px}.eyebrow{font-size:9px}.settings-bar{align-items:flex-start;padding:15px 0}.setting-group{gap:7px}.control-label{font-size:11px;display:block;width:100%}.print{font-size:11px;padding-top:27px}.print svg{display:none}.side{gap:10px 13px}.side a{font-size:10px;gap:5px}.side a b{width:21px;height:21px}.section-head{gap:10px}h2{font-size:24px}.section-head p{font-size:13px}.step-num{width:30px;height:30px;font-size:11px}.agents{grid-template-columns:1fr;gap:8px}.agent{display:grid;grid-template-columns:36px 1fr;gap:0 12px;padding:14px 37px 14px 14px;align-items:center}.agent[aria-pressed="true"]{padding:13px 36px 13px 13px}.agent-symbol{grid-column:1;grid-row:1 / span 3;margin:0}.agent h3{font-size:17px}.agent p{margin-top:4px}.agent .agent-tag{margin-top:4px;font-size:10px}.select-dot{top:20px;right:13px}.install-header{padding:17px}.install-header h3{font-size:19px}.install-steps{padding:3px 16px}.install-steps p{font-size:13px}.access{padding:13px 16px}.rules-grid,.tools-grid{grid-template-columns:1fr;gap:12px}.rules-grid{margin-top:17px}.tool{padding:17px}.rule-card{padding:17px}.microflow{grid-template-columns:1fr 1fr}.source-links{grid-template-columns:1fr}.check-top{padding:17px}.check-top h3{font-size:15px}.checks{padding:3px 16px}.check-bottom{padding:14px 16px}.check-bottom p{font-size:10px}.check-row{font-size:12px}.footer-row{align-items:flex-start;flex-direction:column;gap:6px}section{padding-bottom:28px;margin-bottom:26px}.cmd-label{font-size:9px}.substep h3{font-size:16px}pre{font-size:11px}.prompt-box pre{font-size:13px;padding:15px}.note{font-size:12px;padding:10px 12px}.source-meta{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+@media print{body{background:#fff;font-size:10pt}body:before,.top,.side,.settings-bar,.copy,.reset,.toast,.skip{display:none!important}.wrap{max-width:none;padding:0}.hero{padding:0 0 14px}.hero-grid{display:block}.hero-sketch{display:none}h1{font-size:30pt}h1 span{display:inline}.lede{font-size:11pt;max-width:none;margin-top:10px}.hero-note{font-size:9pt}.layout{display:block;padding:0}.section-head{break-after:avoid}section{margin:15px 0;padding-bottom:15px;break-inside:auto}.agent{display:none}.agent[aria-pressed="true"]{display:block;padding:12px;border:1px solid #a5bcf3}.agent-symbol,.select-dot{display:none}.agent p{font-size:9pt}.agent h3{font-size:13pt}.agent-tag{display:none!important}h2{font-size:18pt}.install-box{break-inside:auto}.install-steps li,.rule-card,.tool,.substep,.check-row,.result-box{break-inside:avoid}.cmd,pre{break-inside:avoid}.cmd-bar{padding:5px 10px}.rules-grid,.tools-grid{gap:12px}.check-row{padding:7px 0;font-size:9pt}.check-bottom p{font-size:8pt}.note,.access{font-size:9pt}.source-links a{font-size:8pt}.check-top{padding:12px}footer{margin-top:15px}.package-choice button{display:none}.package-choice button[aria-pressed="true"]{display:block}.complete{font-size:9pt}.details-body{display:block}details:not([open]) .details-body{display:none}.source-links a:after{content:""}a{text-decoration:none}.step-num{width:25px;height:25px;font-size:9pt}.section-head{margin-bottom:11px}}
+
+/* Readable instruction cards */
+.install-box{background:#eaf0fa;border-color:#afc3e6}
+.install-header,.check-top{background:#dce7fa}
+.install-steps li{border-bottom-color:#c5d3e9}
+.install-steps p,.substep>p,.rule-card p,.details-body,.result-box p,.check-row{font-weight:600}
+.install-steps h4,.substep h3{font-weight:800}
+.rule-card,.result-box,.tool,.microflow div,details{background:#eaf0fa;border-color:#bdcce4}
+.substep{padding:20px 22px;background:#eaf0fa;border:1px solid #bdcce4;border-radius:14px;margin-top:16px}
+.permission-card{background:#dfe9fb;border-color:#9fb9e8;border-left:4px solid var(--blue)}
+.note.soft{background:#e8edf5;border-left-color:#99adc9;color:#34415a}
+.access{background:#dde7f6;font-weight:600}
+.cmd{background:#dfe9fa;border-color:#adbfde}
+.cmd-bar{background:#cfddf4;border-bottom-color:#adbfde;padding:12px 16px}
+.cmd-label{font-size:11px;color:#263c62;font-weight:800}
+.copy{font-size:12px;padding:6px 12px;border:1px solid #b0c4e7}
+.prompt-box pre{font-size:15px;font-weight:600;background:#e8effc;line-height:1.8}
+.check-box{background:#edf2fa}
+.check-row{border-bottom-color:#c8d5e8}
+.agent p,.lede,.section-head p{font-weight:600}
+strong{font-weight:800}
+@media(max-width:620px){.substep{padding:17px}.prompt-box pre{font-size:14px}.cmd-label{font-size:10px}.copy{font-size:11px}}
+
+/* M3C2 additions; colors, type, spacing and components follow the M2 setup reference. */
+.hero-sketch{transform:none;margin:0;padding:22px;background:#fff;box-shadow:0 12px 32px #0b316509}
+.hero-sketch .sketch-top{margin-bottom:18px;line-height:1.5}
+.value-groups{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:12px;align-items:stretch}
+.value-group{min-width:0;padding:14px 12px 12px;border:1px solid #d6e2fa;border-radius:13px;background:#f5f8ff}
+.value-group-label{font-size:11px;font-weight:700;line-height:1.45;color:var(--muted);min-height:32px}
+.number-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:10px}
+.number-tiles span{display:grid;place-items:center;min-height:29px;background:#fff;border:1px solid #d5e2fa;border-radius:6px;font-size:14px;font-weight:700;color:#1e4382;font-variant-numeric:tabular-nums}
+.value-group.flagged{background:#fff7e9;border-color:#efc879;text-align:center}
+.flagged .value-group-label{color:#825212}
+.flagged-number{display:block;font-size:46px;font-weight:800;letter-spacing:-.06em;line-height:1.2;color:#a15d08;margin-top:9px;font-variant-numeric:tabular-nums}
+.iqr-boundaries{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding:12px 13px;border:1px solid var(--line);border-radius:10px}
+.iqr-boundaries span{font-size:11px;font-weight:600;color:var(--muted);line-height:1.5;max-width:185px}
+.iqr-boundaries strong{font-size:25px;font-weight:800;letter-spacing:-.04em;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums}
+.iqr-explanation{font-size:12px;line-height:1.6;margin-top:10px;color:var(--ink)}
+.hero-sketch .sketch-bottom{margin-top:15px;font-size:12px;line-height:1.5}
+.hero-sketch .sketch-bottom svg{flex-shrink:0}
+.route-label{font-size:13px;color:var(--muted)}
+.downloads{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.download-card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:20px;min-width:0}
+.download-card h3{font-size:17px;margin-bottom:9px}
+.download-card p{font-size:13px;color:var(--muted)}
+.action{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:9px;padding:10px 14px;font-size:12px;font-weight:700;min-height:42px;margin-top:15px}
+.action:hover{background:var(--blue-deep)}
+.download-card .cmd{margin-top:14px}
+.guide-list{padding-left:20px;margin:12px 0 0;font-size:14px;color:var(--muted)}
+.guide-list li{padding:4px 0 7px}
+.guide-list strong{color:var(--ink)}
+.table-wrap{overflow-x:auto;margin-top:15px;border:1px solid var(--line);border-radius:10px;background:white}
+table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.5}
+caption{text-align:left;padding:12px 14px;font-weight:700;background:#f5f8ff;color:var(--ink)}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-top:1px solid #e3ebfa}
+th{font-weight:700;color:var(--ink)}
+td{font-weight:500;color:var(--muted)}
+thead th{font-size:11px;color:var(--blue);background:#f9fbff}
+.note strong{color:var(--ink)}
+.bonus{margin-top:26px;border:1px solid #b9ceff;border-radius:14px}
+.bonus summary{font-size:15px;color:var(--blue);padding:18px}
+.bonus .details-body{padding:0 18px 20px}
+.bonus h3{font-size:17px;margin:18px 0 9px;color:var(--ink)}
+.bonus p{font-size:14px}
+.bonus .prompt-box pre{font-size:13px}
+.empty-tip{font-size:12px;color:var(--muted);margin-top:12px}
+.complete[hidden]{display:none!important}
+.cmd-bar{flex-wrap:wrap;gap:8px}
+.cmd-label{min-width:0;overflow-wrap:anywhere;flex:1 1 170px}
+.copy{min-height:32px;flex:0 0 auto}
+.action{max-width:100%;overflow-wrap:anywhere;white-space:normal}
+[tabindex]:focus-visible{outline:3px solid #efb82f;outline-offset:4px}
+.own-request{margin-top:20px;border:1px solid #b9ceff;background:#f8faff;border-radius:14px;padding:20px}
+.own-request h3{font-size:17px;margin-bottom:10px;line-height:1.35}
+.own-request>p,.own-request .guide-list{font-size:14px;color:var(--muted)}
+.prompt-help{border-left:3px solid var(--blue);margin-top:18px}
+.prompt-help>summary{color:var(--blue);line-height:1.5}
+.prompt-help .details-body>p{font-size:13px}
+.route-note{padding:14px 0 0;font-size:12px;color:var(--muted)}
+@media(max-width:620px){.own-request{padding:16px}.own-request>p,.own-request .guide-list{font-size:13px}.settings-bar{flex-wrap:wrap;align-items:flex-start}.settings-bar .setting-group{flex:1 1 225px;max-width:100%}.settings-bar .segmented{flex-wrap:nowrap}.settings-bar .segmented button{padding:7px 8px}.settings-bar .print{margin-left:auto;align-self:flex-end}}
+@media print{.own-request{padding:12px}.own-request>p,.own-request .guide-list{font-size:10pt}.route-note{display:none}details[data-prompt-help]:not([open])>.details-body{display:none!important}}
+@media(max-width:620px){.downloads{grid-template-columns:1fr}.download-card{padding:17px}.route-label{font-size:11px}h1{font-size:clamp(36px,10vw,47px)}.guide-list{font-size:13px}th,td{padding:9px 10px;font-size:12px}.bonus summary{font-size:14px}.hero-sketch{display:none}.print{padding-top:0}.settings-bar{align-items:center}.brand{max-width:61%}.brand div{min-width:0}.brand small{font-size:7px;letter-spacing:.04em}.top-row>.segmented{flex-shrink:0}.segmented button{min-height:38px}}
+@media print{.downloads{grid-template-columns:1fr 1fr}.action{display:none}.table-wrap{overflow:visible}table{font-size:9pt}.bonus .details-body{display:block!important}.bonus{break-inside:auto}.cmd{break-inside:auto}.prompt-box pre{font-size:9pt}.guide-list{font-size:10pt}.check-row{font-size:9pt}.hero-sketch{display:none}}
+@media screen and (max-width:620px){.hero-sketch{display:block;margin-top:26px;padding:18px}.value-groups{gap:10px}.value-group{padding:12px 10px}.value-group-label{font-size:11px}.number-tiles{gap:4px}.number-tiles span{font-size:13px}.flagged-number{font-size:clamp(34px,10vw,42px)}.iqr-boundaries span{max-width:155px}.iqr-boundaries strong{font-size:23px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#guide" id="skip">Skip to instructions</a>
+<header class="top"><div class="wrap top-row"><a href="#top" class="brand" aria-label="AI/ML Fundamentals, Cohort 2">
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M17 7v26M23 7v26M12 11l5 5m11-5-5 5M9 20h8m14 0h-8m-11 9 5-5m11 5-5-5"/><circle cx="17" cy="5" r="2"/><circle cx="23" cy="5" r="2"/><circle cx="10" cy="9" r="2"/><circle cx="30" cy="9" r="2"/><circle cx="7" cy="20" r="2"/><circle cx="33" cy="20" r="2"/><circle cx="10" cy="31" r="2"/><circle cx="30" cy="31" r="2"/><circle cx="17" cy="35" r="2"/><circle cx="23" cy="35" r="2"/></svg>
+    <div>AI/ML FUNDAMENTALS<small>COHORT 2 · DATASET EXPLORER</small></div>
+  </a>
+<div class="segmented" role="group" id="language" aria-label="Language">
+<button type="button" data-lang="en" lang="en" aria-pressed="true" aria-label="English">ENG</button>
+<button type="button" data-lang="ru" lang="ru" aria-pressed="false" aria-label="Русский">RU</button>
+<button type="button" data-lang="uz" lang="uz" aria-pressed="false" aria-label="O‘zbekcha">UZB</button>
+</div></div></header>
+<div id="app"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<noscript><div class="noscript">Enable JavaScript to display this offline guide.<br>Включите JavaScript, чтобы открыть эту офлайн-инструкцию.<br>Ushbu oflayn yo‘riqnomani ochish uchun JavaScript’ni yoqing.</div></noscript>
+<script>
+"use strict";
+// The guide has no external assets, libraries, analytics or network requests.
+const CSV = {
+  test: "row_id,amount,note\nA,10,regular\nB,11,regular\nC,12,regular\nD,13,regular\nE,14,regular\nF,15,regular\nG,16,regular\nH,17,regular\nI,100,inspect\nJ,,missing\n",
+  control: "row_id,amount,note\nA,10,regular\nB,11,regular\nC,12,regular\nD,13,regular\nE,14,regular\nF,15,regular\nG,16,regular\nH,17,regular\nI,18,regular\nJ,,missing\n",
+  edge: "row_id,constant,few,empty,text\nA,7,1,,red\nB,7,2,,blue\nC,7,3,,green\nD,7,,,gray\n"
+};
+const FILES = {test: "M3C2_TEST.csv", control: "M3C2_CONTROL.csv", edge: "M3C2_EXTRA_CHECK.csv"};
+const IDS = ["open", "plan", "upgrade", "verify", "save"];
+const T = {
+  en: {
+    title: "Your Explorer.", accent: "A closer look.", eyebrow: "M3C2 / EXTRA HOMEWORK",
+    systemLabel: "My computer", systemContext: "My system", ownTitle: "Build your own request", ownSend: "Use these points to write a short request in your own words. Send it to your agent in the existing project. There is no single required wording.",
+    promptHelpTitle: "Having trouble writing your request? Use a ready-made example", promptHelpIntro: "Try your own wording first. If you get stuck, you may use this optional example. Your selected system is already included. Replace any [placeholders] with your actual details before sending.",
+    systemInstruction: "Use the current project environment and a launch command for this system and my actual terminal. Check the existing project instead of guessing filenames or creating a new environment.",
+    osTips: {win: "Tell the agent that you use Windows and name your terminal, for example PowerShell. Ask for a command for that terminal and the existing project environment. If you use WSL or Git Bash, say so explicitly.", mac: "Tell the agent that you use macOS and the terminal you used before. Ask for the launch command for that terminal and the existing project environment.", linux: "Tell the agent that you use Linux and the terminal you used before. Ask for the launch command for that terminal and the existing project environment."},
+    launchTitle: "If you need the launch command", launchTask: "Ask the agent to help you open the existing app. Include:",
+    launchPoints: ["Your selected system and the name of the terminal you used before, if you know it.", "The same Explorer project folder; the agent should inspect the project and reuse its existing environment.", "The actual launch command and local URL, plus what to do if it cannot start the app itself."],
+    launchLabel: "OPTIONAL EXAMPLE · OPEN THE EXISTING APP",
+    launchPrompt: `Help me start the existing Dataset Explorer in the current project folder. Inspect the project instructions and reuse its existing Python environment. Preserve the files and features; do not create a new project or reinstall tools. Check which terminal to use and ask me if it is unclear. Start the app if you can. Give me the actual launch command, the terminal it belongs in and the local URL. Clearly state what you actually ran and what I must run myself.`,
+    featurePoints: ["Context: your existing Python / Streamlit / pandas Explorer, your selected system and terminal.", "Goal: select a numeric column, see a boxplot, the IQR boundaries, the flag count and the matching original rows. Label them “Needs inspection”.", "Data: use the whole column and the 1.5 × IQR rule from step 2. Exclude missing values from the calculation and show their count. Ask for clear messages when there are no usable numbers or fewer than four, and no crash on equal values.", "Limits: keep the source CSV, rows, upload, summary, chart and any M3C1 counter unchanged. Reuse the environment and installed libraries.", "Check: ask how to launch the app and what was actually checked. You will then run TEST and CONTROL yourself and recheck the old features."],
+    repairPoints: ["The actual uploaded filename and selected column.", "The expected result from the relevant answer table and what the app actually showed.", "The exact error text, if any; ask for one small correction while preserving the source and old features."],
+    bonusPoints: ["Goal: add a side-by-side table of row identifier, Raw, MinMax and Standard for the same selected numeric column.", "Rules: MinMax uses the minimum and maximum; Standard uses the mean and standard deviation with ddof=0. Keep missing values missing; equal values should give zeros without division by zero.", "Limits and check: a temporary preview only, with no change to source data or model training. Preserve the main feature, then check the CONTROL examples below."],
+    lede: "Add a numeric-column check to your existing Dataset Explorer. Let AI make one small change. You run it, check the numbers and explain the result.",
+    heroNote: "Optional practice after the main M3C2 notebook. Use the project and coding agent you already have.",
+    sketchTop: "TEST · 9 numeric values", sketchCaption: ["8 values close together", "1 value to inspect"], sketchBounds: "IQR boundaries from all 9 values", sketchRule: "100 > 22: above the upper boundary, so we flag it for inspection.", sketchBottom: "A flag means inspect, not delete.",
+    routeLabel: "Main task: inspect values · Bonus: preview scaling", print: "Print guide", skip: "Skip to instructions", language: "Language",
+    navTitle: "YOUR ROUTE", nav: ["Open", "Understand", "Ask AI", "Check", "Save"], sideNote: "This page is a guide. Upload the CSV files into your own Explorer.",
+    openTitle: "Open your existing project", openSub: "Continue the Explorer from M2 and M3C1.",
+    openItems: ["Open the same local project folder in your familiar coding agent.", "Start the app using the command you used before, or ask the agent to find the launch command in this project. Open its local URL in a browser.", "Check that CSV upload, the summary and the chart still work. If you completed M3C1, keep the separate space-only cell counter too."],
+    openNote: "If the old app does not start, fix that first with your agent. Tell it the exact error. Continue when the existing features work.",
+    planTitle: "Know what you are adding", planSub: "Choose a numeric column → see a boxplot → inspect flagged rows.",
+    planItems: ["A <strong>boxplot</strong> shows the middle part of the values as a box. Separate points beyond its whiskers can draw attention to unusual values.", "<strong>IQR</strong> is the width of the middle half of the values. A common rule flags values below <code>Q1 − 1.5 × IQR</code> or above <code>Q3 + 1.5 × IQR</code>. Q1 and Q3 are the left and right edges of the box.", "A flag means <strong>“needs inspection”</strong>. It does not prove a typo and does not give permission to delete a row."],
+    predict: "Before asking AI: most test amounts are 10–17; one is 100. Which row would you inspect? Could that value still be real? Say your prediction out loud or write it down.",
+    testTitle: "Test CSV", testText: "10 rows. Nine amounts and one missing amount. A known unusual value helps you check the feature.",
+    controlTitle: "Control CSV", controlText: "The same structure. The value 100 is replaced by 18. Use it to check that the app can also report zero flags.",
+    download: "Download", csvContents: "CSV contents / manual fallback", csvFallback: "If a download is blocked, copy the CSV text into a plain-text file and save it with the exact .csv filename shown here, using UTF-8. Do not add .txt.",
+    upgradeTitle: "Write your own request to AI", upgradeSub: "Describe the change and how you will check it.",
+    promptIntro: "Your task is to add numeric-value inspection to your own Explorer. Use the points below to think through your request. No CSV attachment is needed at this stage: the agent edits the project files, and you upload the two CSV files into the running app afterwards.",
+    promptLabel: "REQUEST 1 · ADD THE FEATURE",
+    prompt: `Continue my existing Dataset Explorer in the current project folder. It uses Python, Streamlit and pandas. Add one small feature; keep the current project structure and environment.
+
+1. Preserve CSV upload, summary, existing charts and the M3C1 space-only counter if it is present. Do not modify the uploaded source table, automatically clean data, delete rows or overwrite the CSV.
+2. Add a section called “Inspect numeric values”. Let me select a numeric column from the uploaded table. Use all finite numeric values in that column, not just preview rows. Report usable and missing/excluded counts. Keep row identifiers visible in the results.
+3. Show a boxplot with unusual points visible. Calculate Q1 and Q3 with pandas' default linear quantile interpolation. IQR = Q3 − Q1; lower = Q1 − 1.5 × IQR; upper = Q3 + 1.5 × IQR. Flag only values strictly below lower or strictly above upper. Show these boundaries, the flag count and the matching original rows. Label flags “Needs inspection”, not “Errors”. Use the same values and rule for the plot and the count. Use an already installed chart library; avoid new dependencies.
+4. Handle no upload, no numeric columns, no usable values and fewer than four usable values with clear messages instead of crashes. For fewer than four values, do not show an IQR verdict. A constant column must not crash or divide by zero. Use temporary views/copies so the original table stays unchanged.
+5. Make the smallest change. Start the app in its existing environment if you can. Tell me the actual launch command and local URL, which files changed and what you really checked. If you cannot run it, say so and give me the command to run. Stop after this feature; scaling is a separate optional step.`,
+    afterPrompt: "After the agent finishes: run the launch command it gives you, open the local app and find the new section. If the agent already started it, open that URL. An AI message saying “done” is not a check.",
+    verifyTitle: "Run both checks yourself", verifySub: "Use amount in both files. Compare the app with the known answers below.",
+    verifyItems: ["Download <code>M3C2_TEST.csv</code> above, upload it into your Explorer and select <code>amount</code> in the new section. Read the plot, the count and the flagged row.", "Now upload <code>M3C2_CONTROL.csv</code>, select <code>amount</code> again and check the refreshed result. Zero flags must be shown clearly.", "Recheck the old upload, summary, chart and space-only counter if present. The app must still show all 10 source rows, including the row with a missing amount."],
+    expectedCaption: "Known answers for the numeric inspection", expectedHeads: ["Check", "TEST", "CONTROL"],
+    expectedRows: [["Source rows", "10", "10"], ["Usable amount / missing", "9 / 1", "9 / 1"], ["Q1 / Q3 / IQR", "12 / 16 / 4", "12 / 16 / 4"], ["Lower / upper boundary", "6 / 22", "6 / 22"], ["Flagged rows", "1: row_id I, amount 100", "0"]],
+    verifyNote: "The blank amount in row J is missing, not an outlier. Do not replace it with zero. The flagged value 100 may still be valid: the CSV does not explain its cause.",
+    realNote: "On your own dataset, zero flags is also a valid result. This is inspection of the currently uploaded table. These two CSV files test an app feature; they are not train/validation/final-test splits for a model.",
+    edgeTitle: "Optional · Check small and constant data", edgeIntro: "This extra check is separate from the two main files. Upload this four-row CSV and select the columns below in turn. Inspect each new result; the text column should not be offered as numeric.",
+    edgeFileTitle: "Extra check CSV", edgeFileText: "Four identical numbers, three usable numbers, an empty column and text — all in one small file.", edgeCaption: "EXTRA_CHECK · known results", edgeHeads: ["Column", "Expected result"],
+    edgeRows: [["constant", "4 usable; Q1 = Q3 = 7, IQR = 0; 0 flags, no crash. If the bonus is present: both scaled previews are 0."], ["few", "3 usable + 1 missing; a message about too few values, no IQR verdict."], ["empty", "0 usable; a no-values message if selectable, or an explanation that this column is not available."], ["text", "Not offered as a numeric column."]],
+    edgeRepair: "If this extra check fails, describe the actual filename, selected column and expected result from this table in your own request. If you choose the optional repair example below, replace its TEST/CONTROL expected-answer paragraph with this result.",
+    helpTitle: "The result differs or the app fails", helpText: "Stay in the same project. First explain the problem to the agent in your own words using these points. Copy the exact error if there is one; you do not need to send private data.",
+    repairLabel: "REPAIR REQUEST · ONE PROBLEM",
+    repair: `Fix only the numeric-inspection feature in my existing Dataset Explorer. Preserve the original uploaded table, CSV upload, summary, chart and the M3C1 counter if present. Do not remove safety checks or add unrelated features.
+
+File I uploaded: [actual filename, e.g. M3C2_TEST.csv; include its new name if renamed]. Selected column: [amount, or the actual column used].
+Expected: both files have 10 rows, 9 usable amounts and 1 missing amount. With linear quantiles Q1=12, Q3=16, IQR=4, boundaries=6 and 22. TEST must flag only row_id I with amount 100; CONTROL must flag zero rows. Flag only values strictly outside the boundaries. Keep all source rows.
+Actual result: [count, boundaries, row shown, or what failed].
+Exact error: [paste exact text, or write “no error message”].
+
+Inspect the current project, explain the cause briefly and make the smallest correction. Run it if possible; tell me the actual launch command and what you verified. I will rerun both CSV checks myself.`,
+    helpAfter: "After a correction, reload the app and repeat BOTH file checks. Then recheck the old features. If the problem remains, send the new exact error and result; do not mark the checklist as complete yet.",
+    saveTitle: "Explain it and keep your work", saveSub: "A working feature + your own explanation is the finish line.",
+    explain: "Explain in your own words: “The app flagged … because … . This does / does not prove an error because … . Before changing the value, I would check … .” If you cannot explain it yet, revisit the plot and the two test results.",
+    saveText: "Save the project files, restart the app with the same command and check that the new feature is still there. Keep your short explanation with your project notes. This optional task adds no new grading rule or separate submission requirement.",
+    checkTitle: "Your manual check", checkNote: "Tick only what you personally checked. This guide does not inspect your app; the check marks are stored only in this browser when storage is available.",
+    checks: ["TEST: only row I / 100 is flagged; 9 usable amounts and 1 missing.", "CONTROL: zero flags; results refresh when the file changes.", "The source still has 10 rows, and the old features work.", "After restarting, the saved feature still works.", "I can explain why an IQR flag is not proof of an error."],
+    reset: "Reset checks", complete: "Main task checked. Keep your explanation and saved project. The bonus below is optional.",
+    bonusTitle: "Optional bonus · Preview a different scale", bonusIntro: "Start only after the main checklist is complete. Add a small preview of the same numbers in Raw, MinMax and Standard form. You are changing how values are represented, not fixing the source.",
+    bonusPredict: "Predict first: on CONTROL, should 10 remain smaller than 18 after scaling? Could a Standard value be negative? Then write a separate request using the points below.",
+    bonusLabel: "REQUEST 2 · OPTIONAL SCALING PREVIEW",
+    bonusPrompt: `The numeric-inspection feature in my existing Dataset Explorer already works. Add only an optional scaling preview for the currently selected numeric column. Preserve that feature, all old features and the original uploaded table.
+
+1. Display a table with row identifier, Raw, MinMax and Standard values side by side. Use a temporary copy of all finite numeric values in the selected column; use the same rows in all three versions. Missing cells must stay missing. Never overwrite the source or delete rows.
+2. For this descriptive preview of the currently uploaded column, MinMax = (x − min) / (max − min). Standard = (x − mean) / standard deviation, using population standard deviation (ddof=0). Keep at least three decimal places in the display.
+3. If there are no usable values, show a message. If all usable values are equal (including a single usable value), show zeros for both scaled previews and explain that this column has no variation. Avoid division by zero.
+4. Add a short note: “Preview only. Scaling does not prove a value is correct, remove outliers or make the distribution normal. For a model, learn scaling parameters only from train, then apply the same parameters to validation/test.” Do not add model training or accuracy scores here.
+5. Reuse the current environment and installed libraries. Start the app if you can, report what changed and what you checked, or give me the exact launch command.`,
+    bonusCheck: "Upload CONTROL again, select amount and find rows A, E and I. The preview should match this table approximately; rounding is normal. Missing row J stays missing, and the source still has 10 rows.",
+    bonusCaption: "CONTROL · known scaling preview", bonusHeads: ["Row / Raw", "MinMax", "Standard"], bonusRows: [["A / 10", "0.000", "−1.549"], ["E / 14", "0.500", "0.000"], ["I / 18", "1.000", "1.549"]],
+    bonusExplain: "Explain: the values have a different scale, but row A still describes the same original amount. Negative Standard values are allowed. Return to the IQR section afterwards and confirm the main checks still pass.",
+    copy: "Copy", copied: "Copied", copyFail: "Copy unavailable. The text is selected: press Ctrl+C / Cmd+C, or copy it manually.", downloadStarted: "CSV download requested. Check your Downloads folder.",
+    footer: "M3C2 · Dataset Explorer upgrade", footerNote: "One offline guide · Continue your own project · Optional practice"
+  },
+  ru: {
+    title: "Твой Explorer.", accent: "Посмотрим внимательнее.", eyebrow: "M3C2 / ДОПОЛНИТЕЛЬНАЯ ДОМАШНЯЯ ПРАКТИКА",
+    systemLabel: "Моя система", systemContext: "Моя система", ownTitle: "Составь свой запрос", ownSend: "По этим опорам напиши короткий запрос своими словами и отправь агенту в прежнем проекте. Единственной правильной формулировки нет.",
+    promptHelpTitle: "Не получилось придумать запрос? Открой готовый пример", promptHelpIntro: "Сначала попробуй сформулировать сам. Если возникли трудности, можно использовать этот необязательный пример. Выбранная система уже указана. Перед отправкой замени все [подсказки в скобках] своими фактическими данными.",
+    systemInstruction: "Используй текущее окружение проекта и команду запуска для этой системы и моего фактического терминала. Проверь существующий проект, не угадывай имена файлов и не создавай новое окружение.",
+    osTips: {win: "Назови агенту Windows и свой терминал, например PowerShell. Попроси команду для этого терминала и прежнего окружения проекта. Если используешь WSL или Git Bash, скажи об этом отдельно.", mac: "Назови агенту macOS и терминал, в котором запускал приложение раньше. Попроси команду для этого терминала и прежнего окружения проекта.", linux: "Назови агенту Linux и терминал, в котором запускал приложение раньше. Попроси команду для этого терминала и прежнего окружения проекта."},
+    launchTitle: "Если нужна команда запуска", launchTask: "Попроси агента помочь открыть прежнее приложение. Укажи:",
+    launchPoints: ["Выбранную систему и название прежнего терминала, если знаешь его.", "Ту же папку Explorer: агенту нужно изучить проект и использовать его существующее окружение.", "Что тебе нужны фактическая команда запуска и локальный адрес, а также действия на случай, если агент не сможет запустить приложение сам."],
+    launchLabel: "НЕОБЯЗАТЕЛЬНЫЙ ПРИМЕР · ОТКРЫТЬ ПРЕЖНЕЕ ПРИЛОЖЕНИЕ",
+    launchPrompt: `Помоги запустить существующий Dataset Explorer в открытой папке проекта. Прочитай инструкции проекта и используй его прежнее Python-окружение. Сохрани файлы и функции; не создавай новый проект и не переустанавливай инструменты. Проверь, какой терминал использовать; если неясно, уточни у меня. Если можешь, запусти приложение. Дай фактическую команду запуска, название терминала, куда её вводить, и локальный адрес. Явно скажи, что ты реально запустил и что нужно выполнить мне.`,
+    featurePoints: ["Контекст: твой прежний Explorer на Python / Streamlit / pandas, выбранная система и терминал.", "Цель: выбрать числовой столбец, увидеть boxplot, границы IQR, число отметок и соответствующие исходные строки. Подпись — «Требуют проверки».", "Данные: весь столбец и правило 1.5 × IQR из шага 2. Пропуски не участвуют в расчёте, но их число показывается. Попроси понятные сообщения, если чисел нет или их меньше четырёх, и работу без сбоя на одинаковых значениях.", "Ограничения: сохранить исходный CSV, строки, загрузку, сводку, график и счётчик M3C1, если он есть. Использовать прежнее окружение и установленные библиотеки.", "Проверка: попроси объяснить запуск и сказать, что реально проверено. Затем ты сам проверишь TEST, CONTROL и прежние функции."],
+    repairPoints: ["Фактическое имя загруженного файла и выбранный столбец.", "Ожидаемый результат из соответствующей таблицы ответов и то, что приложение показало на самом деле.", "Точный текст ошибки, если она есть; попроси одну небольшую правку с сохранением исходника и старых функций."],
+    bonusPoints: ["Цель: добавить таблицу с идентификатором строки и значениями Raw, MinMax и Standard рядом для того же выбранного числового столбца.", "Правила: MinMax использует минимум и максимум; Standard — среднее и стандартное отклонение с ddof=0. Пропуски остаются пропусками; одинаковые значения дают нули без деления на ноль.", "Ограничения и проверка: только временный предпросмотр, без изменения исходника и обучения модели. Сохранить основную функцию, затем сверить примеры CONTROL ниже."],
+    lede: "Добавь проверку числового столбца в свой Dataset Explorer. ИИ делает одну небольшую правку. Ты запускаешь приложение, сверяешь числа и объясняешь результат.",
+    heroNote: "Необязательная практика после основного notebook M3C2. Используй свой прежний проект и знакомого ИИ-агента.",
+    sketchTop: "TEST · 9 числовых значений", sketchCaption: ["8 значений рядом", "1 значение стоит проверить"], sketchBounds: "Границы IQR по всем 9 числам", sketchRule: "100 > 22: выше верхней границы, поэтому отметим для проверки.", sketchBottom: "Отметить — не значит удалить.",
+    routeLabel: "Основное: проверка значений · Бонус: масштаб", print: "Распечатать", skip: "Перейти к инструкции", language: "Язык",
+    navTitle: "ТВОЙ МАРШРУТ", nav: ["Открыть", "Разобраться", "Попросить ИИ", "Проверить", "Сохранить"], sideNote: "Эта страница — инструкция. CSV загружай в свой Explorer.",
+    openTitle: "Открой свой прежний проект", openSub: "Продолжай Explorer из M2 и M3C1.",
+    openItems: ["Открой ту же локальную папку проекта в знакомом ИИ-агенте.", "Запусти приложение прежней командой или попроси агента найти команду запуска в этом проекте. Открой локальный адрес в браузере.", "Проверь загрузку CSV, сводку и график. Если ты выполнил M3C1, сохрани и отдельный счётчик ячеек из одних пробелов."],
+    openNote: "Если прежнее приложение не запускается, сначала исправь это с агентом. Передай точный текст ошибки. Продолжай, когда старые функции работают.",
+    planTitle: "Пойми, что добавляешь", planSub: "Выбрать числовой столбец → увидеть boxplot → посмотреть отмеченные строки.",
+    planItems: ["<strong>Boxplot — диаграмма размаха.</strong> Её «коробка» показывает центральную часть значений. Отдельные точки за «усами» помогают заметить необычные значения.", "<strong>IQR</strong> — ширина средней половины значений. Часто проверяют числа ниже <code>Q1 − 1.5 × IQR</code> или выше <code>Q3 + 1.5 × IQR</code>. Q1 и Q3 — левая и правая границы «коробки».", "Отметка означает <strong>«требует проверки»</strong>. Она не доказывает опечатку и не даёт основания автоматически удалить строку."],
+    predict: "До запроса ИИ: в тестовом файле большинство сумм — 10–17, одна — 100. Какую строку ты бы проверил? Может ли такое значение быть настоящим? Произнеси прогноз вслух или запиши.",
+    testTitle: "Тестовый CSV", testText: "10 строк: девять сумм и один пропуск. Заранее известное необычное значение поможет проверить функцию.",
+    controlTitle: "Контрольный CSV", controlText: "Та же структура. Вместо 100 стоит 18. Проверь, что приложение умеет показывать и отсутствие отметок.",
+    download: "Скачать", csvContents: "Содержимое CSV / запасной способ", csvFallback: "Если скачивание заблокировано, скопируй CSV в обычный текстовый файл и сохрани в UTF-8 с точным именем .csv, указанным здесь. Расширение .txt добавлять не нужно.",
+    upgradeTitle: "Сформулируй свой запрос ИИ", upgradeSub: "Опиши нужную правку и способ её проверки.",
+    promptIntro: "Твоя задача — добавить проверку числовых значений в свой Explorer. По опорам ниже продумай собственный запрос. Прикладывать CSV на этом этапе не нужно: агент изменит файлы проекта, а оба CSV ты позже загрузишь в работающее приложение.",
+    promptLabel: "ЗАПРОС 1 · ДОБАВИТЬ ФУНКЦИЮ",
+    prompt: `Продолжи мой существующий Dataset Explorer в открытой папке проекта. Он использует Python, Streamlit и pandas. Добавь одну небольшую функцию, сохрани структуру проекта и текущее окружение.
+
+1. Сохрани загрузку CSV, сводку, существующие графики и счётчик ячеек из одних пробелов из M3C1, если он есть. Не изменяй исходную загруженную таблицу, не очищай данные автоматически, не удаляй строки и не перезаписывай CSV.
+2. Добавь раздел «Проверка числовых значений». Дай выбрать числовой столбец загруженной таблицы. Используй все конечные числовые значения этого столбца, а не только строки предпросмотра. Покажи количество пригодных и пропущенных/исключённых значений. Сохраняй видимыми идентификаторы строк.
+3. Покажи boxplot с видимыми необычными точками. Рассчитай Q1 и Q3 с обычной линейной интерполяцией квантилей pandas. IQR = Q3 − Q1; нижняя граница = Q1 − 1.5 × IQR; верхняя = Q3 + 1.5 × IQR. Отмечай только числа строго ниже нижней или строго выше верхней границы. Покажи границы, число отметок и соответствующие исходные строки. Подпиши их «Требуют проверки», а не «Ошибки». Для графика и счётчика используй одни и те же значения и правило. Используй уже установленную библиотеку графиков; обойдись без новых зависимостей.
+4. Обработай отсутствие файла, числовых столбцов, пригодных чисел и случай с менее чем четырьмя пригодными значениями: понятные сообщения вместо сбоя. При менее чем четырёх значениях не выдавай заключение IQR. Столбец одинаковых чисел не должен вызывать ошибку или деление на ноль. Используй временные представления/копии, чтобы исходная таблица не менялась.
+5. Сделай минимальную правку. Если можешь, запусти приложение в существующем окружении. Сообщи фактическую команду запуска, локальный адрес, изменённые файлы и что реально проверил. Если запустить не можешь, честно скажи и дай команду для моего запуска. Остановись на этой функции: масштабирование будет отдельным необязательным шагом.`,
+    afterPrompt: "Когда агент закончит, выполни указанную им команду, открой локальное приложение и найди новый раздел. Если агент уже запустил приложение, открой его адрес. Сообщение ИИ «готово» само по себе не является проверкой.",
+    verifyTitle: "Самостоятельно проверь оба файла", verifySub: "В обоих выбирай amount. Сравни приложение с известными ответами ниже.",
+    verifyItems: ["Скачай выше <code>M3C2_TEST.csv</code>, загрузи в свой Explorer и выбери <code>amount</code> в новом разделе. Посмотри график, число отметок и отмеченную строку.", "Теперь загрузи <code>M3C2_CONTROL.csv</code>, снова выбери <code>amount</code> и проверь обновлённый результат. Ноль отметок должен быть показан явно.", "Ещё раз проверь прежние загрузку, сводку, график и счётчик пробелов, если он есть. В исходной таблице по-прежнему должны быть все 10 строк, включая строку с пропуском суммы."],
+    expectedCaption: "Известные ответы для проверки числового столбца", expectedHeads: ["Что проверить", "TEST", "CONTROL"],
+    expectedRows: [["Строк в исходнике", "10", "10"], ["Пригодных amount / пропусков", "9 / 1", "9 / 1"], ["Q1 / Q3 / IQR", "12 / 16 / 4", "12 / 16 / 4"], ["Нижняя / верхняя граница", "6 / 22", "6 / 22"], ["Отмеченные строки", "1: row_id I, amount 100", "0"]],
+    verifyNote: "Пустой amount в строке J — пропуск, а не выброс. Не заменяй его нулём. Отмеченное значение 100 может оказаться верным: причина из этого CSV неизвестна.",
+    realNote: "На своём датасете ноль отметок — тоже правильный результат. Здесь мы осматриваем текущую загруженную таблицу. Эти два CSV проверяют функцию приложения; они не являются train/validation/final test модели.",
+    edgeTitle: "По желанию · Проверь малые и одинаковые данные", edgeIntro: "Эта дополнительная проверка отделена от двух основных файлов. Загрузи CSV из четырёх строк и по очереди выбирай столбцы ниже. Проверяй новый результат; текстовый столбец не должен предлагаться как числовой.",
+    edgeFileTitle: "CSV для дополнительной проверки", edgeFileText: "Четыре одинаковых числа, три пригодных числа, пустой столбец и текст — в одном маленьком файле.", edgeCaption: "EXTRA_CHECK · известные результаты", edgeHeads: ["Столбец", "Ожидаемый результат"],
+    edgeRows: [["constant", "4 пригодных; Q1 = Q3 = 7, IQR = 0; 0 отметок, без сбоя. Если бонус добавлен: оба масштабированных варианта — 0."], ["few", "3 пригодных + 1 пропуск; сообщение о недостаточном числе значений, без заключения IQR."], ["empty", "0 пригодных; сообщение об отсутствии чисел, если столбец можно выбрать, или объяснение, что он недоступен."], ["text", "Не предлагается как числовой столбец."]],
+    edgeRepair: "Если дополнительная проверка не прошла, в своём запросе укажи фактическое имя файла, выбранный столбец и ожидание из этой таблицы. Если решишь использовать необязательный готовый пример ниже, замени его абзац ожиданий TEST/CONTROL этим результатом.",
+    helpTitle: "Результат другой или приложение сломалось", helpText: "Оставайся в том же проекте. Сначала объясни проблему агенту своими словами по этим опорам. При наличии ошибки скопируй её точный текст; личные данные передавать не нужно.",
+    repairLabel: "ЗАПРОС НА ИСПРАВЛЕНИЕ · ОДНА ПРОБЛЕМА",
+    repair: `Исправь только проверку числового столбца в моём существующем Dataset Explorer. Сохрани исходную загруженную таблицу, загрузку CSV, сводку, график и счётчик M3C1, если он есть. Не убирай проверки безопасности и не добавляй посторонних функций.
+
+Загруженный файл: [фактическое имя, например M3C2_TEST.csv; если переименовал, укажи новое]. Выбранный столбец: [amount или фактически выбранный].
+Ожидание: в каждом файле 10 строк, 9 пригодных сумм и 1 пропуск. При линейных квантилях Q1=12, Q3=16, IQR=4, границы=6 и 22. TEST должен отметить только row_id I с amount 100; CONTROL — ни одной строки. Отмечаются только числа строго за границами. Все исходные строки сохраняются.
+Фактический результат: [число отметок, границы, показанная строка или что не сработало].
+Точная ошибка: [вставь текст целиком или напиши «сообщения об ошибке нет»].
+
+Изучи текущий проект, кратко объясни причину и сделай минимальное исправление. По возможности запусти; сообщи фактическую команду и что проверил. Я затем самостоятельно повторю обе CSV-проверки.`,
+    helpAfter: "После исправления обнови приложение и повтори проверки ОБОИХ файлов. Затем проверь старые функции. Если проблема осталась, передай новые точную ошибку и результат; чек-лист пока не отмечай как завершённый.",
+    saveTitle: "Объясни и сохрани свою работу", saveSub: "Готовый результат — работающая функция и твоё объяснение.",
+    explain: "Своими словами: «Приложение отметило …, потому что … . Это доказывает / не доказывает ошибку, потому что … . Перед изменением значения я бы проверил …». Пока объяснить не получается — вернись к графику и результатам двух проверок.",
+    saveText: "Сохрани файлы проекта, перезапусти приложение той же командой и проверь, что функция осталась. Сохрани короткое объяснение рядом с заметками проекта. Эта необязательная практика не вводит новую оценку или отдельное требование сдачи.",
+    checkTitle: "Твоя ручная проверка", checkNote: "Отмечай только то, что проверил лично. Эта инструкция не проверяет приложение за тебя; отметки сохраняются только в этом браузере, если хранилище доступно.",
+    checks: ["TEST: отмечена только строка I / 100; 9 пригодных сумм и 1 пропуск.", "CONTROL: ноль отметок; результат обновляется при смене файла.", "В исходнике всё ещё 10 строк; старые функции работают.", "После перезапуска сохранённая функция работает.", "Я могу объяснить, почему отметка IQR не доказывает ошибку."],
+    reset: "Сбросить отметки", complete: "Основная задача проверена. Сохрани объяснение и проект. Бонус ниже — по желанию.",
+    bonusTitle: "Бонус по желанию · Посмотри на другой масштаб", bonusIntro: "Приступай после основного чек-листа. Добавь небольшой предпросмотр тех же чисел: Raw — исходные, MinMax и Standard. Меняется представление значений, а не исправляется исходник.",
+    bonusPredict: "Сначала прогноз: в CONTROL останется ли 10 меньше 18 после масштабирования? Может ли Standard дать отрицательное число? Затем составь отдельный запрос по опорам ниже.",
+    bonusLabel: "ЗАПРОС 2 · НЕОБЯЗАТЕЛЬНЫЙ ПРЕДПРОСМОТР МАСШТАБА",
+    bonusPrompt: `Проверка числового столбца в моём существующем Dataset Explorer уже работает. Добавь только необязательный предпросмотр масштабирования выбранного числового столбца. Сохрани эту функцию, прежние возможности и исходную загруженную таблицу.
+
+1. Покажи рядом в таблице идентификатор строки, Raw (исходное), MinMax и Standard. Используй временную копию всех конечных числовых значений выбранного столбца; во всех трёх вариантах должны быть одни и те же строки. Пропуски остаются пропусками. Не перезаписывай исходник и не удаляй строки.
+2. Для этого ознакомительного предпросмотра текущего столбца MinMax = (x − min) / (max − min). Standard = (x − mean) / стандартное отклонение; используй стандартное отклонение с ddof=0. Показывай минимум три знака после запятой.
+3. Если пригодных значений нет, покажи сообщение. Если все пригодные значения одинаковы (включая единственное значение), покажи нули в обоих масштабированных вариантах и поясни, что в столбце нет разброса. Предотврати деление на ноль.
+4. Добавь краткое пояснение: «Это только предпросмотр. Масштабирование не доказывает правильность числа, не удаляет выбросы и не делает распределение нормальным. Для модели параметры масштаба определяются только по train, затем то же правило применяется к validation/test». Не добавляй сюда обучение модели и метрики accuracy.
+5. Используй существующее окружение и установленные библиотеки. По возможности запусти приложение и сообщи, что изменил и проверил; иначе дай точную команду запуска.`,
+    bonusCheck: "Снова загрузи CONTROL, выбери amount и найди строки A, E и I. Предпросмотр должен примерно совпасть с таблицей; округление допустимо. В строке J остаётся пропуск, а в исходнике — 10 строк.",
+    bonusCaption: "CONTROL · известный результат масштабирования", bonusHeads: ["Строка / Raw", "MinMax", "Standard"], bonusRows: [["A / 10", "0.000", "−1.549"], ["E / 14", "0.500", "0.000"], ["I / 18", "1.000", "1.549"]],
+    bonusExplain: "Объясни: масштаб другой, но строка A по-прежнему описывает ту же исходную сумму. Отрицательные значения Standard допустимы. Затем вернись в раздел IQR и убедись, что основные проверки по-прежнему проходят.",
+    copy: "Копировать", copied: "Скопировано", copyFail: "Не удалось скопировать. Текст выделен: нажми Ctrl+C / Cmd+C или скопируй вручную.", downloadStarted: "Скачивание CSV запрошено. Проверь папку загрузок.",
+    footer: "M3C2 · Доработка Dataset Explorer", footerNote: "Один офлайн-файл · Продолжай свой проект · Практика по желанию"
+  },
+  uz: {
+    title: "Sening Explorer’ing.", accent: "Yaqinroq ko‘rib chiq.", eyebrow: "M3C2 / QO‘SHIMCHA UY VAZIFASI",
+    systemLabel: "Mening tizimim", systemContext: "Mening tizimim", ownTitle: "O‘z so‘rovingni tuz", ownSend: "Shu tayanchlar yordamida o‘z so‘zlaring bilan qisqa so‘rov yoz va avvalgi loyihadagi agentga yubor. Yagona to‘g‘ri ifoda yo‘q.",
+    promptHelpTitle: "So‘rov tuzishda qiynaldingmi? Tayyor misolni och", promptHelpIntro: "Avval o‘zing ifodalashga urin. Qiynalsang, bu ixtiyoriy misoldan foydalanishing mumkin. Tanlangan tizim allaqachon kiritilgan. Yuborishdan oldin barcha [qavsdagi joylarni] haqiqiy ma’lumotlaring bilan almashtir.",
+    systemInstruction: "Mavjud loyiha muhiti hamda shu tizim va amaldagi terminalim uchun ishga tushirish buyrug‘idan foydalan. Fayl nomlarini taxmin qilish yoki yangi muhit yaratish o‘rniga mavjud loyihani tekshir.",
+    osTips: {win: "Agentga Windows ishlatayotganingni va terminalingni, masalan PowerShell’ni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra. WSL yoki Git Bash ishlatsang, buni alohida ayt.", mac: "Agentga macOS ishlatayotganingni va ilovani avval ishga tushirgan terminalingni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra.", linux: "Agentga Linux ishlatayotganingni va ilovani avval ishga tushirgan terminalingni ayt. Shu terminal va avvalgi loyiha muhiti uchun buyruq so‘ra."},
+    launchTitle: "Ishga tushirish buyrug‘i kerak bo‘lsa", launchTask: "Agentdan avvalgi ilovani ochishga yordam so‘ra. Quyidagilarni ayt:",
+    launchPoints: ["Tanlangan tizim va bilsang, avvalgi terminal nomi.", "O‘sha Explorer papkasi: agent loyihani o‘rganib, uning mavjud muhitidan foydalansin.", "Haqiqiy ishga tushirish buyrug‘i va mahalliy manzil kerakligi; agent ilovani o‘zi ishga tushira olmasa, sen nima qilishing kerakligi."],
+    launchLabel: "IXTIYORIY MISOL · AVVALGI ILOVANI OCHISH",
+    launchPrompt: `Ochiq loyiha papkasidagi mavjud Dataset Explorer’ni ishga tushirishga yordam ber. Loyiha yo‘riqnomalarini o‘qi va avvalgi Python muhitidan foydalan. Fayllar va imkoniyatlarni saqla; yangi loyiha yaratma va vositalarni qayta o‘rnatma. Qaysi terminalni ishlatishni tekshir; noaniq bo‘lsa mendan so‘ra. Imkoning bo‘lsa, ilovani ishga tushir. Haqiqiy buyruq, uni qaysi terminalga kiritish va mahalliy manzilni ber. Amalda nimani ishga tushirganingni va men nima bajarishim kerakligini aniq ayt.`,
+    featurePoints: ["Kontekst: avvalgi Python / Streamlit / pandas Explorer’ing, tanlangan tizim va terminal.", "Maqsad: sonli ustunni tanlash, boxplot, IQR chegaralari, belgilar soni va tegishli asl qatorlarni ko‘rish. Nomi — «Tekshirish kerak».", "Ma’lumot: butun ustun va 2-qadamdagi 1.5 × IQR qoidasi. Yetishmayotgan qiymatlar hisobga kirmaydi, lekin ularning soni ko‘rsatiladi. Sonlar bo‘lmasa yoki to‘rttadan kam bo‘lsa tushunarli xabar, bir xil qiymatlarda esa xatosiz ishlashni so‘ra.", "Cheklovlar: asl CSV, qatorlar, yuklash, umumiy ma’lumot, grafik va M3C1 hisoblagichi bo‘lsa, ularni saqla. Avvalgi muhit va o‘rnatilgan kutubxonalardan foydalan.", "Tekshiruv: qanday ishga tushirishni va amalda nima tekshirilganini so‘ra. Keyin TEST, CONTROL va eski imkoniyatlarni o‘zing tekshirasan."],
+    repairPoints: ["Yuklangan faylning haqiqiy nomi va tanlangan ustun.", "Tegishli javoblar jadvalidagi kutilgan natija va ilova amalda ko‘rsatgan natija.", "Xato bo‘lsa, uning aniq matni; asl jadval va eski imkoniyatlarni saqlagan holda bitta kichik tuzatish so‘ra."],
+    bonusPoints: ["Maqsad: o‘sha tanlangan sonli ustun uchun qator identifikatori, Raw, MinMax va Standard qiymatlari yonma-yon bo‘lgan jadval qo‘shish.", "Qoidalar: MinMax minimum va maksimumdan; Standard esa o‘rtacha qiymat va ddof=0 bilan standart og‘ishdan foydalanadi. Yetishmayotgan qiymatlar o‘z holicha qolsin; bir xil qiymatlar nolga bo‘lishsiz nol bersin.", "Cheklovlar va tekshiruv: faqat vaqtinchalik ko‘rinish, asl ma’lumotni o‘zgartirish yoki model o‘qitishsiz. Asosiy imkoniyatni saqla, keyin quyidagi CONTROL misollarini tekshir."],
+    lede: "O‘z Dataset Explorer’ingga sonli ustunni tekshirish imkoniyatini qo‘sh. AI bitta kichik o‘zgarish qilsin. Sen ilovani ishga tushir, sonlarni tekshir va natijani tushuntir.",
+    heroNote: "M3C2 asosiy notebook’idan keyingi ixtiyoriy mashq. Avvalgi loyihang va tanish AI agentingdan foydalan.",
+    sketchTop: "TEST · 9 ta sonli qiymat", sketchCaption: ["8 qiymat yonma-yon", "1 qiymatni tekshirish kerak"], sketchBounds: "Barcha 9 qiymat uchun IQR chegaralari", sketchRule: "100 > 22: yuqori chegaradan katta, shuning uchun tekshirishga belgilaymiz.", sketchBottom: "Belgi — o‘chirish degani emas.",
+    routeLabel: "Asosiy: qiymatlarni tekshirish · Bonus: masshtab", print: "Chop etish", skip: "Yo‘riqnomaga o‘tish", language: "Til",
+    navTitle: "SENING YO‘LING", nav: ["Ochish", "Tushunish", "AI’dan so‘rash", "Tekshirish", "Saqlash"], sideNote: "Bu sahifa — yo‘riqnoma. CSV fayllarini o‘z Explorer’ingga yukla.",
+    openTitle: "Avvalgi loyihangni och", openSub: "M2 va M3C1 dagi Explorer’ni davom ettir.",
+    openItems: ["O‘sha mahalliy loyiha papkasini tanish AI agentingda och.", "Ilovani avvalgi buyruq bilan ishga tushir yoki agentdan shu loyihadagi ishga tushirish buyrug‘ini topishni so‘ra. Mahalliy manzilni brauzerda och.", "CSV yuklash, umumiy ma’lumot va grafik ishlashini tekshir. M3C1’ni bajargan bo‘lsang, faqat bo‘sh joylardan iborat kataklar uchun alohida hisoblagichni ham saqla."],
+    openNote: "Avvalgi ilova ishga tushmasa, oldin uni agent bilan tuzat. Xatoning aniq matnini yubor. Eski imkoniyatlar ishlagandan keyin davom et.",
+    planTitle: "Nima qo‘shayotganingni tushun", planSub: "Sonli ustunni tanlash → boxplot’ni ko‘rish → belgilangan qatorlarni tekshirish.",
+    planItems: ["<strong>Boxplot — quti va mo‘ylovlar diagrammasi.</strong> Uning qutisi qiymatlarning o‘rta qismini ko‘rsatadi. Mo‘ylovlardan tashqaridagi alohida nuqtalar noodatiy qiymatlarga e’tibor qaratadi.", "<strong>IQR</strong> — qiymatlarning o‘rtadagi yarmi kengligi. Odatdagi qoida <code>Q1 − 1.5 × IQR</code> dan past yoki <code>Q3 + 1.5 × IQR</code> dan yuqori sonlarni belgilaydi. Q1 va Q3 — qutining chap va o‘ng chegaralari.", "Belgi <strong>«tekshirish kerak»</strong> degani. U qiymat xato ekanini isbotlamaydi va qatorni avtomatik o‘chirishga asos bo‘lmaydi."],
+    predict: "AI’dan so‘rashdan oldin: test faylidagi summalarning ko‘pi 10–17, bittasi 100. Qaysi qatorni tekshirarding? Bu qiymat haqiqiy bo‘lishi mumkinmi? Taxminingni ovoz chiqarib ayt yoki yoz.",
+    testTitle: "Test CSV", testText: "10 ta qator: to‘qqizta summa va bitta yetishmayotgan qiymat. Oldindan ma’lum noodatiy qiymat imkoniyatni tekshirishga yordam beradi.",
+    controlTitle: "Nazorat CSV", controlText: "Tuzilishi bir xil. 100 o‘rniga 18 yozilgan. Ilova nol belgi natijasini ham ko‘rsata olishini tekshir.",
+    download: "Yuklab olish", csvContents: "CSV tarkibi / zaxira usul", csvFallback: "Yuklab olish bloklansa, CSV matnini oddiy matn fayliga nusxala. Uni shu yerda ko‘rsatilgan aniq .csv nomi bilan UTF-8 formatida saqla. .txt kengaytmasini qo‘shma.",
+    upgradeTitle: "AI uchun o‘z so‘rovingni yoz", upgradeSub: "Kerakli o‘zgarish va uni tekshirish usulini tasvirla.",
+    promptIntro: "Vazifang — o‘z Explorer’ingga sonli qiymatlarni tekshirishni qo‘shish. Quyidagi tayanchlar yordamida o‘z so‘rovingni o‘ylab chiq. Bu bosqichda CSV biriktirish shart emas: agent loyiha fayllarini o‘zgartiradi, ikkala CSV’ni esa keyin ishlayotgan ilovaga yuklaysan.",
+    promptLabel: "SO‘ROV 1 · IMKONIYAT QO‘SHISH",
+    prompt: `Ochiq loyiha papkasidagi mavjud Dataset Explorer’imni davom ettir. Unda Python, Streamlit va pandas ishlatilgan. Bitta kichik imkoniyat qo‘sh; loyiha tuzilishi va mavjud muhitni saqla.
+
+1. CSV yuklash, umumiy ma’lumot, mavjud grafiklar va M3C1’dagi faqat bo‘sh joyli kataklar hisoblagichi bo‘lsa, ularni saqla. Yuklangan asl jadvalni o‘zgartirma, ma’lumotlarni avtomatik tozalama, qatorlarni o‘chirma va CSV ustiga yozma.
+2. «Sonli qiymatlarni tekshirish» bo‘limini qo‘sh. Yuklangan jadvaldan sonli ustun tanlash imkonini ber. Faqat oldindan ko‘rish qatorlarini emas, shu ustundagi barcha chekli sonli qiymatlarni ishlat. Yaroqli va yetishmayotgan/chiqarib tashlangan qiymatlar sonini ko‘rsat. Natijalarda qator identifikatorlari ko‘rinib tursin.
+3. Noodatiy nuqtalar ko‘rinadigan boxplot ko‘rsat. Q1 va Q3’ni pandas’ning odatiy chiziqli kvantil interpolatsiyasi bilan hisobla. IQR = Q3 − Q1; quyi chegara = Q1 − 1.5 × IQR; yuqori chegara = Q3 + 1.5 × IQR. Faqat quyi chegaradan qat’iy past yoki yuqori chegaradan qat’iy baland sonlarni belgilagin. Chegaralar, belgilar soni va tegishli asl qatorlarni ko‘rsat. Ularni «Tekshirish kerak» deb nomla, «Xatolar» deb emas. Grafik va hisoblagich uchun bir xil qiymatlar hamda qoidani ishlat. Avval o‘rnatilgan grafik kutubxonasidan foydalan; yangi bog‘liqliklar qo‘shma.
+4. Fayl, sonli ustunlar yoki yaroqli sonlar yo‘qligini hamda to‘rttadan kam yaroqli qiymat holatini tushunarli xabar bilan ko‘rsat; ilova buzilmasin. To‘rttadan kam qiymat bo‘lsa, IQR xulosasi berma. Bir xil sonlardan iborat ustun xato yoki nolga bo‘lishga olib kelmasin. Asl jadval o‘zgarmasligi uchun vaqtinchalik ko‘rinishlar/nusxalardan foydalan.
+5. Eng kichik o‘zgarishni qil. Imkoning bo‘lsa, ilovani mavjud muhitda ishga tushir. Haqiqiy ishga tushirish buyrug‘i, mahalliy manzil, o‘zgargan fayllar va amalda tekshirgan narsalaringni ayt. Ishga tushira olmasang, buni aniq ayt va men bajaradigan buyruqni ber. Shu imkoniyat bilan to‘xta: masshtablash alohida ixtiyoriy qadam bo‘ladi.`,
+    afterPrompt: "Agent tugatgach, u bergan buyruqni bajar, mahalliy ilovani och va yangi bo‘limni top. Agent ilovani ishga tushirgan bo‘lsa, uning manzilini och. AI’ning «tayyor» degan xabari o‘zi tekshiruv emas.",
+    verifyTitle: "Ikkala faylni o‘zing tekshir", verifySub: "Ikkalasida ham amount’ni tanla. Ilovani quyidagi ma’lum javoblar bilan solishtir.",
+    verifyItems: ["Yuqoridagi <code>M3C2_TEST.csv</code> faylini yuklab ol, o‘z Explorer’ingga yukla va yangi bo‘limda <code>amount</code> ustunini tanla. Grafik, belgilar soni va belgilangan qatorni ko‘r.", "Endi <code>M3C2_CONTROL.csv</code> faylini yukla, yana <code>amount</code> ustunini tanla va yangilangan natijani tekshir. Nol belgi aniq ko‘rsatilishi kerak.", "Eski yuklash, umumiy ma’lumot, grafik va bo‘sh joy hisoblagichi bo‘lsa, ularni qayta tekshir. Asl jadvalda hamon 10 ta qator, jumladan summasi yetishmayotgan qator bo‘lishi kerak."],
+    expectedCaption: "Sonli ustunni tekshirish uchun ma’lum javoblar", expectedHeads: ["Tekshiruv", "TEST", "CONTROL"],
+    expectedRows: [["Asl jadvaldagi qatorlar", "10", "10"], ["Yaroqli amount / yetishmayotgan", "9 / 1", "9 / 1"], ["Q1 / Q3 / IQR", "12 / 16 / 4", "12 / 16 / 4"], ["Quyi / yuqori chegara", "6 / 22", "6 / 22"], ["Belgilangan qatorlar", "1: row_id I, amount 100", "0"]],
+    verifyNote: "J qatoridagi bo‘sh amount — yetishmayotgan qiymat, noodatiy son emas. Uni nolga almashtirma. Belgilangan 100 haqiqiy bo‘lishi ham mumkin: sababi bu CSV’dan ma’lum emas.",
+    realNote: "O‘z ma’lumotlar to‘plamingda nol belgi ham to‘g‘ri natija. Bu yerda hozir yuklangan jadvalni ko‘rib chiqamiz. Bu ikki CSV ilova imkoniyatini tekshiradi; ular modelning train/validation/final test qismlari emas.",
+    edgeTitle: "Ixtiyoriy · Kam va bir xil qiymatlarni tekshir", edgeIntro: "Bu qo‘shimcha tekshiruv ikkita asosiy fayldan alohida. To‘rt qatorli CSV’ni yukla va quyidagi ustunlarni navbat bilan tanla. Har safar yangi natijani tekshir; matnli ustun sonli sifatida taklif qilinmasin.",
+    edgeFileTitle: "Qo‘shimcha tekshiruv CSV", edgeFileText: "To‘rtta bir xil son, uchta yaroqli son, bo‘sh ustun va matn — bitta kichik faylda.", edgeCaption: "EXTRA_CHECK · ma’lum natijalar", edgeHeads: ["Ustun", "Kutilgan natija"],
+    edgeRows: [["constant", "4 ta yaroqli; Q1 = Q3 = 7, IQR = 0; 0 belgi, xatosiz. Bonus qo‘shilgan bo‘lsa: ikkala masshtablangan ko‘rinish ham 0."], ["few", "3 ta yaroqli + 1 ta yetishmayotgan; qiymatlar kamligi haqida xabar, IQR xulosasisiz."], ["empty", "0 ta yaroqli; tanlash mumkin bo‘lsa sonlar yo‘qligi haqida xabar, aks holda bu ustun mavjud emasligi tushuntiriladi."], ["text", "Sonli ustun sifatida taklif qilinmaydi."]],
+    edgeRepair: "Qo‘shimcha tekshiruv o‘tmasa, o‘z so‘rovingda haqiqiy fayl nomi, tanlangan ustun va shu jadvaldagi kutilgan natijani yoz. Quyidagi ixtiyoriy tayyor misolni tanlasang, uning TEST/CONTROL kutilgan javob abzatsini shu natija bilan almashtir.",
+    helpTitle: "Natija boshqacha yoki ilova buzildi", helpText: "O‘sha loyihada qol. Avval shu tayanchlar yordamida muammoni agentga o‘z so‘zlaring bilan tushuntir. Xato bo‘lsa, aniq matnini nusxala; shaxsiy ma’lumotlarni yuborish shart emas.",
+    repairLabel: "TUZATISH SO‘ROVI · BITTA MUAMMO",
+    repair: `Mavjud Dataset Explorer’imdagi faqat sonli ustunni tekshirish imkoniyatini tuzat. Yuklangan asl jadval, CSV yuklash, umumiy ma’lumot, grafik va M3C1 hisoblagichi bo‘lsa, ularni saqla. Xavfsizlik tekshiruvlarini olib tashlama va aloqasiz imkoniyatlar qo‘shma.
+
+Yuklangan fayl: [haqiqiy nomi, masalan M3C2_TEST.csv; nomini o‘zgartirgan bo‘lsang, yangi nomini yoz]. Tanlangan ustun: [amount yoki amalda tanlangan ustun].
+Kutilgan natija: har bir faylda 10 ta qator, 9 ta yaroqli summa va 1 ta yetishmayotgan qiymat. Chiziqli kvantillar bilan Q1=12, Q3=16, IQR=4, chegaralar=6 va 22. TEST faqat amount 100 bo‘lgan row_id I qatorini belgilashi kerak; CONTROL hech bir qatorni belgilamasligi kerak. Faqat chegaralardan qat’iy tashqaridagi sonlar belgilanadi. Barcha asl qatorlar saqlanadi.
+Haqiqiy natija: [belgilar soni, chegaralar, ko‘rsatilgan qator yoki nima ishlamadi].
+Aniq xato: [to‘liq matnni qo‘y yoki «xato xabari yo‘q» deb yoz].
+
+Joriy loyihani o‘rgan, sababni qisqacha tushuntir va eng kichik tuzatishni qil. Imkon bo‘lsa ishga tushir; haqiqiy buyruq va tekshirganlaringni ayt. Men keyin ikkala CSV tekshiruvini o‘zim takrorlayman.`,
+    helpAfter: "Tuzatishdan keyin ilovani yangila va IKKALA faylni qayta tekshir. Keyin eski imkoniyatlarni tekshir. Muammo qolsa, yangi aniq xato va natijani yubor; ro‘yxatni hali tugallangan deb belgilama.",
+    saveTitle: "Tushuntir va ishingni saqla", saveSub: "Natija — ishlaydigan imkoniyat va o‘z tushuntirishing.",
+    explain: "O‘z so‘zlaring bilan: «Ilova … ni belgiladi, chunki … . Bu xatoni isbotlaydi / isbotlamaydi, chunki … . Qiymatni o‘zgartirishdan oldin … ni tekshirardim». Hali tushuntira olmasang, grafik va ikki tekshiruv natijasiga qayt.",
+    saveText: "Loyiha fayllarini saqla, ilovani o‘sha buyruq bilan qayta ishga tushir va yangi imkoniyat saqlanganini tekshir. Qisqa tushuntirishingni loyiha qaydlarida saqla. Bu ixtiyoriy mashq yangi baholash yoki alohida topshirish talabini qo‘shmaydi.",
+    checkTitle: "O‘zing tekshiradigan ro‘yxat", checkNote: "Faqat shaxsan tekshirganingni belgila. Bu yo‘riqnoma ilovangni tekshirmaydi; belgilar saqlash imkoniyati bo‘lsa, faqat shu brauzerda qoladi.",
+    checks: ["TEST: faqat I / 100 qatori belgilandi; 9 ta yaroqli summa va 1 ta yetishmayotgan qiymat.", "CONTROL: nol belgi; fayl o‘zgarganda natija yangilanadi.", "Asl jadvalda hamon 10 ta qator; eski imkoniyatlar ishlaydi.", "Qayta ishga tushirgach, saqlangan imkoniyat ishlaydi.", "IQR belgisi nega xatoni isbotlamasligini tushuntira olaman."],
+    reset: "Belgilarni tozalash", complete: "Asosiy vazifa tekshirildi. Tushuntirishing va loyihangni saqla. Quyidagi bonus ixtiyoriy.",
+    bonusTitle: "Ixtiyoriy bonus · Boshqa masshtabni ko‘r", bonusIntro: "Asosiy ro‘yxat tugagach boshlagin. O‘sha sonlarning kichik ko‘rinishini qo‘sh: Raw — asl qiymat, MinMax va Standard. Qiymatlarning ifodasi o‘zgaradi, asl ma’lumot tuzatilmaydi.",
+    bonusPredict: "Oldin taxmin qil: CONTROL’da masshtablashdan keyin 10 soni 18 dan kichik qoladimi? Standard manfiy son berishi mumkinmi? Keyin quyidagi tayanchlar bilan alohida so‘rov tuz.",
+    bonusLabel: "SO‘ROV 2 · IXTIYORIY MASSHTABLASH KO‘RINISHI",
+    bonusPrompt: `Mavjud Dataset Explorer’imda sonli ustunni tekshirish ishlayapti. Faqat tanlangan sonli ustun uchun ixtiyoriy masshtablash ko‘rinishini qo‘sh. Bu imkoniyat, eski imkoniyatlar va yuklangan asl jadvalni saqla.
+
+1. Jadvalda qator identifikatori, Raw (asl), MinMax va Standard qiymatlarini yonma-yon ko‘rsat. Tanlangan ustundagi barcha chekli sonli qiymatlarning vaqtinchalik nusxasidan foydalan; uchala variantda bir xil qatorlar bo‘lsin. Yetishmayotgan qiymatlar o‘z holicha qolsin. Asl jadval ustiga yozma va qatorlarni o‘chirma.
+2. Hozir yuklangan ustunning bu tanishtiruvchi ko‘rinishi uchun MinMax = (x − min) / (max − min). Standard = (x − mean) / standart og‘ish; standart og‘ish uchun ddof=0 ishlat. Kamida uchta kasr xonasini ko‘rsat.
+3. Yaroqli qiymatlar bo‘lmasa, xabar ko‘rsat. Barcha yaroqli qiymatlar bir xil bo‘lsa (bitta qiymat bo‘lganda ham), ikkala masshtablangan ko‘rinishda nol ko‘rsat va ustunda tarqoqlik yo‘qligini tushuntir. Nolga bo‘lishning oldini ol.
+4. Qisqa izoh qo‘sh: «Bu faqat oldindan ko‘rish. Masshtablash sonning to‘g‘riligini isbotlamaydi, noodatiy qiymatlarni olib tashlamaydi va taqsimotni normal qilmaydi. Model uchun masshtab parametrlari faqat train’dan olinadi, keyin o‘sha qoida validation/test’ga qo‘llanadi». Bu yerga model o‘qitish yoki accuracy ko‘rsatkichlarini qo‘shma.
+5. Mavjud muhit va o‘rnatilgan kutubxonalardan foydalan. Imkon bo‘lsa ilovani ishga tushir va nima o‘zgargani hamda tekshirganlaringni ayt; aks holda aniq ishga tushirish buyrug‘ini ber.`,
+    bonusCheck: "CONTROL’ni yana yukla, amount’ni tanla va A, E, I qatorlarini top. Ko‘rinish quyidagi jadvalga taxminan mos bo‘lsin; yaxlitlash mumkin. J qatorida qiymat yetishmayotgan bo‘lib qoladi, asl jadvalda esa 10 ta qator saqlanadi.",
+    bonusCaption: "CONTROL · ma’lum masshtablash natijasi", bonusHeads: ["Qator / Raw", "MinMax", "Standard"], bonusRows: [["A / 10", "0.000", "−1.549"], ["E / 14", "0.500", "0.000"], ["I / 18", "1.000", "1.549"]],
+    bonusExplain: "Tushuntir: masshtab boshqacha, ammo A qatori hamon o‘sha asl summani bildiradi. Standard manfiy qiymatlari mumkin. Keyin IQR bo‘limiga qaytib, asosiy tekshiruvlar hamon o‘tishini tasdiqla.",
+    copy: "Nusxalash", copied: "Nusxalandi", copyFail: "Nusxalab bo‘lmadi. Matn belgilandi: Ctrl+C / Cmd+C ni bos yoki qo‘lda nusxala.", downloadStarted: "CSV yuklab olish so‘raldi. Yuklamalar papkasini tekshir.",
+    footer: "M3C2 · Dataset Explorer’ni kengaytirish", footerNote: "Bitta oflayn fayl · O‘z loyihangni davom ettir · Ixtiyoriy mashq"
+  }
+};
+const STORAGE_KEY = "aiml-m3c2-explorer-upgrade-v1";
+const OS_NAMES = {win: "Windows", mac: "macOS", linux: "Linux"};
+const state = {lang: "en", os: "win", checks: [false, false, false, false, false]};
+try {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+  if (saved && typeof saved === "object") {
+    if (Object.prototype.hasOwnProperty.call(T, saved.lang)) state.lang = saved.lang;
+    if (Object.prototype.hasOwnProperty.call(OS_NAMES, saved.os)) state.os = saved.os;
+    if (Array.isArray(saved.checks)) state.checks = state.checks.map((_, i) => saved.checks[i] === true);
+  }
+} catch (_) { /* Offline/private browser storage can be unavailable. */ }
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
+const ICONS = {
+  inspect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5M10 7v4m0 2v.1"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m7.5 12 3 3 6-6"/></svg>',
+  print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 8V3h12v5M6 17H3V8h18v9h-3M6 14h12v7H6z"/><path d="M17 11h1"/></svg>'
+};
+function persist() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {} }
+function list(items) { return '<ol class="guide-list">' + items.map(s => '<li>' + s + '</li>').join("") + '</ol>'; }
+function head(n, title, sub) { return '<div class="section-head"><span class="step-num">0' + n + '</span><div><h2>' + esc(title) + '</h2><p>' + esc(sub) + '</p></div></div>'; }
+function block(text, label, id, prompt = true) {
+  return '<div class="cmd' + (prompt ? ' prompt-box' : '') + '"><div class="cmd-bar"><span class="cmd-label">' + esc(label) + '</span><button type="button" class="copy" data-copy="' + id + '" aria-label="' + esc(T[state.lang].copy + ': ' + label) + '">' + esc(T[state.lang].copy) + '</button></div><pre id="' + id + '">' + esc(text) + '</pre></div>';
+}
+function ownRequest(points, intro = "") {
+  const t = T[state.lang];
+  return '<div class="own-request"><h3>' + esc(t.ownTitle) + '</h3>' + (intro ? '<p>' + esc(intro) + '</p>' : '') + list(points) + '<p>' + esc(t.ownSend) + '</p></div>';
+}
+function promptHelp(text, label, id) {
+  const t = T[state.lang];
+  const context = t.systemContext + ': ' + OS_NAMES[state.os] + '.\n' + t.systemInstruction;
+  return '<details class="prompt-help" id="' + id + '-help" data-prompt-help><summary>' + esc(t.promptHelpTitle) + '</summary><div class="details-body"><p>' + esc(t.promptHelpIntro) + '</p>' + block(context + '\n\n' + text, label, id) + '</div></details>';
+}
+function table(caption, headers, rows) {
+  return '<div class="table-wrap" tabindex="0" role="region" aria-label="' + esc(caption) + '"><table><caption>' + esc(caption) + '</caption><thead><tr>' + headers.map(h => '<th scope="col">' + esc(h) + '</th>').join("") + '</tr></thead><tbody>' + rows.map(r => '<tr>' + r.map((c, i) => (i === 0 ? '<th scope="row">' : '<td>') + esc(c) + (i === 0 ? '</th>' : '</td>')).join("") + '</tr>').join("") + '</tbody></table></div>';
+}
+function downloadCard(kind, title, text) {
+  const t = T[state.lang];
+  return '<article class="download-card"><h3>' + esc(title) + '</h3><p>' + esc(text) + '</p><button type="button" class="action" data-download="' + kind + '">' + esc(t.download) + ' ' + FILES[kind] + '</button><details id="contents-' + kind + '"><summary>' + esc(t.csvContents) + '</summary><div class="details-body">' + block(CSV[kind], FILES[kind], 'csv-' + kind, false) + '<p class="empty-tip">' + esc(t.csvFallback) + '</p></div></details></article>';
+}
+function render() {
+  const t = T[state.lang];
+  document.documentElement.lang = state.lang;
+  document.title = "AI/ML · " + t.footer;
+  document.getElementById("skip").textContent = t.skip;
+  document.getElementById("language").setAttribute("aria-label", t.language);
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === state.lang)));
+  const osControl = '<div class="segmented" role="group" aria-label="' + esc(t.systemLabel) + '">' + Object.entries(OS_NAMES).map(([id, name]) => '<button type="button" data-os="' + id + '" aria-pressed="' + (id === state.os) + '">' + name + '</button>').join("") + '</div>';
+  const nav = t.nav.map((n, i) => '<a href="#' + IDS[i] + '"><b>0' + (i + 1) + '</b>' + esc(n) + '</a>').join("");
+  document.getElementById("app").innerHTML = `
+  <div class="wrap hero" id="top"><p class="eyebrow">${esc(t.eyebrow)}</p><div class="hero-grid">
+    <div><h1>${esc(t.title)} <span>${esc(t.accent)}</span></h1><p class="lede">${esc(t.lede)}</p><p class="hero-note">${esc(t.heroNote)}</p></div>
+    <figure class="hero-sketch" aria-label="${esc(t.sketchTop)}"><figcaption class="sketch-top"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>${esc(t.sketchTop)}</figcaption>
+      <div class="value-groups"><div class="value-group"><p class="value-group-label">${esc(t.sketchCaption[0])}</p><div class="number-tiles">${[10,11,12,13,14,15,16,17].map(n=>'<span>'+n+'</span>').join(' ')}</div></div><div class="value-group flagged"><p class="value-group-label">${esc(t.sketchCaption[1])}</p><strong class="flagged-number">100</strong></div></div>
+      <div class="iqr-boundaries"><span>${esc(t.sketchBounds)}</span> <strong>6–22</strong></div><p class="iqr-explanation">${esc(t.sketchRule)}</p><div class="sketch-bottom">${ICONS.inspect}${esc(t.sketchBottom)}</div>
+    </figure></div></div>
+  <div class="wrap"><div class="settings-bar"><div class="setting-group"><span class="control-label">${esc(t.systemLabel)}</span>${osControl}</div><button class="print" type="button" data-print>${ICONS.print}${esc(t.print)}</button></div><p class="route-note">${esc(t.routeLabel)}</p></div>
+  <div class="wrap layout"><nav class="side" aria-label="${esc(t.navTitle)}"><p>${esc(t.navTitle)}</p>${nav}<div class="side-bottom">${esc(t.sideNote)}</div></nav>
+  <main class="content" id="guide" tabindex="-1">
+    <section id="open">${head(1, t.openTitle, t.openSub)}<p class="note" id="system-tip"><strong>${esc(t.systemLabel)}: ${esc(OS_NAMES[state.os])}.</strong> ${esc(t.osTips[state.os])}</p>${list(t.openItems)}<p class="note soft">${esc(t.openNote)}</p><div class="substep"><h3>${esc(t.launchTitle)}</h3>${ownRequest(t.launchPoints, t.launchTask)}${promptHelp(t.launchPrompt, t.launchLabel, 'launch-prompt')}</div></section>
+    <section id="plan">${head(2, t.planTitle, t.planSub)}${list(t.planItems)}<p class="note">${esc(t.predict)}</p><div class="downloads">${downloadCard('test', t.testTitle, t.testText)}${downloadCard('control', t.controlTitle, t.controlText)}</div></section>
+    <section id="upgrade">${head(3, t.upgradeTitle, t.upgradeSub)}<p class="lede" style="margin-top:0;font-size:14px">${esc(t.promptIntro)}</p>${ownRequest(t.featurePoints)}${promptHelp(t.prompt, t.promptLabel, 'feature-prompt')}<p class="note">${esc(t.afterPrompt)}</p></section>
+    <section id="verify">${head(4, t.verifyTitle, t.verifySub)}${list(t.verifyItems)}${table(t.expectedCaption, t.expectedHeads, t.expectedRows)}<p class="note">${esc(t.verifyNote)}</p><p class="note soft">${esc(t.realNote)}</p>
+      <details id="edge"><summary>${esc(t.edgeTitle)}</summary><div class="details-body"><p>${esc(t.edgeIntro)}</p>${downloadCard('edge', t.edgeFileTitle, t.edgeFileText)}${table(t.edgeCaption, t.edgeHeads, t.edgeRows)}<p class="note soft">${esc(t.edgeRepair)}</p></div></details>
+      <div class="substep" id="repair"><h3>${esc(t.helpTitle)}</h3><p>${esc(t.helpText)}</p>${ownRequest(t.repairPoints)}${promptHelp(t.repair, t.repairLabel, 'repair-prompt')}<p class="note soft">${esc(t.helpAfter)}</p></div>
+    </section>
+    <section id="save">${head(5, t.saveTitle, t.saveSub)}<p class="note">${esc(t.explain)}</p><p class="lede" style="font-size:14px;margin:18px 0 22px">${esc(t.saveText)}</p>
+      <div class="check-box"><div class="check-top"><div class="check-top-row"><h3>${esc(t.checkTitle)}</h3><span class="count" id="check-count" role="status" aria-live="polite"></span></div><div class="meter" aria-hidden="true"><div id="check-meter"></div></div></div>
+      <div class="checks">${t.checks.map((c, i) => '<label class="check-row"><input type="checkbox" data-check="' + i + '"' + (state.checks[i] ? ' checked' : '') + '><span>' + esc(c) + '</span></label>').join("")}</div>
+      <div class="check-bottom"><p>${esc(t.checkNote)}</p><button type="button" class="reset" data-reset>${esc(t.reset)}</button></div></div>
+      <p class="complete" id="complete" role="status" hidden>${esc(t.complete)}</p>
+      <details class="bonus" id="bonus"><summary>${esc(t.bonusTitle)}</summary><div class="details-body"><p>${esc(t.bonusIntro)}</p><p class="note">${esc(t.bonusPredict)}</p>${ownRequest(t.bonusPoints)}${promptHelp(t.bonusPrompt, t.bonusLabel, 'bonus-prompt')}<p>${esc(t.bonusCheck)}</p>${table(t.bonusCaption, t.bonusHeads, t.bonusRows)}<p class="note soft">${esc(t.bonusExplain)}</p></div></details>
+    </section>
+  </main></div>
+  <footer><div class="wrap footer-row"><strong>${esc(t.footer)}</strong><span>${esc(t.footerNote)}</span></div></footer>`;
+  updateChecks();
+}
+function updateChecks() {
+  const count = state.checks.filter(Boolean).length;
+  document.getElementById("check-count").textContent = count + " / " + state.checks.length;
+  document.getElementById("check-meter").style.width = (count / state.checks.length * 100) + "%";
+  document.getElementById("complete").hidden = count !== state.checks.length;
+}
+let toastTimer;
+function toast(message) {
+  clearTimeout(toastTimer);
+  const el = document.getElementById("toast");
+  el.textContent = message; el.hidden = false;
+  toastTimer = setTimeout(() => { el.hidden = true; }, 6500);
+}
+async function copyText(id) {
+  const source = document.getElementById(id);
+  if (!source) return;
+  let copied = false;
+  if (navigator.clipboard && window.isSecureContext) {
+    try { await navigator.clipboard.writeText(source.textContent); copied = true; } catch (_) {}
+  }
+  if (!copied) {
+    const area = document.createElement("textarea");
+    area.value = source.textContent; area.readOnly = true;
+    area.style.position = "fixed"; area.style.top = "-9999px";
+    const previousFocus = document.activeElement;
+    document.body.appendChild(area); area.select();
+    try { copied = document.execCommand("copy"); } catch (_) {}
+    area.remove();
+    if (previousFocus && previousFocus.focus) previousFocus.focus({preventScroll: true});
+  }
+  if (copied) { toast(T[state.lang].copied); return; }
+  const range = document.createRange(); range.selectNodeContents(source);
+  const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
+  toast(T[state.lang].copyFail);
+}
+function downloadCsv(kind) {
+  if (!Object.prototype.hasOwnProperty.call(CSV, kind)) return;
+  const blob = new Blob([CSV[kind]], {type: "text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href = url; a.download = FILES[kind];
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast(T[state.lang].downloadStarted);
+}
+function switchSetting(key, value) {
+  const y = window.scrollY;
+  const opened = [...document.querySelectorAll("details[open]")].map(d => d.id).filter(Boolean);
+  state[key] = value; persist(); render();
+  opened.forEach(id => { const detail = document.getElementById(id); if (detail) detail.open = true; });
+  document.getElementById("toast").hidden = true;
+  window.scrollTo({top: y, behavior: "instant"});
+  document.querySelector('[data-' + key + '="' + value + '"]').focus({preventScroll: true});
+}
+document.addEventListener("click", event => {
+  const b = event.target.closest("button");
+  if (!b) return;
+  if (b.dataset.lang && Object.prototype.hasOwnProperty.call(T, b.dataset.lang)) {
+    switchSetting('lang', b.dataset.lang);
+  } else if (b.dataset.os && Object.prototype.hasOwnProperty.call(OS_NAMES, b.dataset.os)) {
+    switchSetting('os', b.dataset.os);
+  } else if (b.dataset.copy) { copyText(b.dataset.copy); }
+  else if (b.dataset.download) { downloadCsv(b.dataset.download); }
+  else if (b.hasAttribute("data-print")) { window.print(); }
+  else if (b.hasAttribute("data-reset")) {
+    state.checks = state.checks.map(() => false); persist();
+    document.querySelectorAll("[data-check]").forEach(c => { c.checked = false; }); updateChecks();
+  }
+});
+document.addEventListener("change", event => {
+  if (!event.target.matches("[data-check]")) return;
+  const index = Number(event.target.dataset.check);
+  if (!Number.isInteger(index) || index < 0 || index >= state.checks.length) return;
+  state.checks[index] = event.target.checked; persist(); updateChecks();
+});
+let printDetails = [];
+window.addEventListener("beforeprint", () => {
+  printDetails = [...document.querySelectorAll("details")].map(el => ({el, open: el.open}));
+  printDetails.forEach(({el}) => { if (!el.hasAttribute('data-prompt-help')) el.open = true; });
+});
+window.addEventListener("afterprint", () => { printDetails.forEach(({el, open}) => { el.open = open; }); });
+render();
+</script>
+</body>
+</html>

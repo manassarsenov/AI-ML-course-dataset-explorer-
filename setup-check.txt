@@ -1,0 +1,60 @@
+======================================================================
+AI/ML FUNDAMENTALS ENVIRONMENT SETUP REPORT
+======================================================================
+Date / Time: 2026-10-22
+Workspace Path: C:\Users\user\OneDrive\Desktop\AI-ML course
+Operating System: Windows (Microsoft Windows NT 10.0.26300.0)
+Architecture: AMD64 (x86_64)
+Shell: PowerShell
+
+----------------------------------------------------------------------
+1. PYTHON & GIT ENVIRONMENT
+----------------------------------------------------------------------
+System Python: Python 3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026) [MSC v.1944 64 bit (AMD64)]
+Python Source: Microsoft Store / WindowsApps (Reused existing installation)
+Git: git version 2.47.0.windows.2 (Reused existing installation)
+Virtual Environment: C:\Users\user\OneDrive\Desktop\AI-ML course\.venv
+Virtual Environment Interpreter: C:\Users\user\OneDrive\Desktop\AI-ML course\.venv\Scripts\python.exe
+Editor Configuration: .vscode/settings.json configured with python.defaultInterpreterPath
+
+----------------------------------------------------------------------
+2. INSTALLED PACKAGE VERSIONS (.venv)
+----------------------------------------------------------------------
+pip: 26.2.2
+pandas: 3.0.6
+numpy: 2.5.4
+matplotlib: 3.11.2
+scikit-learn: 1.9.1
+streamlit: 1.66.1
+ipykernel: 7.4.0
+IPython: 9.17.1
+
+----------------------------------------------------------------------
+3. EXECUTED VERIFICATION CHECKS & REAL RESULTS
+----------------------------------------------------------------------
+[PASSED] Virtual environment creation (.venv)
+[PASSED] Package installation (pandas, numpy, matplotlib, scikit-learn, streamlit, ipykernel)
+[PASSED] Module import test (pandas, numpy, matplotlib, sklearn, streamlit, IPython)
+         -> Output: ALL_IMPORTS_PASSED: True
+         -> Output: READY
+[PASSED] Streamlit Demo Service startup
+         -> Port: 8501 (Free, successfully bound)
+         -> Demo URL: http://localhost:8501
+[PASSED] HTTP Endpoint Health Check
+         -> HTTP Status: 200 OK
+         -> Page Title: Streamlit
+         -> Browser inspection: Verified HTML response rendered by Streamlit server.
+[NOT RUN] External cloud deployment (Intentionally skipped as requested)
+[NOT RUN] Lesson notebook modifications (Preserved student work untouched)
+[BLOCKED] None (Setup completed without blocking errors or permission requests)
+
+----------------------------------------------------------------------
+4. STREAMLIT DEMO
+----------------------------------------------------------------------
+Current Status: RUNNING in background
+Local URL: http://localhost:8501
+
+How to ask me to restart the Streamlit demo in the future:
+Just send a message: "Streamlit demoni ishga tushir" or "Start the Streamlit demo".
+I will check if it is running, and if not, start it on an available port and give you the link.
+======================================================================

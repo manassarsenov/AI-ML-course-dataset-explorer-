@@ -1,0 +1,26 @@
+{
+  "format_version": 1,
+  "run_id": "DEMO_B",
+  "dataset_id": "demo_telco_v1",
+  "split_id": "demo_split_42",
+  "features": [
+    "tenure",
+    "MonthlyCharges",
+    "Contract"
+  ],
+  "target": "Churn",
+  "positive_class": "Yes",
+  "model": "LogisticRegression",
+  "penalty": "l2",
+  "C": 0.1,
+  "seed": 42,
+  "threshold": 0.5,
+  "evaluation_split": "validation",
+  "metrics": {
+    "train_f1": 0.7,
+    "f1": 0.63,
+    "precision": 0.67,
+    "recall": 0.59
+  },
+  "note": "Synthetic UI fixture. Not a measured Telco result or an MLflow run."
+}

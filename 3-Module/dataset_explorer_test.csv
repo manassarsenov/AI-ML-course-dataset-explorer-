@@ -1,0 +1,6 @@
+row,amount,note
+A,10,ok
+B,"   ",ok
+C,,ok
+D,0," "
+E,30,ok

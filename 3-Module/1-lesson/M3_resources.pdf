@@ -1,0 +1,256 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document (opensource)
+1 0 obj
+<<
+/F1 2 0 R /F2 3 0 R
+>>
+endobj
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
+endobj
+3 0 obj
+<<
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+>>
+endobj
+4 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 591.4898 169.7145 604.0898 ] /Subtype /Link /Type /Annot
+>>
+endobj
+5 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://pandas.pydata.org/docs/user_guide/missing_data.html)
+>> /Border [ 0 0 0 ] /Rect [ 193.0665 591.4898 315.0135 604.0898 ] /Subtype /Link /Type /Annot
+>>
+endobj
+6 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://pandas.pydata.org/docs/reference/api/pandas.to_numeric.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 520.2898 149.292 532.8898 ] /Subtype /Link /Type /Annot
+>>
+endobj
+7 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://pandas.pydata.org/docs/user_guide/text.html)
+>> /Border [ 0 0 0 ] /Rect [ 172.644 520.2898 275.9325 532.8898 ] /Subtype /Link /Type /Annot
+>>
+endobj
+8 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 422.0898 132.366 434.6898 ] /Subtype /Link /Type /Annot
+>>
+endobj
+9 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)
+>> /Border [ 0 0 0 ] /Rect [ 155.718 422.0898 222.225 434.6898 ] /Subtype /Link /Type /Annot
+>>
+endobj
+10 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/common_pitfalls.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 351.6773 186.021 365.9773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+11 0 obj
+<<
+/Annots [ 4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R ] /Contents 28 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 27 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+12 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/preprocessing.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 733.0773 150.4575 747.3773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+13 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 661.8773 135.285 676.1773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+14 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 513.7773 177.873 528.0773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+15 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.mutual_info_classif.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 456.8773 149.2815 471.1773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+16 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 399.9773 81 414.2773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+17 0 obj
+<<
+/Annots [ 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R ] /Contents 29 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 27 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+18 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://imbalanced-learn.org/stable/common_pitfalls.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 733.0773 216.3765 747.3773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+19 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://imbalanced-learn.org/stable/over_sampling.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 676.1773 128.2605 690.4773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+20 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 604.1898 211.7145 616.7898 ] /Subtype /Link /Type /Annot
+>>
+endobj
+21 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/classification_threshold.html)
+>> /Border [ 0 0 0 ] /Rect [ 235.0665 604.1898 372.2175 616.7898 ] /Subtype /Link /Type /Annot
+>>
+endobj
+22 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/compose.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 506.7773 225.144 521.0773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+23 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://scikit-learn.org/stable/modules/cross_validation.html)
+>> /Border [ 0 0 0 ] /Rect [ 60 435.5773 296.9115 449.8773 ] /Subtype /Link /Type /Annot
+>>
+endobj
+24 0 obj
+<<
+/Annots [ 18 0 R 19 0 R 20 0 R 21 0 R 22 0 R 23 0 R ] /Contents 30 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 27 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+25 0 obj
+<<
+/PageMode /UseNone /Pages 27 0 R /Type /Catalog
+>>
+endobj
+26 0 obj
+<<
+/Author (Nikita Terentev / Darya Argentova) /CreationDate (D:20261026000538+08'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20261026000538+08'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (\(unspecified\)) /Title (Module 3 Data Preparation and Feature Engineering Resources) /Trapped /False
+>>
+endobj
+27 0 obj
+<<
+/Count 3 /Kids [ 11 0 R 17 0 R 24 0 R ] /Type /Pages
+>>
+endobj
+28 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 1859
+>>
+stream
+Gau1.CJPm>'SaBc<ugae<&![`p:=*cZs]e/JL"W,<Jjb8GK4sFm`]id(IQ^phfi[VNM4:.8t/3sp0>o1RJ.[f$Lg"H5I6O:LD_+,6OG',/LX:p6F0UZb[18IW`r'J^b5jBlBYO/8s;4[(Ag>7Ot[jb#@t!nRBSJ$817)E<mq!AmuG[gC"fMUQU968Yk0:`l_QKs7JQ>>cC7-sr0h5iC%dNBZ$B,-A:nDTlu*7j[XEgurOu]*UJ]1^FIXO//?iM%KK.#HeiacZP>O#]iatH\]ConVdFcM(UYJ(\Ir]Zm_:fK,cE9nhk;0]:9ICX?oA^.j]m=lXH/utD8!7i/Oh`V42*:$H7^9;cU4_88??>sN7)]V=V,kN7:/f!p`X&$3CT2t@;I+4I5"nI_]Yf%8\Or3*m=VR[$&cJ1Z_amX3%X@;3Pc(Q[(^6(11DDc:mnNmUi]>jXu;dW@BERr[%X<K`CcU=7dhk$8?:aAlD5VWdcY.0k3hQ+hnRbP+e\a`C3*1V-E.:.)0`QW_rQB0h["n=W7LqtBl/L7:<tPljqa83`@\Xorj^/,4sP=?2_UVo=IUhOC-WlqR_1Uk_)ckfk,cmm.pej[50L<_=`\PqP4b!DJm1koY>I(-rRT`ZbkO@Z8@8!;4Uc0;]@^_ia>=oErd6uAoI8h_rd_)^=r<lqKtMI5XU8Sjj!J+<[JuF%'bW0u1AWd>m^G7s(,_aYkJ2lJ2%26,V'uXi<j^V-$O_f[H3.>PkBOQAX@_MH+RRn6LQa0^.gJ]NCUYqlJnI_h!S49FkG0m((29GCYr)eA-r?d8N`B$u-d/O`pf,MNO;V(LD']f=`K"\eiC:5H7m6)Y>*sQWgP9qlP(.6h6%l?.IItR6i+g<m)Pgk$H:DDaBb6=KKqi%;VKDA%Q,3h-PE#hMA-/8.P<o4C6'p48`\@jU_nj7)BJ<g[(dHaKQpI$%7dpGU0DXV#X:QG^52rOB##)%Np0g.8lVl`VgNM%!GhfI7*q0fT\do:EX\"Gk48!Qn,$f?;`46?)C!g+:h77NMbDQQeMn51A?>c8U87a=G(@(ds44sG%ksj267*ih="+-0R)QO9]U\Lbc:TpHG39XJI78Z%0U=Bn/:hs%id^d>dH@rE,N[)&s8aAO=,n;qXElQ_N`*HA^jb8.6k(=4NpoC(jWR3\OJm9.t@?PF<(Co(WNrC]kCAjW:nDImOEnY8MS"6K(_itU;K%_[-%\_DZA$iMum:BIg9^Homk^"o#\mB,NdPfdA&>]37@MifEOp;WUgU"<GZ9[HY:,rc\S.#HZ^L*<le*9sN#7,B6h[4ET]Q3UZiu2&)ah63gN*s+CE8d;#cP:a0Y9;ROId<o)J9+jRh8Y4jD5^/N*7KVR[?;BDj<(U&n@@3!&/38C]+XrDM2g_I;\p&i*meK<$f?3ekd`UJF+A0="4,\]!Z$8CpS/"hhXE8oirSd2h%8XU`1m:'H8L+ZDfQYr0`MLU1TA[ph8TV*aA"c(i;3mI^Z];UNChB[k)lf!A:9-a:0GYH8TV/t[o+.MH-;Q5/$dGl5F2);gX#<[_o*kO@EIuLQ,Z%GodBl`A_p1m7^"@I1U<>#P2G2^C+Pf1l+)-`I_V_Ed89#6STD'1hH'@p19U-GTXq_6Xj#Q!JV^+_'p2d[Xk^t=R"[WT6cT/r$kNkN&;@`XHaZs5P;fd26sh\JM3l:$?EoF7D@7X,UBeFKP.c&H;Iu],dGQ^]#u#11'u3hUe]#3Dou_D[I]I&J,oXN3n/De(H]4hh:gFb&;t$"_>-TgaoC'8HY!>0;2b*N)[=$oi"tf6I7OO`@qOB*AJ*e_H3RW'r/MLB)_QT7D!4oH/BrC-bA4lan-;:WB![_5+]D~>endstream
+endobj
+29 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 1992
+>>
+stream
+Gatm;mn_\/&H0m]1#`j0"_/p'ij?:\31BKd;<U;l]osp7)gd`aZ$5%&Od,/1pmYRD8O,+'PTlBS?16"OpZB^[JrkF*s*n&Nr'#[qE<K,T-?G"&+GRuAN$\d:&"8b?8Gl@&FIT,"4%SC<"@:B6K-62K5sGCXE6gpHJ0]ke$Bl*_:<u_m?bk<OS<YK2.l@//B6#GdJM)@u06:>?oNoAp$VZ"h+a22ron+M2p=n'-459b/1u!HW&-dbD8CM!>(Sc[,*/5%g(Nf!8JmLY_K`)-iL<t"^SrC98o_8!e4F2MMp>a,JekTUpH$8lSr:1ke8#MQ3f:s9E]mL3cmm`WW34lblN;f7#9Bfk_8[O[\kSG;;&@X)VZ-OTd3Lod#N#>kk`A:Q187XL=@KB0`0LfZU6@r'JUMOPP'RR1MKgG881rD0:%>hneR&$_)lUOV"mg]I@ed^V\O?a,i0SgD=e9k-/bl^pt[(]N#Um!Y#lM6?d:fo07U"8Wm3AYJYlMWOJqG.+DlNZki_d-7ji,Ad*[Y*hWL/B#sn<RiWbEhH?0Mk<@;WXi<TP[/*C!\.VMN\ZoDTe5qW<IHQY%634J&Kiq)o^;IE'Z3T!JNoNF/cq^K`soj2t9`Mn51Et,skWdXT?2AZD'rfN4r5t^]\=\o/i9sY#*qk6<3b&/C?"[*pc<M)$[d@'Ykgt]'8h]^Cp<s1nG7XH]nqpFSnp2Ij*o*fEqo+]YLK][mI6OY94's"#pn_M4<UZ?,%HOKocWP41(XTdmu6/aP/"mgl$DrHUo3uhbct4'f*BI&SQeJ#<<$?CXPOX90oi.Ks!*c0U!4"V*UR/@TT#t31o1W%dajsKLGD&V^]15bBH:#D[ZPA`*/D<nMJ=p(rOa'3r(]%6:'@(H0qBpU4!0QOYP%<V7N(&O\*X)G9p<#/`&+092[-NlAIHHgArH,IBfNtJGJ?A>$@3M(::Co&u9+kh9@h$mQ=_QA-O+I*/,rS?q.-rDG[IFJ)1O-#r0YJ1>G?5[]NY?;88g"Q@,rZogJcZ\KiA(G!toDh2iN.d/X3;86R`SYSi]WF.9DE1)O?WIWgO"jEXHChK]&0(AO]q-W*9SqLWicbqqrr]k8(/7<B.=R8i#O*E4=0W5%`35tk&&IpC)m)FX=b*'L%Wec]5[OL=YL6&XOKOtG($]b/u:WJ#)1+l'<]UeNtto]IInpub^Be"bgc?XZ20khLTq;B($(=,\Yso>7/8N4plbYMeOtP&82r+n=\9/0!iI2C,N<.:nIDfrM/5M-niqdik\<HCiBJf%&K=Mn,AS#05nRF!ijN:Xhd*pnRBI2cFRob"\82(H\8INUQ"7B*o)C>>+RgjKH*FVZaKF^fadu&$&nbXHu%RDCA!3](/lY^o/1+;r9PZdWhK:VC3T^G/P.AWBpsIdRn"8VYJ@_9JS&Z3G%R=[Po2m1rC-f[MqAff'Dj>DjpX&kM:PC*f!%KL>@qLXLGSf2IoOAS8.M?SX/;M9AhC138HJp:YLOKKdG9AhjVZmEh)N]D<Skdr+\7f30_?7%=m#/erV?Y.kPc(RB'PK,g&aEeDG&`;3g_#FWNO@E5%s`?Mr%!JPT1Sqn\^[@tUZ1.3NI6ZS,^1nFZJqpOg9mq&[_ROR(UX[C11(A_eK)EpmF3f$ne%2+VJG?O6C9j^.+Bbc!mM>m>8JDsQQOEcp#S.M9S]GP?Kk6</'d7h&c]79L?^<m?`c:g)7e$O6Yp7#1b9[d?k`f#t$G=&m)+-L]qm1Nsq?.;PqaF@-o:#B-M_?]f`biT8iDLN`K%NK3E$^/);fGM9g6H?4'&nMOjCgmYD+PO31&S3E,7(g+?@>XF[*/^-,QE:_gC2uQn:JD:R?=#&N;65B#(^A''beVm`)cJm!$TJAC=MXHXE0t5#p9Rl5+q01*.\5Uuff2;`jN@U$s,b"\dmT7<b,iY+1<\mgpG;RWCg!5/pGI3GdiQue\cQl4_*M8U/X2`9;cpu1hQk%l+0YtU*4__3\~>endstream
+endobj
+30 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2044
+>>
+stream
+Gatm;gJZcs&:N^l]):XFJjFV(8aQU'Yb>MK)k=QYNMWmCM_q3QMuZrHa)C]C^6-?M-/mhbNRYFYqK+6@!5Co$=k!FiVJpi!65[O\%Um3eQqlRKHM$<t5KR'nNrg*i7k>S?8K7eir>2[`$qFG-AjOar]n8.m.#2LG_m?DmlNph)WoUQaN`R"qKlarW`^,9-?L+o!"N8'koH0J":+g_W`#243EON<aHeVmEk5)eCJC,cXGs9M.0g&j[3!f%7(3ST@3(l_,p+4Df@PW:V)8Xtgl*D@9hnK%G\\POMG^"LUEArT0cY&G;B@Ep9)`YHT$e';90KFKd(X2JidVpS(^`P[_SueK<M>*Tgn)l-)eMCNO<JV:EElX7>-epSEF;DA9@3YJ0?\j=8_uWNG;3,]<`++I;'Vp"L+arhCj.AgKNC>D?7k)q!VAY;kQMm'Um[hslj]t1r&LQm*(&Off-DQbsE20)QFfcB8d`m&;fgD0<j+ND!-tSdPn@Qt1$=:Tbf<FNI2dl,P=C*pW4_M9(;Ct/[X=t1?8ZaOW<NV;Gp'3X)i0>klaf,s)6*#kh<sqk\\=*M,7t2/U0T'?Ane$VII07na_ia@*n&0ku;+W'oTsa*2.A/BsNtLZ\C1MGP"BZ,]Ocd1r%W?]YDCO*om('8kbLRg>jSG?G*5sK+Q$gYn(1k=CdGadbQkNgKbhsW;;9VK_?lqliGldd]/ft35C`Qf6hK;$OrBrX/7eh;d?/JC15Wgo[Knl1l?I]/jPV#'tpkp2JFlYp%;J<qh!i0kR1qMtEr(nP/]h*TBW'Zi,+kdJ8D5=B=/-d[SR^p?]-[;nl3"#+R>-3fNBt%[,E$:H"]E0=VMhLA_M*s$ob9o(&>,Q/3*hI=oYeC.SpC]!jQ@b3X_IO1("lUk@6+.Ma)WEG;!?SqqOYp=S#_&D>0V%?\Zrl^V@UXqtP^H>JC]AhtEj9^MiAF\EkRmO?%b[A\*dqKa.15=!\g<eP@XfCJ@@BYI6Mgj!SS3E^D6oSG++ps:C^I\0"r=<l"]<P&oIN&#IHoq43n,($hW^Utrpke*kX$m9E[5&_Bu#m1MIp@dFDj\9(q^ZZnRgr^+lg61=b0c-3_M3S;6eWV&?h59'fQM/[_@Wn28!#lYI)0PC8AISZEfN.iT!fO974<>W>!9bA"i$5ETSBRdjTXLgts!N),0hl'e4^nlR$8CrZ;RI<tL9$r=?S&+.Pi8OKdr8:=^t-@?UPMP&;K;1a0fFPrLW4.#HKmU)loQ8^YgZE#/acO9MC1nH84q'bgl<LgD73rJ9/3e$41;Y,f!3;\Wc#W^TNKie7^hN$`\rXnCC*f\n^UO*a63f[%HQIVpHN1Dn5t&s(Zm%C-^KHmsr"A?"b$59U%bjY>VK'AX"S^),psIsA$(<7_JP"4JaXF6YFF)!WquK\>kJ6..*"b^s1nR0XVhE>\]-oK>.eg66BC^B/ud[+t%W"cY2=%]RgKgu:G.iQmQuR^&uUT\'\a!Nq,4ZESsk(q`),D5Sc/SKlY_d-RrS-T-m%=lA-na2.3T\$MOSBLECnL420D4N8,<P5m7ZD,h`(ecb:Fc/93Dma@*3YbDb:K(1LD+K?/SNmr(/P",<I_Y+oDe'L/f03jFP=pqK.XXj9GO,]+T93`9$[o$Nj%MB1ocCGu$?OS_Kg)mWJ#(u<)6tO;c`<LVLh<Y2#m$8gK3GD2C-*i"IO;\2DGJC9uDUlnWeA42'R\WqGd?)B.=f%%'gCKM>cd/XjM?d#CL0bC=e,-FKU\1t'o%S0!\YI\mD>3/4m>4jq>'Y4rqW><A\7l[pGdLm2ENrh$EJ2/Ngdq]6Tu<.Ig:rV&3:e(NDHSr]<e1(AS?H=s>=3CQ(l8mIi%IsEpp4PaUGhiOd>IMB%U/o$Po>/$FURTNXPV7c89DTUc@mF]fFCHr1eQ`8E-d7a6p[%l\9L=mWVr<c?$&FB`p:'MLmCHT0<I(*gf[#CLtT4640)r%HXS3l@I]bs@u3\"`jZs</)J^KQ-&\>3+NDL)ssK2`29H0UA];LaPcC6Z`:jhJ*UaOLB~>endstream
+endobj
+xref
+0 31
+0000000000 65535 f 
+0000000061 00000 n 
+0000000102 00000 n 
+0000000209 00000 n 
+0000000321 00000 n 
+0000000538 00000 n 
+0000000749 00000 n 
+0000000961 00000 n 
+0000001163 00000 n 
+0000001399 00000 n 
+0000001638 00000 n 
+0000001836 00000 n 
+0000002097 00000 n 
+0000002302 00000 n 
+0000002538 00000 n 
+0000002755 00000 n 
+0000003002 00000 n 
+0000003227 00000 n 
+0000003480 00000 n 
+0000003683 00000 n 
+0000003884 00000 n 
+0000004125 00000 n 
+0000004347 00000 n 
+0000004545 00000 n 
+0000004753 00000 n 
+0000005013 00000 n 
+0000005083 00000 n 
+0000005430 00000 n 
+0000005505 00000 n 
+0000007456 00000 n 
+0000009540 00000 n 
+trailer
+<<
+/ID 
+[<d7285d2cb9d5ff25ca7fc543861152d4><d7285d2cb9d5ff25ca7fc543861152d4>]
+% ReportLab generated PDF document -- digest (opensource)
+
+/Info 26 0 R
+/Root 25 0 R
+/Size 31
+>>
+startxref
+11676
+%%EOF

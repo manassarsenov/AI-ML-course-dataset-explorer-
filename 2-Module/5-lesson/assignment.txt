@@ -1,0 +1,110 @@
+# Module 2 | Class 5 Assignment: Mathematical Foundations in Practice (Part 2)
+
+**Related slides:** Class 5 — Calculus, Probability, and Statistics for ML
+**Estimated time:** 50 minutes
+
+## Objective
+Complete the remaining mathematical foundations tasks: descriptive statistics and correlation analysis. By the end, you will have a full Activity 3 notebook covering vectors, distances, linear combinations, statistics, and correlation.
+
+## What You Need
+- Tool: Google Colab: https://colab.research.google.com
+- Dataset: Superstore dataset (same notebook from Class 4 assignment — continue in the same file)
+- Libraries: `pandas`, `numpy` (both pre-installed in Colab)
+
+## Tasks
+
+### Task 3: Descriptive Statistics — With Meaning
+**What to do:** Calculate mean, variance, and standard deviation manually for a sample of 10 values, verify with NumPy, and interpret each measure.
+
+**How to do it:**
+- Step 1: Pick one numerical column (e.g., Sales) and extract a sample of 10 values:
+  ```python
+  import pandas as pd
+  import numpy as np
+
+  df = pd.read_csv('superstore_cleaned.csv')
+  sample = df['Sales'].sample(10, random_state=42).values
+  print("Sample values:", sample)
+  ```
+- Step 2: Calculate mean manually. Mean = sum of values / count:
+  ```python
+  # Manual calculation
+  manual_mean = sum(sample) / len(sample)
+  print(f"Manual mean: {manual_mean:.2f}")
+  ```
+- Step 3: Calculate variance manually. Variance = average of squared differences from mean:
+  ```python
+  # Manual calculation
+  squared_diffs = [(x - manual_mean)**2 for x in sample]
+  manual_variance = sum(squared_diffs) / len(sample)
+  print(f"Manual variance: {manual_variance:.2f}")
+  ```
+- Step 4: Calculate standard deviation. StdDev = square root of variance:
+  ```python
+  manual_std = manual_variance ** 0.5
+  print(f"Manual std dev: {manual_std:.2f}")
+  ```
+- Step 5: Verify with NumPy:
+  ```python
+  print(f"NumPy mean: {np.mean(sample):.2f}")
+  print(f"NumPy variance: {np.var(sample):.2f}")
+  print(f"NumPy std dev: {np.std(sample):.2f}")
+  ```
+- Step 6: In a text cell, interpret each measure:
+  - What does the mean tell you? (The central/typical value of sales)
+  - What does variance tell you that mean does not? (How spread out the values are)
+  - If standard deviation is large relative to the mean, what does that imply? (High variability — the "typical" value is not very typical)
+
+**Tool:** `np.mean()`, `np.var()`, `np.std()` — NumPy statistical functions
+**Help if stuck:** StatQuest — Statistics Fundamentals playlist (start with "Histograms" and "Mean, Variance, Standard Deviation"): https://statquest.org/video-index/
+**Slide reference:** This was covered in Class 5, Slide: "Probability Distributions and Descriptive Statistics"
+
+### Task 4: Correlation Analysis
+**What to do:** Compute correlations between Sales, Profit, and Discount. Interpret the results and think about implications for modeling.
+
+**How to do it:**
+- Step 1: Compute individual correlations:
+  ```python
+  corr_sales_profit = df['Sales'].corr(df['Profit'])
+  corr_sales_discount = df['Sales'].corr(df['Discount'])
+  print(f"Sales-Profit correlation: {corr_sales_profit:.4f}")
+  print(f"Sales-Discount correlation: {corr_sales_discount:.4f}")
+  ```
+- Step 2: Generate the full correlation matrix:
+  ```python
+  corr_matrix = df[['Sales', 'Profit', 'Discount']].corr()
+  print(corr_matrix)
+  ```
+- Step 3: In a text cell, interpret the results:
+  - Which pair is most strongly correlated?
+  - Is any relationship negative? What does a negative correlation mean in this context?
+  - If two features have a correlation of 0.95, should you include both in a model? Why or why not? (Hint: think about multicollinearity — redundant information)
+- Step 4: Optional bonus — visualize with a scatter plot:
+  ```python
+  import matplotlib.pyplot as plt
+  plt.figure(figsize=(8, 5))
+  plt.scatter(df['Sales'], df['Profit'], alpha=0.3, s=10)
+  plt.title('Sales vs Profit')
+  plt.xlabel('Sales ($)')
+  plt.ylabel('Profit ($)')
+  plt.show()
+  ```
+
+**Tool:** `df.corr()` — computes pairwise Pearson correlation, `df['col1'].corr(df['col2'])` for individual pairs
+**Help if stuck:** freeCodeCamp Python for Data Science (covers statistics and correlation with Pandas): https://www.freecodecamp.org/news/python-data-science-course-matplotlib-pandas-numpy/
+**Slide reference:** This was covered in Class 5, Slide: "Calculus, Probability, and Statistics for ML"
+
+## Tips
+- Variance and standard deviation are about spread. Two datasets can have the same mean but wildly different variance. That difference matters for ML — high-variance features dominate distance calculations.
+- A high positive correlation means features move together. Negative means they move in opposite directions. Near zero means no linear relationship.
+- When comparing your manual calculations to NumPy, small floating-point differences are normal. As long as they match to 2 decimal places, you are fine.
+
+## Reflection Question
+Answer in a text cell at the end of your notebook (2-3 sentences):
+1. The mean and median of Sales are likely different. What does this tell you about the distribution? Which one would you report to a business stakeholder, and why?
+
+## Submission
+- Complete the full Activity 3 notebook (Tasks 1-2 from Class 4 and Tasks 3-4 from Class 5, all in one notebook).
+- Written interpretation for each task — not just numbers, but what they mean.
+- Submit by end of Class 5 or beginning of the next lab session.
+- Google Colab link with all cells executed and visible output.
